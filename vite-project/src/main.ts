@@ -1,23 +1,13 @@
 import './style.css'
-import typescriptLogo from './typescript.svg'
 
+const api = async () => {
+  const res = await fetch("https://www.bortakvall.se/api/");
+  if (!res.ok) {
+    throw new Error(`Could not fetch candy, because ${res.status} ${res.statusText}`);
+  }
 
-document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
-  <div>
-    <a href="https://vitejs.dev" target="_blank">
-      <img src="/vite.svg" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://www.typescriptlang.org/" target="_blank">
-      <img src="${typescriptLogo}" class="logo vanilla" alt="TypeScript logo" />
-    </a>
-    <h1>Vite + TypeScript</h1>
-    <div class="card">
-      
-    </div>
-    <p class="read-the-docs">
-      Click on the Vite and TypeScript logos to learn more
-    </p>
-  </div>
-`
+  return await res.json();
+}
 
+api
 
