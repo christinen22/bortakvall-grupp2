@@ -30,11 +30,11 @@ const renderApi = async () => {
 
     data.data.map(e => {
         return document.querySelector('#app').innerHTML +=
-            `<h3>${e.name}</h3><img src="${baseUrl}${e.images.thumbnail}" alt="picture of ${e.name} candy">`
+            `<img src="${baseUrl}${e.images.thumbnail}" alt="picture of ${e.name} candy"><h3>${e.name}</h3>`
     });
 };
 
-// Catch if returned error from promise
+// Catch if returned error from promise and call renderApi-function
 
 renderApi()
     .catch(error => console.log('rejected: ', error.message));
