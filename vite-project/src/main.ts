@@ -2,95 +2,45 @@
 //import { productsTS } from './interfaces'
 import './style.css'
 
-type productsTS = { // denna kan vi lägga i en extern fil och exportera/importera - se 40-async-todos-ts i interfaces.ts
-  id: number,
-  name: string,
-  description: string,
-  price: number,
-  on_sale: boolean,
-  images: any, //vad ska vi ha för datatyp här? Object ger oss fel. String ger också fel, även om det fungerar. 
-  stock_status: string,
-  stock_quantity?: null,
-  //data: any
+// Base URL and endpoint from where we fetch the candy
 
-};
+const baseUrl = 'https://www.bortakvall.se';
 
-let products: productsTS[] = [];
-//let products: any = [];
-let containerEl = document.querySelector('.row');
+// Promise for baseUrl and changeable endPoint
 
+const fetchApi = async (endPoint: string) => {
 
-const fetchProducts = async () => {
-  const res = await fetch('https://www.bortakvall.se/api/products');
+  const res = await fetch(baseUrl + endPoint);
+
+  // If fetch not succeeds throw error
 
   if (!res.ok) {
-    throw new Error(`Could not fetch data, reason: ${res.status} ${res.statusText}`);
+    throw new Error(`This did not work: ${res.status} ${res.statusText}`)
+  };
 
-  }
+  return await res.json();
+};
 
-  const data = await res.json();
-  products = data.data;
-  console.log(products);
-  renderProducts();
-  return data;
+// Call fetchApi and render names and images to DOM 
 
-}
+const renderApi = async () => {
 
-fetchProducts()
-  .then(data => console.log('resolved: ', data))
-  .catch(err => console.log('rejected:', err.message));
+  // Variable to store awaited URL with products
 
+  let data = await fetchApi('/api/products');
+  console.log('data:', data);
 
-//const getProducts = async () => {
-//products = await fetchProducts();
+  // Render product name and image to DOM via map-function
 
-//products = products.data;
-//console.log(typeof (products));
-//console.log(products);
-//console.log(products);
-//renderProducts();
-//console.log(products.length);
-//console.log(products);
-
-//}
-
-// const fetchProducts = async () => {
-//   const res = await fetch('https://www.bortakvall.se/api/products');
-//   if (!res.ok) {
-//     throw new Error(`Could not fetch data, reason: ${res.status} ${res.statusText}`);
-//   }
-
-//   return await res.json() as productsTS[];
-
-// }
-
-const renderProducts = () => {
-  console.log("rendering products...");
-  //products = res.json();
-  let html = '';
-  products.forEach(product => {
-
-    //console.log(product.images['thumbnail']);
-    let htmlSegment = `<div class="col-3"> 
-            <img src="https://bortakvall.se${product.images['thumbnail']}"> 
-            <h2 class="card-text">${product.name} ${product.price} kr</h2>
-            <button type="button" class="btn btn-success">Add to cart</button> 
-            </div>`; // <div> ${product.description}</div> - kan läggas till
-
-    html += htmlSegment;
+  data.data.map(e => {
+    return document.querySelector('#app')!.innerHTML +=
+      `<img src="${baseUrl}${e.images.thumbnail}" alt="picture of ${e.name} candy"><h3>${e.name}</h3>`
   });
+};
 
-  containerEl!.innerHTML = html;
+// Catch if returned error from promise
 
-
-}
-
-//fetchProducts();
-//getProducts();
-//renderProducts();
-
-
-
-
+renderApi()
+  .catch(error => console.log('rejected: ', error.message));
 
 
