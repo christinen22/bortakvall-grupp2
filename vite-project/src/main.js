@@ -1,11 +1,14 @@
 // Base URL and endpoint from where we fetch the candy
 
 const baseUrl = 'https://www.bortakvall.se';
-// let endPoint = '';
+
+// Promise for baseUrl and changeable endPoint
 
 const fetchApi = async (endPoint) => {
 
     const res = await fetch(baseUrl + endPoint);
+
+    // If fetch not succeeds throw error
 
     if (!res.ok) {
         throw new Error(`This did not work: ${res.status} ${res.statusText}`)
@@ -14,28 +17,24 @@ const fetchApi = async (endPoint) => {
     return await res.json();
 };
 
-// Not needed because async below (w/ then)? 
+// Call fetchApi and render names and images to DOM 
 
 const renderApi = async () => {
 
-    // Not needed because async above? 
+    // Variable to store awaited URL with products
 
-    // const data = await fetchApi()
-    //     .then(data => console.log('resolved: ', data))
-    //     .catch(error => console.log('rejected: ', error.message));
-
-    const data = await fetchApi('/api/products');
+    let data = await fetchApi('/api/products');
     console.log('data:', data);
 
-    // const image = await fetchApi(data.data)
-
-    // Render product name and image to DOM
+    // Render product name and image to DOM via map-function
 
     data.data.map(e => {
         return document.querySelector('#app').innerHTML +=
             `<h3>${e.name}</h3><img src="${baseUrl}${e.images.large}" alt="picture of ${e.name} candy">`
     });
 }
+
+// Catch if returned error from promise
 
 renderApi()
     .catch(error => console.log('rejected: ', error.message));
