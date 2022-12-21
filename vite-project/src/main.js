@@ -30,9 +30,9 @@ const renderApi = async () => {
 
     data.data.map(e => {
         return document.querySelector('#app').innerHTML +=
-            `<h3>${e.name}</h3><img src="${baseUrl}${e.images.large}" alt="picture of ${e.name} candy">`
+            `<h3>${e.name}</h3><img src="${baseUrl}${e.images.thumbnail}" alt="picture of ${e.name} candy">`
     });
-}
+};
 
 // Catch if returned error from promise
 
