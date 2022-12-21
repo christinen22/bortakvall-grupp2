@@ -1,5 +1,3 @@
-//import { fetchProducts } from './api'
-//import { productsTS } from './interfaces'
 import './style.css'
 
 type productsTS = { // denna kan vi lägga i en extern fil och exportera/importera - se 40-async-todos-ts i interfaces.ts
@@ -63,11 +61,11 @@ fetchProducts()
 //   return await res.json() as productsTS[];
 
 // }
-
+let html = '';
 const renderProducts = () => {
   console.log("rendering products...");
   //products = res.json();
-  let html = '';
+
   products.forEach(product => {
 
     //console.log(product.images['thumbnail']);
@@ -75,22 +73,18 @@ const renderProducts = () => {
             <img src="https://bortakvall.se${product.images['thumbnail']}"> 
             <h2 class="card-text">${product.name} ${product.price} kr</h2>
             <button type="button" class="btn btn-success">Add to cart</button> 
+            <button type="info" id="${product.id}" class="btn btn-info">Info</button>
             </div>`; // <div> ${product.description}</div> - kan läggas till
 
     html += htmlSegment;
   });
 
   containerEl!.innerHTML = html;
-
-
 }
+
+
 
 //fetchProducts();
 //getProducts();
 //renderProducts();
-
-
-
-
-
 

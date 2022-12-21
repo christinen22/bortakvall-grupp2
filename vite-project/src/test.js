@@ -9,10 +9,11 @@ const modalInfo = document.querySelector(".infoCandy");
 let candyImg = document.createElement("img");
 
 
+
 // close modal function
 const closeModal = function () {
-    modal.classList.add("hidden");
-    overlay.classList.add("hidden");
+    modal.classList.add("hidden");  // Byt .add till toggle och testa 
+    overlay.classList.add("hidden"); // Byt .add till toggle och testa 
 };
 
 // close the modal when the close button and overlay is clicked
@@ -40,8 +41,6 @@ const getProducts = async () => {
     const data = await fetchProducts();
     products = data;
     renderProducts();
-
-
 }
 
 const fetchProducts = async () => {
@@ -50,7 +49,6 @@ const fetchProducts = async () => {
         throw new Error(`Could not fetch data, reason: ${res.status} ${res.statusText}`);
     }
     return await res.json();
-
 }
 
 const renderProducts = () => {
@@ -59,7 +57,7 @@ const renderProducts = () => {
     let html = '';
     //products.data.forEach(product => {
     candy = products.data;
-    candy.forEach(product => {
+    candy.map(product => {
         //console.log(product);
 
         //console.log(product.images['thumbnail']);
@@ -73,10 +71,14 @@ const renderProducts = () => {
 
         html += htmlSegment;
         containerEl.innerHTML = html;
+
     })
+
 };
 
 //containerEl.innerHTML = html;
+
+
 
 // funktion som tar in ID från klicket
 function addToCart(e) {
@@ -101,11 +103,17 @@ function getInfo(e) {
 }
 
 
+
 fetchProducts()
     .then(data => console.log('resolved: ', data))
     .catch(err => console.log('rejected:', err.message));
 getProducts();
 renderProducts();
+
+
+
+
+
 
 
 
