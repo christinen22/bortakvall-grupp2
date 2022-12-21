@@ -1,11 +1,10 @@
-let candy = [];
-let containerEl = document.querySelector('.row');
-let shoppingcartCandy = [];
-const modal = document.querySelector(".modal");
-const overlay = document.querySelector(".overlay");
-const openModalBtn = document.querySelector(".btn-open");
-const closeModalBtn = document.querySelector(".btn-close");
-const modalTitle = document.querySelector(".titleCandy");
+let candy = []; // En tom array som ska innehålla det hämtade godiset från API:et 
+let containerEl = document.querySelector('.row'); // En query selector på diven med class row i HTML dokumentet
+let shoppingcartCandy = []; // En tom array som ska innehålla det valda godiset som ska till kundvagnen
+const modal = document.querySelector(".modal"); // En query selector på sectiontaggen i HTML dokumentet som ska innehålla Modalen
+const overlay = document.querySelector(".overlay"); // En query selector på en div som ska innehålla overlayen som blurrar bakgrunden
+const closeModalBtn = document.querySelector(".btn-close"); // En query selector på knappen som ska stänga Modal boxen
+const modalTitle = document.querySelector(".titleCandy"); // 
 const modalInfo = document.querySelector(".infoCandy");
 let candyImg = document.createElement("img");
 
@@ -102,9 +101,12 @@ function getInfo(e) {
 }
 
 
-fetchProducts();
+fetchProducts()
+    .then(data => console.log('resolved: ', data))
+    .catch(err => console.log('rejected:', err.message));
 getProducts();
 renderProducts();
+
 
 
 
