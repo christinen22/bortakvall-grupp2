@@ -33,8 +33,8 @@ const renderApi = async () => {
             `<div class="col-3">
             <img src="${baseUrl}${e.images.thumbnail}" alt="picture of ${e.name} candy">
             <h3>${e.name} ${e.price}kr</h3>
-            <button type="button" onclick="addToCart(${e.id})" class="btn btn-success">Add to cart</button> 
-            <button type="info" onclick="getInfo(${e.id})" class="btn btn-info">Info</button>
+            <button type="button" id="${e.id}" class="btn btn-success">Add to cart</button> 
+            <button type="info" id="${e.id}" class="btn btn-info">Info</button>
             </div>`
     });
 };
@@ -69,7 +69,7 @@ function getInfo(e) {
     modalInfo.innerHTML += (`${infoCandy.description}`); //Placerar godisets beskrivning i modalen
     candyImg.src = (`${baseUrl}${infoCandy.images.large}`); // hämtar den stora bilden från objectet för tillhörande godis
     modalInfo.appendChild(candyImg); // renderar ut bilden i modalen
-    modalInfo.innerHTML += (`<button type="button" onclick="addToCart(${infoCandy.id})" class="btn btn-success">Add to cart</button>`); //lägger till samma knapp även i Modalen
+    modalInfo.innerHTML += (`<button type="button" id="(${infoCandy.id})" class="btn btn-success">Add to cart</button>`); //lägger till samma knapp även i Modalen
 }
 
 // Functions for modalbox 
@@ -103,9 +103,6 @@ function addToCart(e) {
     console.log(foundCandy);
     shoppingcartCandy.push(foundCandy); // pushar det klickade godiset till en tom array som vi sedan kommer lägga till kundkorgen
     console.log('Shopping cart contains: ', shoppingcartCandy); // konsoll loggar "kundkorgen"
-}
-
-
-;
+};
 
 
