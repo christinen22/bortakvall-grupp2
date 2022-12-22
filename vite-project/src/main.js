@@ -64,15 +64,17 @@ let shoppingcartCandy = [];
 
 // Query Selector for button and adding event listener 
 containerEl.addEventListener('click', e => {
-    if (e.target.className.includes('cart')) {
-        console.log('ID:t', e.target)
-        addToCart(e.target.id)
+    if (e.target.tagName == 'BUTTON') {
+        if (e.target.className.includes('cart')) {
+            console.log('ID:t', e.target)
+            addToCart(e.target.id)
 
-    } if (e.target.className.includes('info')) {
-        // getInfo(e.target.id)
-        console.log('ID:t', e.target.id)
-    }
-    console.log('"e":t: ', e.target)
+        } if (e.target.className.includes('info')) {
+            // getInfo(e.target.id)
+            console.log('ID:t', e.target.id)
+        }
+        console.log('"e":t: ', e.target)
+    };
 });
 
 
