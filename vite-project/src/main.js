@@ -1,3 +1,10 @@
+// Query selectors for functionality of modal box 
+const modal = document.querySelector(".modal"); // En query selector på sectiontaggen i HTML dokumentet som ska innehålla Modalen
+const overlay = document.querySelector(".overlay"); // En query selector på en div som ska innehålla overlayen som blurrar bakgrunden
+const closeModalBtn = document.querySelector(".btn-close"); // En query selector på knappen som ska stänga Modal boxen
+const modalInfo = document.querySelector(".infoCandy");
+let candyImg = document.createElement("img");
+
 // Base URL and endpoint from where we fetch the candy
 
 const baseUrl = 'https://www.bortakvall.se';
@@ -17,18 +24,6 @@ const getApi = async () => {
     products = data;
 
     renderApi();
-
-    // Render product name and image to DOM via map-function
-
-    // data.data.map(e => {
-    //     return document.querySelector('.row').innerHTML +=
-    //         `<div class="col-3">
-    //         <img src="${baseUrl}${e.images.thumbnail}" alt="picture of ${e.name} candy">
-    //         <h3>${e.name} ${e.price}kr</h3>
-    //         <button type="button" id="${e.id}" class="cart btn btn-success">Add to cart</button> 
-    //         <button type="button" id="${e.id}" class="info btn btn-info">Info</button>
-    //         </div>`
-    // });
 };
 
 
@@ -47,8 +42,12 @@ const fetchApi = async (endPoint) => {
     return await res.json();
 };
 
+// Render product name and image to DOM via map-function
+
 const renderApi = () => {
+
     console.log('Render API', products)
+
     products.data.map(e => {
         return document.querySelector('.row').innerHTML +=
             `<div class="col-3">
@@ -71,13 +70,6 @@ getApi()
 console.log('PRODUCTS: ', products)
 
 
-// Query selectors for functionality of modal box 
-const modal = document.querySelector(".modal"); // En query selector på sectiontaggen i HTML dokumentet som ska innehålla Modalen
-const overlay = document.querySelector(".overlay"); // En query selector på en div som ska innehålla overlayen som blurrar bakgrunden
-const closeModalBtn = document.querySelector(".btn-close"); // En query selector på knappen som ska stänga Modal boxen
-const modalInfo = document.querySelector(".infoCandy");
-let candyImg = document.createElement("img");
-
 // Query selectors for functionality of Info button 
 let containerEl = document.querySelector('.row');
 
@@ -88,7 +80,7 @@ let shoppingcartCandy = [];
 containerEl.addEventListener('click', e => {
     if (e.target.tagName == 'BUTTON') {
         if (e.target.className.includes('cart')) {
-            console.log('ID:t', e.target)
+            console.log('Elementet: ', e.target)
             addToCart(e.target.id)
 
         } if (e.target.className.includes('info')) {
@@ -102,20 +94,23 @@ containerEl.addEventListener('click', e => {
 
 // Function for Add to Cart button
 const addToCart = e => {
+
     console.log(`you clicked product w/ ID: ${e}`);
-    const foundCandy = products.find((f) => {
-        console.log(products)
-        return e == f
-    }); // skapar nya variabel där man sätter variabeln till objectet som tillhör det specifika ID:et som klickades
+
+    // Find products in the API and store in foundCandy 
+    let foundCandy = products.data.find((candy) => {
+        return candy.id == e
+    });
 
     console.log('foundCandy: ', foundCandy)
 
-    // console.log(foundCandy);
+    // pushar det klickade godiset till en tom array som vi sedan kommer lägga till kundkorgen
+    // shoppingcartCandy.push(foundCandy);
 
-    // shoppingcartCandy.push(e); // pushar det klickade godiset till en tom array som vi sedan kommer lägga till kundkorgen
-
-    console.log('Shopping cart contains: ', shoppingcartCandy); // konsoll loggar "kundkorgen"
+    // console.log('Shopping cart contains: ', shoppingcartCandy); 
 };
+
+
 
 
 // Function for pop up Info
