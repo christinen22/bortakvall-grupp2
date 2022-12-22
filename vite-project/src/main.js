@@ -7,7 +7,7 @@ let products = [];
 
 // Promise for baseUrl and changeable endPoint
 
-const fetchApi = async (endPoint) => {
+const getApi = async (endPoint) => {
 
     const res = await fetch(baseUrl + endPoint);
 
@@ -22,11 +22,11 @@ const fetchApi = async (endPoint) => {
 
 // Call fetchApi and render names and images to DOM 
 
-const renderApi = async () => {
+const fetchApi = async () => {
 
     // Variable to store awaited URL with products
 
-    let data = await fetchApi('/api/products');
+    let data = await getApi('/api/products');
     console.log('data:', data);
 
     // Render product name and image to DOM via map-function
@@ -45,9 +45,9 @@ const renderApi = async () => {
 
 };
 
-// Catch if returned error from promise and call renderApi-function
+// Catch if returned error from promise and call fetchApi-function
 
-renderApi()
+fetchApi()
     .then(
         console.log('DATA: ', products)
     )
