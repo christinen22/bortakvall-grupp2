@@ -23,7 +23,6 @@ const getApi = async () => {
     renderApi();
 };
 
-
 // Promise for baseUrl and changeable endPoint
 const fetchApi = async (endPoint) => {
 
@@ -72,15 +71,10 @@ let shoppingcartCandy = [];
 // Query Selector for button and adding event listener 
 containerEl.addEventListener('click', e => {
     if (e.target.tagName == 'BUTTON') {
-        if (e.target.className.includes('cart')) {
-            console.log('Elementet: ', e.target)
-            addToCart(e.target.id)
 
-        } if (e.target.className.includes('info')) {
-            console.log('ID:t', e.target.id)
-            getInfo(e.target.id)
+        // If adding another button in containerEl add includes('.info') to else
+        e.target.className.includes('cart') ? addToCart(e.target.id) : getInfo(e.target.id);
 
-        };
     };
 });
 
@@ -123,11 +117,11 @@ const getInfo = e => {
 };
 
 // Functions for modalbox 
-const openModal = function () {
+const openModal = () => {
     modal.classList.remove("hidden");
     overlay.classList.remove("hidden");
 };
-const closeModal = function () {
+const closeModal = () => {
     modal.classList.add("hidden");  // Byt .add till toggle och testa 
     overlay.classList.add("hidden"); // Byt .add till toggle och testa 
 };
@@ -139,7 +133,7 @@ closeModalBtn.addEventListener("click", closeModal);
 overlay.addEventListener("click", closeModal);
 
 // close modal when the Esc key is pressed
-document.addEventListener("keydown", function (e) {
+document.addEventListener("keydown", e => {
     if (e.key === "Escape" && !modal.classList.contains("hidden")) {
         closeModal();
     };
