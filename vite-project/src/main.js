@@ -4,6 +4,8 @@ const overlay = document.querySelector(".overlay"); // En query selector på en 
 const closeModalBtn = document.querySelector(".btn-close"); // En query selector på knappen som ska stänga Modal boxen
 const modalInfo = document.querySelector(".infoCandy");
 let candyImg = document.createElement("img");
+//queryselector for shoppingcart
+let shoppingCart = document.querySelector(".cart");
 
 // Base URL and endpoint from where we fetch the candy
 
@@ -46,7 +48,7 @@ const fetchApi = async (endPoint) => {
 
 const renderApi = () => {
 
-    console.log('Render API', products)
+    //console.log('Render API', products)
 
     products.data.map(e => {
         return document.querySelector('.row').innerHTML +=
@@ -67,7 +69,7 @@ getApi()
     )
     .catch(error => console.log('rejected: ', error.message));
 
-console.log('PRODUCTS: ', products)
+//console.log('PRODUCTS: ', products)
 
 
 // Query selectors for functionality of Info button 
@@ -80,14 +82,14 @@ let shoppingcartCandy = [];
 containerEl.addEventListener('click', e => {
     if (e.target.tagName == 'BUTTON') {
         if (e.target.className.includes('cart')) {
-            console.log('Elementet: ', e.target)
+        //console.log('Elementet: ', e.target)
             addToCart(e.target.id)
 
         } if (e.target.className.includes('info')) {
             // getInfo(e.target.id)
             console.log('ID:t', e.target.id)
         }
-        console.log('"e":t: ', e.target)
+        //console.log('"e":t: ', e.target)
     };
 });
 
@@ -95,23 +97,34 @@ containerEl.addEventListener('click', e => {
 // Function for Add to Cart button
 const addToCart = e => {
 
-    console.log(`you clicked product w/ ID: ${e}`);
+    //console.log(`you clicked product w/ ID: ${e}`);
 
     // Find products in the API and store in foundCandy 
     let foundCandy = products.data.find((candy) => {
         return candy.id == e
     });
 
-    console.log('foundCandy: ', foundCandy)
+    //console.log('foundCandy: ', foundCandy)
 
     // pushar det klickade godiset till en tom array som vi sedan kommer lägga till kundkorgen
-    // shoppingcartCandy.push(foundCandy);
+    shoppingcartCandy.push(foundCandy);
 
-    // console.log('Shopping cart contains: ', shoppingcartCandy); 
+    console.log('Shopping cart contains: ', shoppingcartCandy); 
+
+    const storage = JSON.stringify(shoppingcartCandy); // skapar variabel som store:ar klickade godisar
+    localStorage.setItem("candyInCart", storage);
+
+    console.log(storage);
+
 };
 
 
 
+
+//eventlistener for shoppingcart
+shoppingCart.addEventListener ('click', e => {
+    console.log('hej');
+})
 
 // Function for pop up Info
 // function getInfo(e) {
