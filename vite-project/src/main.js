@@ -2,6 +2,9 @@
 
 const baseUrl = 'https://www.bortakvall.se';
 
+// Array to store data from API
+let data = [];
+
 // Promise for baseUrl and changeable endPoint
 
 const fetchApi = async (endPoint) => {
@@ -23,7 +26,7 @@ const renderApi = async () => {
 
     // Variable to store awaited URL with products
 
-    let data = await fetchApi('/api/products');
+    data = await fetchApi('/api/products');
     console.log('data:', data);
 
     // Render product name and image to DOM via map-function
@@ -42,6 +45,7 @@ const renderApi = async () => {
 // Catch if returned error from promise and call renderApi-function
 
 renderApi()
+    .then(() => { console.log('DATA: ', data.data) })
     .catch(error => console.log('rejected: ', error.message));
 
 
@@ -49,27 +53,42 @@ renderApi()
 const modal = document.querySelector(".modal"); // En query selector på sectiontaggen i HTML dokumentet som ska innehålla Modalen
 const overlay = document.querySelector(".overlay"); // En query selector på en div som ska innehålla overlayen som blurrar bakgrunden
 const closeModalBtn = document.querySelector(".btn-close"); // En query selector på knappen som ska stänga Modal boxen
-const modalTitle = document.querySelector(".titleCandy"); // 
 const modalInfo = document.querySelector(".infoCandy");
 let candyImg = document.createElement("img");
 
 // Query selectors for functionality of Info button 
-let containerEl = document.querySelector('.row'); // En query selector på diven med class row i HTML dokumentet
+let containerEl = document.querySelector('.row');
 
 // Query Selector for Add to Cart button
 let shoppingcartCandy = [];
 
 // Query Selector for button and adding event listener 
-containerEl.addEventListener('click', (e) => {
+containerEl.addEventListener('click', e => {
     if (e.target.className.includes('cart')) {
-        // addToCart(e.target.id)
-        console.log('ID:t', e.target.id)
+        console.log('ID:t', e.target)
+        addToCart(e.target.id)
+
     } if (e.target.className.includes('info')) {
         // getInfo(e.target.id)
         console.log('ID:t', e.target.id)
     }
     console.log('"e":t: ', e.target)
 });
+
+
+// Function for Add to Cart button
+const addToCart = e => {
+    console.log(`you clicked product w/ ID: ${e}`);
+    // const foundCandy = e.find((e) => {
+    //     return e === e.id
+    // }); // skapar nya variabel där man sätter variabeln till objectet som tillhör det specifika ID:et som klickades
+
+    // console.log(foundCandy);
+
+    shoppingcartCandy.push(e); // pushar det klickade godiset till en tom array som vi sedan kommer lägga till kundkorgen
+
+    console.log('Shopping cart contains: ', shoppingcartCandy); // konsoll loggar "kundkorgen"
+};
 
 
 // Function for pop up Info
@@ -81,18 +100,11 @@ containerEl.addEventListener('click', (e) => {
 //     modalInfo.innerHTML += (`${infoCandy.description}`); //Placerar godisets beskrivning i modalen
 //     candyImg.src = (`${baseUrl}${infoCandy.images.large}`); // hämtar den stora bilden från objectet för tillhörande godis
 //     modalInfo.appendChild(candyImg); // renderar ut bilden i modalen
-//     modalInfo.innerHTML += (`<button type="button" id="(${infoCandy.id})" class="btn btn-success">Add to cart</button>`); //lägger till samma knapp även i Modalen
+// //    modalInfo.innerHTML += (`<button type="button" id="(${infoCandy.id})" class="btn btn-success">Add to cart</button>`); // Add cart to modual REMOVE?!  
 // }
 
 
-// Function for Add to Cart button
-// function addToCart(e) {
-//     console.log(`you clicked product ${e}`);
-//     const foundCandy = data.find(candy => candy.id === e); // skapar nya variabel där man sätter variabeln till objectet som tillhör det specifika ID:et som klickades
-//     console.log(foundCandy);
-//     shoppingcartCandy.push(foundCandy); // pushar det klickade godiset till en tom array som vi sedan kommer lägga till kundkorgen
-//     console.log('Shopping cart contains: ', shoppingcartCandy); // konsoll loggar "kundkorgen"
-// };
+
 
 
 // INFO BOX APPEAR / DISAPPEAR //
