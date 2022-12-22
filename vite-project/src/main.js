@@ -5,9 +5,36 @@ const baseUrl = 'https://www.bortakvall.se';
 // Array to store data from API
 let products = [];
 
+// Call getApi and render names and images to DOM 
+
+const getApi = async () => {
+
+    // Variable to store awaited URL with products
+
+    let data = await fetchApi('/api/products');
+    console.log('data:', data);
+
+    products = data;
+
+    renderApi();
+
+    // Render product name and image to DOM via map-function
+
+    // data.data.map(e => {
+    //     return document.querySelector('.row').innerHTML +=
+    //         `<div class="col-3">
+    //         <img src="${baseUrl}${e.images.thumbnail}" alt="picture of ${e.name} candy">
+    //         <h3>${e.name} ${e.price}kr</h3>
+    //         <button type="button" id="${e.id}" class="cart btn btn-success">Add to cart</button> 
+    //         <button type="button" id="${e.id}" class="info btn btn-info">Info</button>
+    //         </div>`
+    // });
+};
+
+
 // Promise for baseUrl and changeable endPoint
 
-const getApi = async (endPoint) => {
+const fetchApi = async (endPoint) => {
 
     const res = await fetch(baseUrl + endPoint);
 
@@ -20,36 +47,24 @@ const getApi = async (endPoint) => {
     return await res.json();
 };
 
-// Call fetchApi and render names and images to DOM 
-
-const fetchApi = async () => {
-
-    // Variable to store awaited URL with products
-
-    let data = await getApi('/api/products');
-    console.log('data:', data);
-
-    // Render product name and image to DOM via map-function
-
-    data.data.map(e => {
+const renderApi = () => {
+    console.log('Render API', products)
+    products.data.map(e => {
         return document.querySelector('.row').innerHTML +=
             `<div class="col-3">
-            <img src="${baseUrl}${e.images.thumbnail}" alt="picture of ${e.name} candy">
-            <h3>${e.name} ${e.price}kr</h3>
-            <button type="button" id="${e.id}" class="cart btn btn-success">Add to cart</button> 
-            <button type="button" id="${e.id}" class="info btn btn-info">Info</button>
-            </div>`
+        <img src="${baseUrl}${e.images.thumbnail}" alt="picture of ${e.name} candy">
+        <h3>${e.name} ${e.price}kr</h3>
+        <button type="button" id="${e.id}" class="cart btn btn-success">Add to cart</button> 
+        <button type="button" id="${e.id}" class="info btn btn-info">Info</button>
+        </div>`
     });
-
-    return products.push(data)
-
 };
 
-// Catch if returned error from promise and call fetchApi-function
+// Catch if returned error from promise and call getApi-function
 
-fetchApi()
+getApi()
     .then(
-        console.log('DATA: ', products)
+        console.log('Success!')
     )
     .catch(error => console.log('rejected: ', error.message));
 
@@ -88,13 +103,16 @@ containerEl.addEventListener('click', e => {
 // Function for Add to Cart button
 const addToCart = e => {
     console.log(`you clicked product w/ ID: ${e}`);
-    // const foundCandy = e.find((e) => {
-    //     return e === e.id
-    // }); // skapar nya variabel där man sätter variabeln till objectet som tillhör det specifika ID:et som klickades
+    const foundCandy = products.find((f) => {
+        console.log(products)
+        return e == f
+    }); // skapar nya variabel där man sätter variabeln till objectet som tillhör det specifika ID:et som klickades
+
+    console.log('foundCandy: ', foundCandy)
 
     // console.log(foundCandy);
 
-    shoppingcartCandy.push(e); // pushar det klickade godiset till en tom array som vi sedan kommer lägga till kundkorgen
+    // shoppingcartCandy.push(e); // pushar det klickade godiset till en tom array som vi sedan kommer lägga till kundkorgen
 
     console.log('Shopping cart contains: ', shoppingcartCandy); // konsoll loggar "kundkorgen"
 };
