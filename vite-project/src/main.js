@@ -3,7 +3,7 @@
 const baseUrl = 'https://www.bortakvall.se';
 
 // Array to store data from API
-let data = [];
+let products = [];
 
 // Promise for baseUrl and changeable endPoint
 
@@ -26,7 +26,7 @@ const renderApi = async () => {
 
     // Variable to store awaited URL with products
 
-    data = await fetchApi('/api/products');
+    let data = await fetchApi('/api/products');
     console.log('data:', data);
 
     // Render product name and image to DOM via map-function
@@ -40,13 +40,20 @@ const renderApi = async () => {
             <button type="button" id="${e.id}" class="info btn btn-info">Info</button>
             </div>`
     });
+
+    return products.push(data)
+
 };
 
 // Catch if returned error from promise and call renderApi-function
 
 renderApi()
-    .then(() => { console.log('DATA: ', data.data) })
+    .then(
+        console.log('DATA: ', products)
+    )
     .catch(error => console.log('rejected: ', error.message));
+
+console.log('PRODUCTS: ', products)
 
 
 // Query selectors for functionality of modal box 
