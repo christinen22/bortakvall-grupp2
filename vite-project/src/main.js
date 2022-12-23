@@ -8,18 +8,15 @@ let candyImg = document.createElement("img");
 let shoppingCart = document.querySelector(".cart");
 
 // Base URL and endpoint from where we fetch the candy
-
 const baseUrl = 'https://www.bortakvall.se';
 
 // Array to store data from API
 let products = [];
 
 // Call getApi and render names and images to DOM 
-
 const getApi = async () => {
 
     // Variable to store awaited URL with products
-
     let data = await fetchApi('/api/products');
     console.log('data:', data);
 
@@ -28,15 +25,12 @@ const getApi = async () => {
     renderApi();
 };
 
-
 // Promise for baseUrl and changeable endPoint
-
 const fetchApi = async (endPoint) => {
 
     const res = await fetch(baseUrl + endPoint);
 
     // If fetch not succeeds throw error
-
     if (!res.ok) {
         throw new Error(`This did not work: ${res.status} ${res.statusText}`)
     };
@@ -45,7 +39,6 @@ const fetchApi = async (endPoint) => {
 };
 
 // Render product name and image to DOM via map-function
-
 const renderApi = () => {
 
     //console.log('Render API', products)
@@ -62,7 +55,6 @@ const renderApi = () => {
 };
 
 // Catch if returned error from promise and call getApi-function
-
 getApi()
     .then(
         console.log('Success!')
@@ -81,15 +73,10 @@ let shoppingcartCandy = [];
 // Query Selector for button and adding event listener 
 containerEl.addEventListener('click', e => {
     if (e.target.tagName == 'BUTTON') {
-        if (e.target.className.includes('cart')) {
-        //console.log('Elementet: ', e.target)
-            addToCart(e.target.id)
 
-        } if (e.target.className.includes('info')) {
-            // getInfo(e.target.id)
-            console.log('ID:t', e.target.id)
-        }
-        //console.log('"e":t: ', e.target)
+        // If adding another button in containerEl add includes('.info') to else
+        e.target.className.includes('cart') ? addToCart(e.target.id) : getInfo(e.target.id);
+
     };
 });
 
@@ -100,9 +87,7 @@ const addToCart = e => {
     //console.log(`you clicked product w/ ID: ${e}`);
 
     // Find products in the API and store in foundCandy 
-    let foundCandy = products.data.find((candy) => {
-        return candy.id == e
-    });
+    let foundCandy = products.data.find(candy => candy.id == e);
 
     //console.log('foundCandy: ', foundCandy)
 
@@ -118,36 +103,37 @@ const addToCart = e => {
 
 };
 
+// Function w/ module that pops up on click
+const getInfo = e => {
 
 //eventlistener for shoppingcart
 shoppingCart.addEventListener ('click', e => {
     console.log('hej');
 })
+    console.log(`you clicked info of product w/ ID: ${e}`);
 
-// Function for pop up Info
-// function getInfo(e) {
-//     console.log(`you clicked info of product ${e}`);
-//     const infoCandy = data.data.find(candy => candy.id === e); // skapar ny variabel med objectet vars info-knapp klickas på.
-//     openModal(); // öppnar modalboxen
-//     modalInfo.innerHTML = (`${infoCandy.name} - ${infoCandy.price} kr`); //Placerar godisets namn & pris i modalen
-//     modalInfo.innerHTML += (`${infoCandy.description}`); //Placerar godisets beskrivning i modalen
-//     candyImg.src = (`${baseUrl}${infoCandy.images.large}`); // hämtar den stora bilden från objectet för tillhörande godis
-//     modalInfo.appendChild(candyImg); // renderar ut bilden i modalen
-// //    modalInfo.innerHTML += (`<button type="button" id="(${infoCandy.id})" class="btn btn-success">Add to cart</button>`); // Add cart to modual REMOVE?!  
-// }
+    // Find products via ID to show info
+    const infoCandy = products.data.find(candy => candy.id == e);
 
+    // Opens module box
+    openModal();
 
+    // Rendering candy name + price + description to DOM
+    modalInfo.innerHTML = `${infoCandy.name} - ${infoCandy.price} kr ${infoCandy.description}`;
 
-
-
-// INFO BOX APPEAR / DISAPPEAR //
+    // Setting src to large image to render to DOM
+    candyImg.src = `${baseUrl}${infoCandy.images.large}`;
+    modalInfo.appendChild(candyImg);
+    candyImg.alt = `picture of ${infoCandy.name} candy`;
+    //    modalInfo.innerHTML += (`<button type="button" id="(${infoCandy.id})" class="btn btn-success">Add to cart</button>`); // Add cart to modual REMOVE?!  
+};
 
 // Functions for modalbox 
-const openModal = function () {
+const openModal = () => {
     modal.classList.remove("hidden");
     overlay.classList.remove("hidden");
 };
-const closeModal = function () {
+const closeModal = () => {
     modal.classList.add("hidden");  // Byt .add till toggle och testa 
     overlay.classList.add("hidden"); // Byt .add till toggle och testa 
 };
@@ -159,10 +145,10 @@ closeModalBtn.addEventListener("click", closeModal);
 overlay.addEventListener("click", closeModal);
 
 // close modal when the Esc key is pressed
-document.addEventListener("keydown", function (e) {
+document.addEventListener("keydown", e => {
     if (e.key === "Escape" && !modal.classList.contains("hidden")) {
         closeModal();
-    }
+    };
 });
 
 
