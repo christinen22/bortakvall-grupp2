@@ -8,7 +8,7 @@ let candyImg = document.createElement("img");
 let shoppingCart = document.querySelector(".cart");
 const cartSum = document.querySelector("#sum");
 const cartCount = document.querySelector("#count");
-const candyTot = document.querySelector(".summary");
+const candyTot = document.querySelector(".order");
 
 
 // Base URL and endpoint from where we fetch the candy
@@ -186,7 +186,7 @@ const addToCart = e => {
     /*localStorage.setItem("sum", sum);
     localStorage.setItem("count", count); */
 
-    const orderTotal = candyTot.innerHTML += `<td>You chose ${candy.name}</td> <td>${candy.price}kr</td> <td>${count}st</td><br>`;
+    candyTot.innerHTML += `<td>You chose ${candy.name}</td> <td>${candy.price}kr</td> <td>${count}st</td><br>`;
     
 
     }
