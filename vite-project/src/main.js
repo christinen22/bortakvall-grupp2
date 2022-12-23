@@ -119,8 +119,6 @@ const addToCart = e => {
 };
 
 
-
-
 //eventlistener for shoppingcart
 shoppingCart.addEventListener ('click', e => {
     console.log('hej');
