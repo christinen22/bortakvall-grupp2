@@ -6,6 +6,9 @@ const modalInfo = document.querySelector(".infoCandy");
 let candyImg = document.createElement("img");
 //queryselector for shoppingcart
 let shoppingCart = document.querySelector(".cart");
+const cartSum = document.querySelector("#sum");
+const cartCount = document.querySelector("#count");
+
 
 // Base URL and endpoint from where we fetch the candy
 const baseUrl = 'https://www.bortakvall.se';
@@ -81,35 +84,12 @@ containerEl.addEventListener('click', e => {
 });
 
 
-// Function for Add to Cart button
-const addToCart = e => {
-
-    //console.log(`you clicked product w/ ID: ${e}`);
-
-    // Find products in the API and store in foundCandy 
-    let foundCandy = products.data.find(candy => candy.id == e);
-
-    //console.log('foundCandy: ', foundCandy)
-
-    // pushar det klickade godiset till en tom array som vi sedan kommer lägga till kundkorgen
-    shoppingcartCandy.push(foundCandy);
-
-    console.log('Shopping cart contains: ', shoppingcartCandy); 
-
-    const storage = JSON.stringify(shoppingcartCandy); // skapar variabel som store:ar klickade godisar
-    localStorage.setItem("candyInCart", storage);
-
-    console.log(storage);
-
-};
 
 // Function w/ module that pops up on click
 const getInfo = e => {
 
-//eventlistener for shoppingcart
-shoppingCart.addEventListener ('click', e => {
-    console.log('hej');
-})
+
+
     console.log(`you clicked info of product w/ ID: ${e}`);
 
     // Find products via ID to show info
@@ -127,6 +107,9 @@ shoppingCart.addEventListener ('click', e => {
     candyImg.alt = `picture of ${infoCandy.name} candy`;
     //    modalInfo.innerHTML += (`<button type="button" id="(${infoCandy.id})" class="btn btn-success">Add to cart</button>`); // Add cart to modual REMOVE?!  
 };
+
+
+
 
 // Functions for modalbox 
 const openModal = () => {
@@ -150,6 +133,63 @@ document.addEventListener("keydown", e => {
         closeModal();
     };
 });
+
+
+
+
+
+
+
+
+// Function for Add to Cart button
+let count = 0;
+let sum = 0;
+let cart = {};
+
+
+
+
+const addToCart = e => {
+    const candy = products.data.find(candy => candy.id == e);
+    let price = candy.price;
+    let title = candy.name;
+    let id = candy.id;
+
+    console.log(price);
+
+    shoppingcartCandy.push(candy);
+
+    console.log('Shopping cart contains: ', shoppingcartCandy); 
+
+
+    count++;
+    sum += price;
+
+
+    const storage = JSON.stringify(shoppingcartCandy); // skapar variabel som store:ar klickade godisar
+    localStorage.setItem("candyInCart", storage);
+
+        //eventlistener for shoppingcart
+        shoppingCart.addEventListener ('click', e => {
+            localStorage.getItem(storage); //läggs i kundvagnen
+            
+        })
+
+    console.log(storage);
+
+    console.log(sum, count);
+    
+    cartSum.innerHTML = `<p>Summa: ${sum}</p>`;
+    cartCount.innerHTML = `<p>Antal: ${count}</p>`;
+
+    localStorage.setItem("sum", sum);
+    localStorage.setItem("count", count);
+
+    
+    }
+
+ 
+
 
 
 
