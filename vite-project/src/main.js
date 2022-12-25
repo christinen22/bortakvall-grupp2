@@ -163,21 +163,20 @@ const addToCart = e => {
     // Pushing candy to shoppingcartCandy & adding quantity to candy array to store the amount of each candy
     if (!shoppingcartCandy.includes(candy)) {
         shoppingcartCandy.push(candy)
-        candy.qty = 1;
+        candy.qty = 0;
     };
 
-    // candy.qty++
+    candy.qty++;
 
     console.log('Shopping cart contains: ', shoppingcartCandy);
 
-    // count++;  // Tog bort denna för att istället använda candy.qty som en key i shoppingcartCandy för att löst antal i cart-vyn
-    sum += price;
-
+    count++;
+    sum += candy.price;
 
     const storage = JSON.stringify(shoppingcartCandy); // skapar variabel som store:ar klickade godisar
     localStorage.setItem("candyInCart", storage);
 
-    //eventlistener for shoppingcart
+    //eventlistener for shoppingcart when icon clicked
     shoppingCart.addEventListener('click', () => {
         localStorage.getItem(storage); //läggs i kundvagnen
 
@@ -195,11 +194,19 @@ const addToCart = e => {
     /*localStorage.setItem("sum", sum);
     localStorage.setItem("count", count); */
 
-    shoppingcartCandy.map((e) => {
-        candyTot.innerHTML += `<td>You chose ${e.name}</td> <td>${e.price * Math.max(1, e.qty)}kr</td> <td>${e.qty++}st</td><br>`;
-    });
 
+    // shoppingcartCandy.map((e) => {
+    //     e.price * e.qty;
+    // });
+
+    // shoppingcartCandy.map((e) => {
+    //     candyTot.innerHTML += `<td>You chose ${e.name}</td> <td>${e.price * e.qty}kr</td> <td>${e.qty++}st</td><br>`;
+    // });
+    const candyInCart = JSON.parse(localStorage.getItem('candyInCart'))
+    console.log('candy in cart: ', candyInCart)
 };
+
+
 
 
 
