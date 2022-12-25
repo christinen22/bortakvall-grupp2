@@ -164,7 +164,9 @@ const addToCart = e => {
     if (!shoppingcartCandy.includes(candy)) {
         shoppingcartCandy.push(candy)
         candy.qty = 1;
-    };
+    } else {
+        candy.qty++;
+    }
 
     console.log('Shopping cart contains: ', shoppingcartCandy);
 
@@ -192,9 +194,10 @@ const addToCart = e => {
     /*localStorage.setItem("sum", sum);
     localStorage.setItem("count", count); */
 
+    candyTot.innerHTML = '';
 
     shoppingcartCandy.map((e) => {
-        candyTot.innerHTML += `<td>You chose ${e.name}</td> <td>${e.price * e.qty}kr</td> <td>${e.qty++}st</td><br>`;
+        candyTot.innerHTML += `<td>${e.name}</td> <td>${e.price * e.qty}kr</td> <td>${e.qty}st</td><br>`;
     });
 
 
@@ -203,6 +206,12 @@ const addToCart = e => {
     // });
 
 };
+
+// get item from local storage and convert to JS object
+// const candyInCart = JSON.parse(localStorage.getItem('candyInCart'));
+
+// console.log('candy in cart: ', candyInCart)
+
 
 
 
