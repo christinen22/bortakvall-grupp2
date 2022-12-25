@@ -151,48 +151,58 @@ let cart = {};              //objekt i carten
 
 
 const addToCart = e => {
-    const candy = products.data.find(candy => candy.id == e);
+    // Find clicked candy object from products
+    let candy = products.data.find(candy => candy.id == e);
+
     let price = candy.price;
     let title = candy.name;
     let id = candy.id;
 
     console.log(price);
 
-    shoppingcartCandy.push(candy);
+    // Pushing candy to shoppingcartCandy & adding quantity to candy array to store the amount of each candy
+    if (!shoppingcartCandy.includes(candy)) {
+        shoppingcartCandy.push(candy)
+        candy.qty = 1;
+    };
 
-    console.log('Shopping cart contains: ', shoppingcartCandy); 
+    // candy.qty++
 
+    console.log('Shopping cart contains: ', shoppingcartCandy);
 
-    count++;
+    // count++;  // Tog bort denna för att istället använda candy.qty som en key i shoppingcartCandy för att löst antal i cart-vyn
     sum += price;
 
 
     const storage = JSON.stringify(shoppingcartCandy); // skapar variabel som store:ar klickade godisar
     localStorage.setItem("candyInCart", storage);
 
-        //eventlistener for shoppingcart
-        shoppingCart.addEventListener ('click', e => {
-            localStorage.getItem(storage); //läggs i kundvagnen
-            
-        })
+    //eventlistener for shoppingcart
+    shoppingCart.addEventListener('click', () => {
+        localStorage.getItem(storage); //läggs i kundvagnen
 
-    console.log(storage);
+    });
 
-    console.log(sum, count);
-    
+    console.log('Storage: ', storage);
+
+    console.log('e: ', e)
+
+    console.log('Sum & count: ', sum, count);
+
     cartSum.innerHTML = `<p>Summa: ${sum} kr</p>`;
     cartCount.innerHTML = `<p>Antal: ${count} st</p>`;
 
     /*localStorage.setItem("sum", sum);
     localStorage.setItem("count", count); */
 
-    candyTot.innerHTML += `<td>You chose ${candy.name}</td> <td>${candy.price}kr</td> <td>${count}st</td><br>`;
-    
+    shoppingcartCandy.map((e) => {
+        candyTot.innerHTML += `<td>You chose ${e.name}</td> <td>${e.price * Math.max(1, e.qty)}kr</td> <td>${e.qty++}st</td><br>`;
+    });
 
-    }
+};
 
 
- 
+
 
 
 
