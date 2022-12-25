@@ -166,7 +166,7 @@ const addToCart = e => {
         candy.qty = 1;
     } else {
         candy.qty++;
-    }
+    };
 
     console.log('Shopping cart contains: ', shoppingcartCandy);
 
@@ -184,8 +184,6 @@ const addToCart = e => {
 
     console.log('Storage: ', storage);
 
-    console.log('e: ', e)
-
     console.log('Sum & count: ', sum, count);
 
     cartSum.innerHTML = `<p>Summa: ${sum} kr</p>`;
@@ -194,24 +192,12 @@ const addToCart = e => {
     /*localStorage.setItem("sum", sum);
     localStorage.setItem("count", count); */
 
+    // Empty then render to DOM
     candyTot.innerHTML = '';
 
-    shoppingcartCandy.map((e) => {
-        candyTot.innerHTML += `<td>${e.name}</td> <td>${e.price * e.qty}kr</td> <td>${e.qty}st</td><br>`;
-    });
-
-
-    // shoppingcartCandy.map((e) => {
-    //     candyTot.innerHTML += `<td>You chose ${e.name}</td> <td>${e.price * e.qty}kr</td> <td>${e.qty++}st</td><br>`;
-    // });
+    shoppingcartCandy.map(e => candyTot.innerHTML += `<td>${e.name}</td> <td>${e.price * e.qty}kr</td> <td>${e.qty}st</td><br>`);
 
 };
-
-// get item from local storage and convert to JS object
-// const candyInCart = JSON.parse(localStorage.getItem('candyInCart'));
-
-// console.log('candy in cart: ', candyInCart)
-
 
 
 
