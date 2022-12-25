@@ -163,10 +163,8 @@ const addToCart = e => {
     // Pushing candy to shoppingcartCandy & adding quantity to candy array to store the amount of each candy
     if (!shoppingcartCandy.includes(candy)) {
         shoppingcartCandy.push(candy)
-        candy.qty = 0;
+        candy.qty = 1;
     };
-
-    candy.qty++;
 
     console.log('Shopping cart contains: ', shoppingcartCandy);
 
@@ -195,18 +193,16 @@ const addToCart = e => {
     localStorage.setItem("count", count); */
 
 
-    // shoppingcartCandy.map((e) => {
-    //     e.price * e.qty;
-    // });
+    shoppingcartCandy.map((e) => {
+        candyTot.innerHTML += `<td>You chose ${e.name}</td> <td>${e.price * e.qty}kr</td> <td>${e.qty++}st</td><br>`;
+    });
+
 
     // shoppingcartCandy.map((e) => {
     //     candyTot.innerHTML += `<td>You chose ${e.name}</td> <td>${e.price * e.qty}kr</td> <td>${e.qty++}st</td><br>`;
     // });
-    const candyInCart = JSON.parse(localStorage.getItem('candyInCart'))
-    console.log('candy in cart: ', candyInCart)
+
 };
-
-
 
 
 
