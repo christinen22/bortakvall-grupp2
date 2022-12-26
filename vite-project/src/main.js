@@ -202,10 +202,3 @@ const addToCart = e => {
 
 
 
-
-
-
-
-
-
-
