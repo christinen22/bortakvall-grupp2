@@ -9,7 +9,8 @@ let shoppingCart = document.querySelector(".cart");
 const cartSum = document.querySelector("#sum");
 const cartCount = document.querySelector("#count");
 const candyTot = document.querySelector(".order");
-
+const addButton = document.querySelector(".btn plus");
+const removeButton = document.querySelector(".btn minus");
 
 // Base URL and endpoint from where we fetch the candy
 const baseUrl = 'https://www.bortakvall.se';
@@ -195,8 +196,13 @@ const addToCart = e => {
     // Empty then render to DOM
     candyTot.innerHTML = '';
 
-    shoppingcartCandy.map(e => candyTot.innerHTML += `<td>${e.name}</td> <td>${e.price * e.qty}kr</td> <td>${e.qty}st</td><br>`);
+    shoppingcartCandy.map(e => candyTot.innerHTML += `<td>${e.name}</td> <td>${e.price * e.qty}kr</td> <td>${e.qty}st
+    <button class="btn-plus">+</button><button class="btn-minus">-</button></td><br>`);
 
+
+ 
+
+    
 };
 
 
