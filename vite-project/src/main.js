@@ -189,9 +189,6 @@ const addToCart = e => {
     cartSum.innerHTML = `<p>Summa: ${sum} kr</p>`;
     cartCount.innerHTML = `<p>Antal: ${count} st</p>`;
 
-    /*localStorage.setItem("sum", sum);
-    localStorage.setItem("count", count); */
-
     // Empty then render to DOM
     candyTot.innerHTML = '';
 
@@ -199,6 +196,10 @@ const addToCart = e => {
 
 };
 
+const candyInCart = JSON.parse(localStorage.getItem('candyInCart'))
+console.log('candy in cart: ', candyInCart)
+
+shoppingcartCandy.map(e => candyTot.innerHTML += `<td>${e.name}</td> <td>${e.price * e.qty}kr</td> <td>${e.qty}st</td><br>`);
 
 
 
