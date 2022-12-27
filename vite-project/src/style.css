@@ -85,6 +85,20 @@ button:focus-visible {
   }
 } */
 
+
+
+.toolbar {
+  position: sticky;
+  top: 0;
+  text-align: center;
+
+
+}
+
+.col-3 img {
+  border-radius: 50%;
+}
+
 .card-text {
   text-align: center;
 }
