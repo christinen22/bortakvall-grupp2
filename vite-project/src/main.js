@@ -9,6 +9,10 @@ let shoppingCart = document.querySelector(".cart");
 const cartSum = document.querySelector("#sum");
 const cartCount = document.querySelector("#count");
 const candyTot = document.querySelector(".order");
+//queryselector to open cartModal
+const cartModal = document.querySelector(".cartModal");
+const closeCartModalBtn = document.querySelector(".btn-close-cart");
+let cartItems = document.querySelector(".cartItems");
 
 
 // Base URL and endpoint from where we fetch the candy
@@ -111,8 +115,7 @@ const getInfo = e => {
 
 
 
-
-// Functions for modalbox 
+// Functions for info modalbox 
 const openModal = () => {
     modal.classList.remove("hidden");
     overlay.classList.remove("hidden");
@@ -145,7 +148,7 @@ document.addEventListener("keydown", e => {
 // Function for Add to Cart button
 let count = 0;              //hur många varor det är TOTALT
 let sum = 0;                //summa TOTALT
-let cart = {};              //objekt i carten
+//let cart = {};              //objekt i carten
 
 
 
@@ -178,6 +181,8 @@ const addToCart = e => {
 
     //eventlistener for shoppingcart when icon clicked
     shoppingCart.addEventListener('click', () => {
+        openCartModal();
+        console.log('clicked carticon');
         localStorage.getItem(storage); //läggs i kundvagnen
 
     });
@@ -194,11 +199,34 @@ const addToCart = e => {
 
     // Empty then render to DOM
     candyTot.innerHTML = '';
+    // Empty then render to Cart Modal
+    cartItems.innerHTML = '';
 
     shoppingcartCandy.map(e => candyTot.innerHTML += `<td>${e.name}</td> <td>${e.price * e.qty}kr</td> <td>${e.qty}st</td><br>`);
+
+    shoppingcartCandy.map(e => cartItems.innerHTML += `<li>${e.qty}st ${e.name} för ${e.price * e.qty}kr</li>`);
+
 
 };
 
 
+const openCartModal = () => {
+    cartModal.classList.remove("hidden");
+    //overlay.classList.remove("hidden");
+};
 
+const closeCartModal = () => {
+    cartModal.classList.add("hidden");  // Byt .add till toggle och testa 
+    overlay.classList.add("hidden"); // Byt .add till toggle och testa 
+};
+
+closeCartModalBtn.addEventListener("click", closeCartModal);
+overlay.addEventListener("click", closeCartModal);
+
+// close modal when the Esc key is pressed
+document.addEventListener("keydown", e => {
+    if (e.key === "Escape" && !cartModal.classList.contains("hidden")) {
+        closeCartModal();
+    };
+});
 
