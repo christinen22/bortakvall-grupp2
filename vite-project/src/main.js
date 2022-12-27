@@ -150,24 +150,31 @@ const addToCart = e => {
     // Find clicked candy object from products
     let candy = products.data.find(candy => candy.id == e);
 
-    // let price = candy.price;
+    console.log('shoppingcartCandy i addtocart: ', shoppingcartCandy, candy)
 
-    console.log('shoppingcartCandy i addtocart: ', shoppingcartCandy, candy.name, candy.qty)
+    // Create temporary array to push object IDs from shoppingcartCandy to new candyIds array
+    const candyIds = [];
 
-    console.log(candy == shoppingcartCandy[0])
+    shoppingcartCandy.map(f => {
+        candyIds.push(f.id);
+    });
 
-    // Pushing candy to shoppingcartCandy & adding quantity to candy array to store the amount of each candy
-    if (!shoppingcartCandy.includes(candy)) {
+    console.log(candyIds);
+
+    // Pushing candy to shoppingcartCandy & adding quantity to candy array to store the amount of each candy 
+    if (!candyIds.includes(candy.id)) {
 
         shoppingcartCandy.push(candy)
         candy.qty = 1;
 
-        console.log('hej')
-
     } else {
-        candy.qty++;
 
-        console.log('då')
+        shoppingcartCandy.map(e => {
+            if (candy.id == e.id) {
+                e.qty++;
+            }
+        });
+
     };
 
     console.log('Shopping cart contains: ', shoppingcartCandy);
@@ -199,7 +206,14 @@ const cartSave = () => {
 
     // Ogiltligt vid omladdning av sidan? 
     let count;
-    let sum;
+
+    let sum = shoppingcartCandy.map(e => {
+        e.qty * e.price
+    });
+
+    console.log('Totalt cost: ', sum)
+
+    // let sum;
 
     // sum += candy.price;
 
