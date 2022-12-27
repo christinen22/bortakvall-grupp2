@@ -9,8 +9,7 @@ let shoppingCart = document.querySelector(".cart");
 const cartSum = document.querySelector("#sum");
 const cartCount = document.querySelector("#count");
 const candyTot = document.querySelector(".order");
-const addButton = document.querySelector(".btn plus");
-const removeButton = document.querySelector(".btn minus");
+
 
 // Base URL and endpoint from where we fetch the candy
 const baseUrl = 'https://www.bortakvall.se';
@@ -146,7 +145,7 @@ document.addEventListener("keydown", e => {
 // Function for Add to Cart button
 let count = 0;              //hur många varor det är TOTALT
 let sum = 0;                //summa TOTALT
-let cart = {};              //objekt i carten
+//let cart = {};              //objekt i carten
 
 
 
@@ -171,8 +170,7 @@ const addToCart = e => {
 
     console.log('Shopping cart contains: ', shoppingcartCandy);
 
-    count++;
-    sum += candy.price;
+    
 
     const storage = JSON.stringify(shoppingcartCandy); // skapar variabel som store:ar klickade godisar
     localStorage.setItem("candyInCart", storage);
@@ -186,6 +184,9 @@ const addToCart = e => {
     console.log('Storage: ', storage);
 
     console.log('Sum & count: ', sum, count);
+
+    count++;
+    sum += candy.price;
 
     cartSum.innerHTML = `<p>Summa: ${sum} kr</p>`;
     cartCount.innerHTML = `<p>Antal: ${count} st</p>`;
@@ -204,18 +205,21 @@ const addToCart = e => {
 
 
 
-    // adding event listener 
+   // adding event listener 
     candyTot.addEventListener('click', e => {
     if (e.target.tagName == 'BUTTON') {
 
         if (e.target.className.includes('plus')) {
-            console.log('du la till');
-        } if (e.target.className.includes('minus')) {
-            console.log('du tog bort');
-        }
+            
+                shoppingcartCandy.push(candy),
+                e.qty++;
+            } else if (e.target.className.includes('minus')) {
+            shoppingcartCandy.pop(candy),
+            e.qty--;
+        };
         
-
-    };
-});
-
+    }})
 }
+    
+
+    
