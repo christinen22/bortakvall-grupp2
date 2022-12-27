@@ -48,7 +48,7 @@ const renderApi = () => {
     //console.log('Render API', products)
 
     products.data.map(e => {
-        return document.querySelector('.row').innerHTML +=
+        return containerEl.innerHTML +=
             `<div class="col-3">
         <img src="${baseUrl}${e.images.thumbnail}" alt="picture of ${e.name} candy">
         <h3>${e.name} ${e.price}kr</h3>
@@ -69,7 +69,7 @@ getApi()
 
 
 // Query selectors for functionality of Info button 
-let containerEl = document.querySelector('.row');
+let containerEl = document.querySelector('.candyProducts');
 
 // // Query Selector for Add to Cart button
 // let shoppingcartCandy = [];
@@ -136,31 +136,21 @@ document.addEventListener("keydown", e => {
 });
 
 
-
-
-
-
-
-
-// // Function for Add to Cart button
-// let count = 0;              //hur många varor det är TOTALT
-// let sum = 0;                //summa TOTALT
-// let cart = {};              //objekt i carten
-
-
 // Getting candyInCart value from local storage
 const shoppingcartCandy = JSON.parse(localStorage.getItem('candyInCart')) ?? [];
 console.log('candy in cart: ', shoppingcartCandy)
 
+// Empty then render to DOM
+candyTot.innerHTML = '';
+
 const addToCart = e => {
+
     // Find clicked candy object from products
     let candy = products.data.find(candy => candy.id == e);
 
-    let price = candy.price;
-    // let title = candy.name;
-    // let id = candy.id;
+    // let price = candy.price;
 
-    console.log(price);
+    console.log('shoppingcartCandy i addtocart: ', shoppingcartCandy, candy)
 
     // Pushing candy to shoppingcartCandy & adding quantity to candy array to store the amount of each candy
     if (!shoppingcartCandy.includes(candy)) {
@@ -168,8 +158,12 @@ const addToCart = e => {
         shoppingcartCandy.push(candy)
         candy.qty = 1;
 
+        console.log('hej')
+
     } else {
         candy.qty++;
+
+        console.log('då')
     };
 
     console.log('Shopping cart contains: ', shoppingcartCandy);
@@ -208,29 +202,17 @@ const cartSave = () => {
     cartSum.innerHTML = `<p>Summa: ${sum} kr</p>`;
     cartCount.innerHTML = `<p>Antal: ${count} st</p>`;
 
-    if (shoppingcartCandy) { shoppingcartCandy.map(e => candyTot.innerHTML += `<td>${e.name}</td> <td>${e.price * e.qty}kr</td> <td>${e.qty}st</td><br>`); }
+    // Empty then render to DOM
+    candyTot.innerHTML = '';
+
+    // if (shoppingcartCandy) {
+    shoppingcartCandy.map(e =>
+        candyTot.innerHTML += `<td>${e.name}</td> <td>${e.price * e.qty}kr</td> <td>${e.qty}st</td><br>`);
+    // }
 };
 
-//  // Empty then render to DOM
-//     candyTot.innerHTML = '';
-
-cartSave();
-
-// Query Selector for Add to Cart button
-// let shoppingcartCandy = [];
-
-// const localItems = () => {
 
 
-
-    // candyInCart.map(e => candyTot.innerHTML += `<td>${e.name}</td> <td>${e.price * e.qty}kr</td> <td>${e.qty}st</td><br>`);
-
-    //eventlistener for shoppingcart when icon clicked
-    // shoppingCart.addEventListener('click', () => {
-    //     localStorage.getItem(storage); //läggs i kundvagnen
-
-    // });
-// };
 
 
 
