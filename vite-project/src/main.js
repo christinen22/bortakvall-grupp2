@@ -13,6 +13,9 @@ const candyTot = document.querySelector(".order");
 const cartModal = document.querySelector(".cartModal");
 const closeCartModalBtn = document.querySelector(".btn-close-cart");
 let cartItems = document.querySelector(".cartItems");
+const orderBtn = document.querySelector(".orderBtn");
+const orderForm = document.querySelector(".form");
+const submitForm = document.querySelector("#submitbtn");
 
 
 // Base URL and endpoint from where we fetch the candy
@@ -207,6 +210,7 @@ const addToCart = e => {
     shoppingcartCandy.map(e => cartItems.innerHTML += `<li>${e.qty}st ${e.name} för ${e.price * e.qty}kr</li>`);
 
 
+
 };
 
 
@@ -230,3 +234,18 @@ document.addEventListener("keydown", e => {
     };
 });
 
+
+
+const orderView = () => {
+    console.log('you clicked order');
+    containerEl.classList.toggle("hidden");
+    closeModal();
+    closeCartModal();
+    orderForm.classList.toggle("hidden");
+}
+orderBtn.addEventListener('click', orderView);
+
+const alertSubmit = () => {
+    alert('Thank you for your order!');
+}
+submitForm.addEventListener('click', alertSubmit);
