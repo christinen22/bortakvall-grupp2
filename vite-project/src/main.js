@@ -140,6 +140,8 @@ document.addEventListener("keydown", e => {
 const shoppingcartCandy = JSON.parse(localStorage.getItem('candyInCart')) ?? [];
 console.log('candy in cart: ', shoppingcartCandy)
 
+console.log('HEEEEJ')
+
 // Empty then render to DOM
 candyTot.innerHTML = '';
 
@@ -150,7 +152,9 @@ const addToCart = e => {
 
     // let price = candy.price;
 
-    console.log('shoppingcartCandy i addtocart: ', shoppingcartCandy, candy)
+    console.log('shoppingcartCandy i addtocart: ', shoppingcartCandy, candy.name, candy.qty)
+
+    console.log(candy == shoppingcartCandy[0])
 
     // Pushing candy to shoppingcartCandy & adding quantity to candy array to store the amount of each candy
     if (!shoppingcartCandy.includes(candy)) {
