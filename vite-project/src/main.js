@@ -261,10 +261,63 @@ const alertSubmit = () => {
     alert('Thank you for your order!');
     localStorage.clear('candyInCart'); // funkar med click men ej med submit
 }
-orderForm.addEventListener('submit', (e) => {
-    e.preventDefault();
+
+
+
+
+
+// Trying to POST submitted form/order to server
+
+// Finding all input fields from order form
+const firstName = document.querySelector(".fname");
+const lastName = document.querySelector(".lname");
+const address = document.querySelector(".address");
+const zipCode = document.querySelector(".zipcode");
+const city = document.querySelector(".city");
+const email = document.querySelector(".email");
+const telephone = document.querySelector(".telephone");
+
+
+const submitData = {
+    customer_first_name: firstName,
+    customer_last_name: lastName,
+    customer_address: address,
+    customer_postcode: zipCode,
+    customer_city: city,
+    customer_email: email,
+    order_total: sum,
+    order_items: shoppingcartCandy,
+}
+
+
+
+orderForm.addEventListener('submit', async (e) => {
+
+    e.preventDefault(); // TA BORT
+
+    const res = await fetch('https://www.bortakvall.se/api/orders', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(submitData)
+    });
+
+    if (!res.ok) {
+        alert('APP APP APP!!')
+        // Return to prevent from running rest of code
+        return;
+    };
+
+    // if (e.target) {
+    //     console.log(fname.value)
+    // };
+
     alertSubmit();
+
 });
+
+
 
 
 
