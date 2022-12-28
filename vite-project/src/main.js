@@ -85,11 +85,8 @@ containerEl.addEventListener('click', e => {
 });
 
 
-
 // Function w/ module that pops up on click
 const getInfo = e => {
-
-
 
     console.log(`you clicked info of product w/ ID: ${e}`);
 
@@ -110,8 +107,6 @@ const getInfo = e => {
 };
 
 
-
-
 // Functions for modalbox 
 const openModal = () => {
     modal.classList.remove("hidden");
@@ -124,7 +119,6 @@ const closeModal = () => {
 
 // Eventlisteners for modalbox 
 // close the modal when the close button and overlay is clicked
-
 closeModalBtn.addEventListener("click", closeModal);
 overlay.addEventListener("click", closeModal);
 
@@ -139,8 +133,6 @@ document.addEventListener("keydown", e => {
 // Getting candyInCart value from local storage
 const shoppingcartCandy = JSON.parse(localStorage.getItem('candyInCart')) ?? [];
 console.log('candy in cart: ', shoppingcartCandy)
-
-console.log('HEEEEJ')
 
 // Empty then render to DOM
 candyTot.innerHTML = '';
@@ -179,14 +171,6 @@ const addToCart = e => {
 
     console.log('Shopping cart contains: ', shoppingcartCandy);
 
-
-    // // Ogiltligt vid omladdning av sidan? 
-    // count++;
-    // sum += candy.price;
-
-    // cartSum.innerHTML = `<p>Summa: ${sum} kr</p>`;
-    // cartCount.innerHTML = `<p>Antal: ${count} st</p>`;
-
     console.log('Sum & count: ', sum, count);
 
     console.log(shoppingcartCandy);
@@ -197,25 +181,20 @@ const addToCart = e => {
 
 const cartSave = () => {
 
-    // console.log('SHOPPING: ', shoppingcartCandy);
-
     const storage = JSON.stringify(shoppingcartCandy); // skapar variabel som store:ar klickade godisar
     localStorage.setItem('candyInCart', storage);
 
-    // console.log('Storage: ', storage);
+    // let count = shoppingcartCandy.map(e => {
+    //     return e.qty
+    // });
 
-    // Ogiltligt vid omladdning av sidan? 
-    let count;
+    // console.log('Totalt amount: ', count)
 
-    let sum = shoppingcartCandy.map(e => {
-        e.qty * e.price
-    });
+    // let sum = shoppingcartCandy.map(e => {
+    //     return e.price * e.qty
+    // });
 
     console.log('Totalt cost: ', sum)
-
-    // let sum;
-
-    // sum += candy.price;
 
     cartSum.innerHTML = `<p>Summa: ${sum} kr</p>`;
     cartCount.innerHTML = `<p>Antal: ${count} st</p>`;
