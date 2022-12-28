@@ -50,7 +50,7 @@ const renderApi = () => {
     //console.log('Render API', products)
 
     products.data.map(e => {
-        return document.querySelector('.row').innerHTML +=
+        return containerEl.innerHTML +=
             `<div class="col-3">
         <img src="${baseUrl}${e.images.thumbnail}" alt="picture of ${e.name} candy">
         <h3>${e.name} ${e.price}kr</h3>
@@ -71,10 +71,10 @@ getApi()
 
 
 // Query selectors for functionality of Info button 
-let containerEl = document.querySelector('.row');
+let containerEl = document.querySelector('.candyProducts');
 
-// Query Selector for Add to Cart button
-let shoppingcartCandy = [];
+// // Query Selector for Add to Cart button
+// let shoppingcartCandy = [];
 
 // Query Selector for button and adding event listener 
 containerEl.addEventListener('click', e => {
@@ -87,11 +87,8 @@ containerEl.addEventListener('click', e => {
 });
 
 
-
 // Function w/ module that pops up on click
 const getInfo = e => {
-
-
 
     console.log(`you clicked info of product w/ ID: ${e}`);
 
@@ -112,8 +109,6 @@ const getInfo = e => {
 };
 
 
-
-
 // Functions for modalbox 
 const openModal = () => {
     modal.classList.remove("hidden");
@@ -126,7 +121,6 @@ const closeModal = () => {
 
 // Eventlisteners for modalbox 
 // close the modal when the close button and overlay is clicked
-
 closeModalBtn.addEventListener("click", closeModal);
 overlay.addEventListener("click", closeModal);
 
@@ -138,7 +132,11 @@ document.addEventListener("keydown", e => {
 });
 
 
+// Getting candyInCart value from local storage
+const shoppingcartCandy = JSON.parse(localStorage.getItem('candyInCart')) ?? [];
+console.log('candy in cart: ', shoppingcartCandy)
 
+<<<<<<< HEAD
 
 
 
@@ -151,33 +149,63 @@ let sum = 0;                //summa TOTALT
 
 
 
+=======
+// Empty then render to DOM
+candyTot.innerHTML = '';
+>>>>>>> dev
 
 const addToCart = e => {
+
     // Find clicked candy object from products
     let candy = products.data.find(candy => candy.id == e);
 
-    let price = candy.price;
-    let title = candy.name;
-    let id = candy.id;
+    console.log('shoppingcartCandy i addtocart: ', shoppingcartCandy, candy)
 
-    console.log(price);
+    // Create temporary array to push object IDs from shoppingcartCandy to new candyIds array
+    const candyIds = [];
 
-    // Pushing candy to shoppingcartCandy & adding quantity to candy array to store the amount of each candy
-    if (!shoppingcartCandy.includes(candy)) {
+    shoppingcartCandy.map(f => {
+        candyIds.push(f.id);
+    });
+
+    console.log(candyIds);
+
+    // Pushing candy to shoppingcartCandy & adding quantity to candy array to store the amount of each candy 
+    if (!candyIds.includes(candy.id)) {
+
         shoppingcartCandy.push(candy)
         candy.qty = 1;
+
     } else {
-        candy.qty++;
+
+        shoppingcartCandy.map(e => {
+            if (candy.id == e.id) {
+                e.qty++;
+            }
+        });
+
     };
 
     console.log('Shopping cart contains: ', shoppingcartCandy);
 
+<<<<<<< HEAD
     console.log('Storage: ', storage);
 
     console.log('Sum & count: ', sum, count);
 
     count++;
     sum += candy.price;
+=======
+    console.log('Sum & count: ', sum, count);
+
+    console.log(shoppingcartCandy);
+
+    cartSave();
+
+};
+
+const cartSave = () => {
+>>>>>>> dev
 
     cartSum.innerHTML = `<p>Summa: ${sum} kr</p>`;
     cartCount.innerHTML = `<p>Antal: ${count} st</p>`;
@@ -195,23 +223,47 @@ const addToCart = e => {
     
 
     const storage = JSON.stringify(shoppingcartCandy); // skapar variabel som store:ar klickade godisar
-    localStorage.setItem("candyInCart", storage);
+    localStorage.setItem('candyInCart', storage);
 
-    //eventlistener for shoppingcart when icon clicked
-    shoppingCart.addEventListener('click', () => {
-        localStorage.getItem(storage); //läggs i kundvagnen
+    // let count = shoppingcartCandy.map(e => {
+    //     return e.qty
+    // });
 
-    });
+    // console.log('Totalt amount: ', count)
 
+<<<<<<< HEAD
 
 
     /*localStorage.setItem("sum", sum);
     localStorage.setItem("count", count); */
+=======
+    // let sum = shoppingcartCandy.map(e => {
+    //     return e.price * e.qty
+    // });
+
+    console.log('Totalt cost: ', sum)
+
+    cartSum.innerHTML = `<p>Summa: ${sum} kr</p>`;
+    cartCount.innerHTML = `<p>Antal: ${count} st</p>`;
+
+    // Empty then render to DOM
+    candyTot.innerHTML = '';
+
+    // if (shoppingcartCandy) {
+    shoppingcartCandy.map(e =>
+        candyTot.innerHTML += `<td>${e.name}</td> <td>${e.price * e.qty}kr</td> <td>${e.qty}st</td><br>`);
+    // }
+};
+
+
+
+>>>>>>> dev
 
 
 
 
 
+<<<<<<< HEAD
    // adding event listener 
     candyTot.addEventListener('click', e => {
     if (e.target.tagName == 'BUTTON') {
@@ -231,3 +283,5 @@ const addToCart = e => {
     
 
     
+=======
+>>>>>>> dev
