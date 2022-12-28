@@ -175,51 +175,79 @@ const addToCart = e => {
 
     };
 
+
     console.log('Shopping cart contains: ', shoppingcartCandy);
 
     console.log('Sum & count: ', sum, count);
 
     console.log(shoppingcartCandy);
 
+
+
     cartSave();
 
 };
-
-
 
 const cartSave = () => {
 
     const storage = JSON.stringify(shoppingcartCandy); // skapar variabel som store:ar klickade godisar
     localStorage.setItem('candyInCart', storage);
 
-    // let count = shoppingcartCandy.map(e => {
-    //     return e.qty
-    // });
+    const count = shoppingcartCandy.map(e => e.qty)
+        .reduce((acc, curr) => acc + curr);
 
-    // console.log('Totalt amount: ', count)
+    const sum = shoppingcartCandy.map(e => e.price * e.qty)
+        .reduce((acc, curr) => acc + curr);
 
-    // let sum = shoppingcartCandy.map(e => {
-    //     return e.price * e.qty
-    // });
+    console.log('Total sum (reduce): ', sum, 'Total count (reduce): ', count)
 
     console.log('Totalt cost: ', sum)
 
     cartSum.innerHTML = `<p>Summa: ${sum} kr</p>`;
     cartCount.innerHTML = `<p>Antal: ${count} st</p>`;
 
-    // Empty then render to DOM
-    candyTot.innerHTML = '';
+ 
 
     cartItems.innerHTML = '';
 
-    // if (shoppingcartCandy) {
-    shoppingcartCandy.map(e =>
-        candyTot.innerHTML += `<td>${e.name}</td> <td>${e.price * e.qty}kr</td> <td>${e.qty}st
-            <button type="button" id="${e.id}" class="btn-plus">+</button> 
-                <button type="button" id="${e.id}" class="btn-minus">-</button></td><br>`);
     shoppingcartCandy.map(e => cartItems.innerHTML += `<li>${e.qty}st ${e.name} för ${e.price * e.qty}kr</li>`);
     // }
-};
+
+    
+
+           // Empty then render to DOM
+    candyTot.innerHTML = '';
+
+
+
+        shoppingcartCandy.map(e =>
+            candyTot.innerHTML += `<td>${e.name}</td> <td>${e.price * e.qty}kr</td> <td>${e.qty}st
+                <button type="button" id="${e.id}" class="btn-plus">+</button> 
+                    <button type="button" id="${e.id}" class="btn-minus">-</button></td><br>`),
+
+                    candyTot.addEventListener('click', f => {
+                        if (f.target.tagName == 'BUTTON') {
+                    
+                            shoppingcartCandy.map(e => {
+
+                                
+                            if (f.target.className.includes('plus'))   {
+                                candyTot.innerHTML += `<td>${e.name}</td> <td>${e.price * e.qty}kr</td> <td>${e.qty++}st<button type="button" id="${e.id}" class="btn-plus">+</button> 
+                                <button type="button" id="${e.id}" class="btn-minus">-</button></td><br>`;
+                    
+                            } else if (f.target.className.includes('minus')) {
+                                candyTot.innerHTML += `<td>${e.name}</td> <td>${e.price * e.qty}kr</td> <td>${e.qty--}st<button type="button" id="${e.id}" class="btn-plus">+</button> 
+                                <button type="button" id="${e.id}" class="btn-minus">-</button></td><br>`;
+                            };
+                            })
+
+                            
+                        }
+                    })
+
+                
+                };
+
 
 //eventlistener for shoppingcart when icon clicked
 shoppingCart.addEventListener('click', () => {
@@ -269,26 +297,6 @@ orderForm.addEventListener('submit', (e) => {
     e.preventDefault();
     alertSubmit();
 });
-
-
-
-
-// adding event listener 
-candyTot.addEventListener('click', e => {
-    if (e.target.tagName == 'BUTTON') {
-
-        if (e.target.className.includes('plus')) {
-            console.log('you added')
-
-            e.qty++;
-        } else if (e.target.className.includes('minus')) {
-            console.log('you removed');
-            e.qty--;
-        };
-
-        console.log(e.qty);
-    }
-})
 
 
 
