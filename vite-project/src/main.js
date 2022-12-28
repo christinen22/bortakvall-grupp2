@@ -185,22 +185,24 @@ const addToCart = e => {
 
 };
 
-
-
 const cartSave = () => {
 
     const storage = JSON.stringify(shoppingcartCandy); // skapar variabel som store:ar klickade godisar
     localStorage.setItem('candyInCart', storage);
 
-    // let count = shoppingcartCandy.map(e => {
-    //     return e.qty
-    // });
+    const count = shoppingcartCandy.map(e => {
+        return e.qty
+    }).reduce((acc, curr) => {
+        return acc + curr
+    });
 
-    // console.log('Totalt amount: ', count)
+    const sum = shoppingcartCandy.map((e) => {
+        return e.price * e.qty
+    }).reduce((acc, curr) => {
+        return acc + curr
+    });
 
-    // let sum = shoppingcartCandy.map(e => {
-    //     return e.price * e.qty
-    // });
+    console.log('Total sum (reduce): ', sum, 'Total count (reduce): ', count)
 
     console.log('Totalt cost: ', sum)
 
