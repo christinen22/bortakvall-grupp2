@@ -190,17 +190,11 @@ const cartSave = () => {
     const storage = JSON.stringify(shoppingcartCandy); // skapar variabel som store:ar klickade godisar
     localStorage.setItem('candyInCart', storage);
 
-    const count = shoppingcartCandy.map(e => {
-        return e.qty
-    }).reduce((acc, curr) => {
-        return acc + curr
-    });
+    const count = shoppingcartCandy.map(e => e.qty)
+        .reduce((acc, curr) => acc + curr);
 
-    const sum = shoppingcartCandy.map((e) => {
-        return e.price * e.qty
-    }).reduce((acc, curr) => {
-        return acc + curr
-    });
+    const sum = shoppingcartCandy.map(e => e.price * e.qty)
+        .reduce((acc, curr) => acc + curr);
 
     console.log('Total sum (reduce): ', sum, 'Total count (reduce): ', count)
 
