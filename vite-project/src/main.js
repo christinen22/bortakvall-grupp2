@@ -177,24 +177,33 @@ const addToCart = e => {
 
     console.log('Shopping cart contains: ', shoppingcartCandy);
 
-    console.log('Sum & count: ', sum, count);
-
     console.log(shoppingcartCandy);
 
     cartSave();
 
+    console.log('Sum & count: ', sum, count);
 };
+
+let count;
+let sum;
+
+let totCount = () => {
+    count = shoppingcartCandy.map(e => e.qty)
+        .reduce((acc, curr) => acc + curr, 0);
+}
+
+let totSum = () => {
+    sum = shoppingcartCandy.map(e => e.price * e.qty)
+        .reduce((acc, curr) => acc + curr, 0);
+}
 
 const cartSave = () => {
 
     const storage = JSON.stringify(shoppingcartCandy); // skapar variabel som store:ar klickade godisar
     localStorage.setItem('candyInCart', storage);
 
-    const count = shoppingcartCandy.map(e => e.qty)
-        .reduce((acc, curr) => acc + curr);
-
-    const sum = shoppingcartCandy.map(e => e.price * e.qty)
-        .reduce((acc, curr) => acc + curr);
+    totCount();
+    totSum();
 
     console.log('Total sum (reduce): ', sum, 'Total count (reduce): ', count)
 
@@ -269,31 +278,35 @@ const alertSubmit = () => {
 // Trying to POST submitted form/order to server
 
 // Finding all input fields from order form
-const firstName = document.querySelector(".fname");
-const lastName = document.querySelector(".lname");
-const address = document.querySelector(".address");
-const zipCode = document.querySelector(".zipcode");
-const city = document.querySelector(".city");
-const email = document.querySelector(".email");
-const telephone = document.querySelector(".telephone");
+const firstName = document.querySelector("#fname");
+const lastName = document.querySelector("#lname");
+const address = document.querySelector("#address");
+const zipCode = document.querySelector("#zipcode");
+const city = document.querySelector("#city");
+const email = document.querySelector("#email");
+const telephone = document.querySelector("#telephone");
 
+console.log('fname: ', firstName)
 
 const submitData = {
-    customer_first_name: firstName,
-    customer_last_name: lastName,
-    customer_address: address,
-    customer_postcode: zipCode,
-    customer_city: city,
-    customer_email: email,
-    order_total: sum,
-    order_items: shoppingcartCandy,
+    customer_first_name: firstName.value,
+    customer_last_name: lastName.value,
+    customer_address: address.value,
+    customer_postcode: zipCode.value,
+    customer_city: city.value,
+    customer_email: email.value,
+    order_total: totSum(),
+    order_items: shoppingcartCandy.value,
 }
 
+console.log(JSON.stringify(submitData))
 
 
 orderForm.addEventListener('submit', async (e) => {
 
     e.preventDefault(); // TA BORT
+
+    console.log('fname: ', firstName, firstName.value)
 
     const res = await fetch('https://www.bortakvall.se/api/orders', {
         method: 'POST',
