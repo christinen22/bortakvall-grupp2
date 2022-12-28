@@ -11,82 +11,82 @@
     integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 
   <!-- Styles -->
-  <link rel="stylesheet" href="src/style.css">
+  <link rel="stylesheet" href="css/style.css">
 
 </head>
 
 <body>
   <div class="wrapper">
-  <div class="toolbar">
-    <h1 class="brand">Bortakväll</h1>
-    <img class="cart" src="src/shoppingcart.jpg" alt="shopping cart">
-            <span id="count"></span>
-            <span id="sum"></span>
-  </div>
+    <div class="toolbar">
+      <h1 class="brand">Bortakväll</h1>
+      <img class="cart" src="src/shoppingcart.jpg" alt="shopping cart">
+      <span id="count"></span>
+      <span id="sum"></span>
+    </div>
     <div class="order">
-   
-    </div>
-
-  <form class="form hidden" type="submit">
-    <label for="fname">First name:</label><br>
-    <input type="text" id="fname" name="fname" required><br>
-
-    <label for="lname">Last name:</label><br>
-    <input type="text" id="lname" name="lname" required><br>
-
-    <label for="address">Address:</label><br>
-    <input type="text" id="address" name="address" required><br>
-
-    <label for="zipcode">Zip code:</label><br>
-    <input type="number" id="zipcode" name="zipcode" required><br>
-
-    <label for="city">City:</label><br>
-    <input type="text" id="city" name="city" required><br>
-
-    <label for="email">Email:</label><br>
-    <input type="email" id="email" name="email" required><br>
-
-    <label for="telephone">*Optional Telephone:</label><br>
-    <input type="number" id="telephone" name="telephone"><br>
-
-    <input type="submit" id="submitbtn" name="submit" value="Submit">
-
-  </form>
-  <section class="cartModal hidden">
-    <div class="cartView">
-      <ul class="cartItems">
-
-      </ul>
-      <button class="btn-close-cart">x</button>
-      <button class="orderBtn">Beställ</button>
-    </div>
-  </section>
-
-  <section class="modal hidden">
-    <div class="flex">
-      <img src="" class="infoCandyImg" alt="" />
-      <button class="btn-close">⨉</button>
-    </div>
-    <div class="infoCandy">
-
 
     </div>
-  </section>
 
-  <div class="overlay hidden"></div>
+    <form class="form hidden" type="submit">
+      <label for="fname">First name:</label><br>
+      <input type="text" id="fname" name="fname" required><br>
 
-  <div class="app">
-  
-    
-  </div>
+      <label for="lname">Last name:</label><br>
+      <input type="text" id="lname" name="lname" required><br>
 
-  <div class="row candyProducts">
+      <label for="address">Address:</label><br>
+      <input type="text" id="address" name="address" required><br>
+
+      <label for="zipcode">Zip code:</label><br>
+      <input type="number" id="zipcode" name="zipcode" required><br>
+
+      <label for="city">City:</label><br>
+      <input type="text" id="city" name="city" required><br>
+
+      <label for="email">Email:</label><br>
+      <input type="email" id="email" name="email" required><br>
+
+      <label for="telephone">*Optional Telephone:</label><br>
+      <input type="number" id="telephone" name="telephone"><br>
+
+      <input type="submit" id="submitbtn" name="submit" value="Submit">
+
+    </form>
+    <section class="cartModal hidden">
+      <div class="cartView">
+        <ul class="cartItems">
+
+        </ul>
+        <button class="btn-close-cart">x</button>
+        <button class="orderBtn">Beställ</button>
+      </div>
+    </section>
+
+    <section class="modal hidden">
+      <div class="flex">
+        <img src="" class="infoCandyImg" alt="" />
+        <button class="btn-close">⨉</button>
+      </div>
+      <div class="infoCandy">
 
 
-  </div>
-  <footer>
-    <p>Här är footertext</p>
-  </footer>
+      </div>
+    </section>
+
+    <div class="overlay hidden"></div>
+
+    <div class="app">
+
+
+    </div>
+
+    <div class="row candyProducts">
+
+
+    </div>
+    <footer>
+      <p>Här är footertext</p>
+    </footer>
   </div>
   </div>
   <script type="module" src="/src/main.js"></script>
