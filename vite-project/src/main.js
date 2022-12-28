@@ -15,7 +15,7 @@ const closeCartModalBtn = document.querySelector(".btn-close-cart");
 let cartItems = document.querySelector(".cartItems");
 const orderBtn = document.querySelector(".orderBtn");
 const orderForm = document.querySelector(".form");
-const submitForm = document.querySelector("#submitbtn");
+
 
 // Base URL and endpoint from where we fetch the candy
 const baseUrl = 'https://www.bortakvall.se';
@@ -264,8 +264,12 @@ orderBtn.addEventListener('click', orderView);
 
 const alertSubmit = () => {
     alert('Thank you for your order!');
+    localStorage.clear('candyInCart'); // funkar med click men ej med submit
 }
-submitForm.addEventListener('submit', alertSubmit);
+orderForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    alertSubmit();
+});
 
 
 
