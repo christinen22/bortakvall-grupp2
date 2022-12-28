@@ -248,4 +248,4 @@ orderBtn.addEventListener('click', orderView);
 const alertSubmit = () => {
     alert('Thank you for your order!');
 }
-submitForm.addEventListener('click', alertSubmit);
+submitForm.addEventListener('submit', alertSubmit);
