@@ -9,7 +9,13 @@ let shoppingCart = document.querySelector(".cart");
 const cartSum = document.querySelector("#sum");
 const cartCount = document.querySelector("#count");
 const candyTot = document.querySelector(".order");
-
+//queryselector to open cartModal
+const cartModal = document.querySelector(".cartModal");
+const closeCartModalBtn = document.querySelector(".btn-close-cart");
+let cartItems = document.querySelector(".cartItems");
+const orderBtn = document.querySelector(".orderBtn");
+const orderForm = document.querySelector(".form");
+const submitForm = document.querySelector("#submitbtn");
 
 // Base URL and endpoint from where we fetch the candy
 const baseUrl = 'https://www.bortakvall.se';
@@ -179,6 +185,8 @@ const addToCart = e => {
 
 };
 
+
+
 const cartSave = () => {
 
     const storage = JSON.stringify(shoppingcartCandy); // skapar variabel som store:ar klickade godisar
@@ -202,11 +210,62 @@ const cartSave = () => {
     // Empty then render to DOM
     candyTot.innerHTML = '';
 
+    cartItems.innerHTML = '';
+
     // if (shoppingcartCandy) {
     shoppingcartCandy.map(e =>
         candyTot.innerHTML += `<td>${e.name}</td> <td>${e.price * e.qty}kr</td> <td>${e.qty}st</td><br>`);
+    shoppingcartCandy.map(e => cartItems.innerHTML += `<li>${e.qty}st ${e.name} för ${e.price * e.qty}kr</li>`);
+    //localStorage.getItem(storage); //läggs i kundvagnen
+
     // }
 };
+
+//eventlistener for shoppingcart when icon clicked
+shoppingCart.addEventListener('click', () => {
+    openCartModal();
+    console.log('clicked carticon');
+    //localStorage.getItem(storage); //läggs i kundvagnen
+
+});
+
+const openCartModal = () => {
+    cartModal.classList.remove("hidden");
+    cartItems.innerHTML = '';
+    shoppingcartCandy.map(e => cartItems.innerHTML += `<li>${e.qty}st ${e.name} för ${e.price * e.qty}kr</li>`);
+    //overlay.classList.remove("hidden");
+};
+
+const closeCartModal = () => {
+    cartModal.classList.add("hidden");  // Byt .add till toggle och testa 
+    overlay.classList.add("hidden"); // Byt .add till toggle och testa 
+};
+
+closeCartModalBtn.addEventListener("click", closeCartModal);
+overlay.addEventListener("click", closeCartModal);
+
+// close modal when the Esc key is pressed
+document.addEventListener("keydown", e => {
+    if (e.key === "Escape" && !cartModal.classList.contains("hidden")) {
+        closeCartModal();
+    };
+});
+
+
+
+const orderView = () => {
+    console.log('you clicked order');
+    containerEl.classList.toggle("hidden");
+    closeModal();
+    closeCartModal();
+    orderForm.classList.toggle("hidden");
+}
+orderBtn.addEventListener('click', orderView);
+
+const alertSubmit = () => {
+    alert('Thank you for your order!');
+}
+submitForm.addEventListener('submit', alertSubmit);
 
 
 

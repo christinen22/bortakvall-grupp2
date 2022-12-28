@@ -191,3 +191,55 @@ button {
 .hidden {
   display: none;
 }
+
+/* Cart Modal styling */
+
+.cartModal {
+  display: flex;
+  flex-direction: column;
+  justify-content: right;
+  gap: 0.4rem;
+  width: 450px;
+  padding: 1.3rem;
+  height: 900px;
+  position: fixed;
+  right: 0;
+  top: 0;
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 15px;
+}
+
+.cartModal .cartView {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.cartModal {
+  z-index: 2;
+}
+
+.cartModal input {
+  padding: 0.7rem 1rem;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 0.9em;
+}
+
+.cartModal p {
+  font-size: 0.9rem;
+  color: #777;
+  margin: 0.4rem 0 0.2rem;
+}
+
+.btn-close-cart {
+  transform: translate(10px, -20px);
+  padding: 0.5rem 0.7rem;
+  background: #eee;
+  border-radius: 50%;
+}
+
+.hidden {
+  display: none;
+}
