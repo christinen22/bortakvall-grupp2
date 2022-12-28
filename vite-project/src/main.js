@@ -214,10 +214,10 @@ const cartSave = () => {
 
     // if (shoppingcartCandy) {
     shoppingcartCandy.map(e =>
-        candyTot.innerHTML += `<td>${e.name}</td> <td>${e.price * e.qty}kr</td> <td>${e.qty}st</td><br>`);
+        candyTot.innerHTML += `<td>${e.name}</td> <td>${e.price * e.qty}kr</td> <td>${e.qty}st
+            <button type="button" id="${e.id}" class="btn-plus">+</button> 
+                <button type="button" id="${e.id}" class="btn-minus">-</button></td><br>`);
     shoppingcartCandy.map(e => cartItems.innerHTML += `<li>${e.qty}st ${e.name} för ${e.price * e.qty}kr</li>`);
-    //localStorage.getItem(storage); //läggs i kundvagnen
-
     // }
 };
 
@@ -235,7 +235,6 @@ const openCartModal = () => {
     shoppingcartCandy.map(e => cartItems.innerHTML += `<li>${e.qty}st ${e.name} för ${e.price * e.qty}kr</li>`);
     //overlay.classList.remove("hidden");
 };
-
 const closeCartModal = () => {
     cartModal.classList.add("hidden");  // Byt .add till toggle och testa 
     overlay.classList.add("hidden"); // Byt .add till toggle och testa 
@@ -274,7 +273,22 @@ orderForm.addEventListener('submit', (e) => {
 
 
 
+// adding event listener 
+candyTot.addEventListener('click', e => {
+    if (e.target.tagName == 'BUTTON') {
 
+        if (e.target.className.includes('plus')) {
+            console.log('you added')
+
+            e.qty++;
+        } else if (e.target.className.includes('minus')) {
+            console.log('you removed');
+            e.qty--;
+        };
+
+        console.log(e.qty);
+    }
+})
 
 
 
