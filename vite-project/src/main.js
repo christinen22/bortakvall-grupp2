@@ -184,26 +184,20 @@ const addToCart = e => {
     console.log('Sum & count: ', sum, count);
 };
 
-let count;
-let sum;
 
-let totCount = () => {
-    count = shoppingcartCandy.map(e => e.qty)
-        .reduce((acc, curr) => acc + curr, 0);
-}
 
-let totSum = () => {
-    sum = shoppingcartCandy.map(e => e.price * e.qty)
-        .reduce((acc, curr) => acc + curr, 0);
-}
+
 
 const cartSave = () => {
 
     const storage = JSON.stringify(shoppingcartCandy); // skapar variabel som store:ar klickade godisar
     localStorage.setItem('candyInCart', storage);
 
-    totCount();
-    totSum();
+    const count = shoppingcartCandy.map(e => e.qty)
+        .reduce((acc, curr) => acc + curr, 0);
+
+    const sum = shoppingcartCandy.map(e => e.price * e.qty)
+        .reduce((acc, curr) => acc + curr, 0);
 
     console.log('Total sum (reduce): ', sum, 'Total count (reduce): ', count)
 
@@ -288,22 +282,23 @@ const telephone = document.querySelector("#telephone");
 
 console.log('fname: ', firstName)
 
-const submitData = {
-    customer_first_name: firstName.value,
-    customer_last_name: lastName.value,
-    customer_address: address.value,
-    customer_postcode: zipCode.value,
-    customer_city: city.value,
-    customer_email: email.value,
-    order_total: totSum(),
-    order_items: shoppingcartCandy.value,
-}
 
-console.log(JSON.stringify(submitData))
+
 
 
 orderForm.addEventListener('submit', async (e) => {
+    const submitData = {
+        customer_first_name: firstName.value,
+        customer_last_name: lastName.value,
+        customer_address: address.value,
+        customer_postcode: zipCode.value,
+        customer_city: city.value,
+        customer_email: email.value,
+        order_total: sum,
+        order_items: shoppingcartCandy,
+    }
 
+    console.log(JSON.stringify(submitData))
     e.preventDefault(); // TA BORT
 
     console.log('fname: ', firstName, firstName.value)
