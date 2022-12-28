@@ -17,8 +17,6 @@ const baseUrl = 'https://www.bortakvall.se';
 // Array to store data from API
 let products = [];
 
-
-
 // Call getApi and render names and images to DOM 
 const getApi = async () => {
 
@@ -136,23 +134,8 @@ document.addEventListener("keydown", e => {
 const shoppingcartCandy = JSON.parse(localStorage.getItem('candyInCart')) ?? [];
 console.log('candy in cart: ', shoppingcartCandy)
 
-<<<<<<< HEAD
-
-
-
-
-
-// Function for Add to Cart button
-let count = 0;              //hur många varor det är TOTALT
-let sum = 0;                //summa TOTALT
-//let cart = {};              //objekt i carten
-
-
-
-=======
 // Empty then render to DOM
 candyTot.innerHTML = '';
->>>>>>> dev
 
 const addToCart = e => {
 
@@ -188,14 +171,6 @@ const addToCart = e => {
 
     console.log('Shopping cart contains: ', shoppingcartCandy);
 
-<<<<<<< HEAD
-    console.log('Storage: ', storage);
-
-    console.log('Sum & count: ', sum, count);
-
-    count++;
-    sum += candy.price;
-=======
     console.log('Sum & count: ', sum, count);
 
     console.log(shoppingcartCandy);
@@ -205,22 +180,6 @@ const addToCart = e => {
 };
 
 const cartSave = () => {
->>>>>>> dev
-
-    cartSum.innerHTML = `<p>Summa: ${sum} kr</p>`;
-    cartCount.innerHTML = `<p>Antal: ${count} st</p>`;
-
-        // Empty then render to DOM
-        candyTot.innerHTML = '';
-
-        //what is in the cart
-        shoppingcartCandy.map(e => candyTot.innerHTML += 
-            `<td>${e.name}</td> <td>${e.price * e.qty}kr</td> <td>${e.qty}st
-            <button type="button" id="${e.id}" class="btn-plus">+</button> 
-            <button type="button" id="${e.id}" class="btn-minus">-</button></td><br>`);
-}
-
-    
 
     const storage = JSON.stringify(shoppingcartCandy); // skapar variabel som store:ar klickade godisar
     localStorage.setItem('candyInCart', storage);
@@ -231,12 +190,6 @@ const cartSave = () => {
 
     // console.log('Totalt amount: ', count)
 
-<<<<<<< HEAD
-
-
-    /*localStorage.setItem("sum", sum);
-    localStorage.setItem("count", count); */
-=======
     // let sum = shoppingcartCandy.map(e => {
     //     return e.price * e.qty
     // });
@@ -251,19 +204,16 @@ const cartSave = () => {
 
     // if (shoppingcartCandy) {
     shoppingcartCandy.map(e =>
-        candyTot.innerHTML += `<td>${e.name}</td> <td>${e.price * e.qty}kr</td> <td>${e.qty}st</td><br>`);
+        candyTot.innerHTML += `<td>${e.name}</td> <td>${e.price * e.qty}kr</td> <td>${e.qty}st
+        <button type="button" id="${e.id}" class="btn-plus">+</button> 
+            <button type="button" id="${e.id}" class="btn-minus">-</button></td><br>`);
+   
     // }
 };
 
 
 
->>>>>>> dev
 
-
-
-
-
-<<<<<<< HEAD
    // adding event listener 
     candyTot.addEventListener('click', e => {
     if (e.target.tagName == 'BUTTON') {
@@ -283,5 +233,3 @@ const cartSave = () => {
     
 
     
-=======
->>>>>>> dev
