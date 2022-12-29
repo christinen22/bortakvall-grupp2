@@ -185,8 +185,13 @@ const addToCart = e => {
 };
 
 
+// Function for total sum (re-used at body for POST)
+let sum;
 
-
+let totSum = () => {
+    sum = shoppingcartCandy.map(e => e.price * e.qty)
+        .reduce((acc, curr) => acc + curr, 0);
+}
 
 const cartSave = () => {
 
@@ -196,8 +201,7 @@ const cartSave = () => {
     const count = shoppingcartCandy.map(e => e.qty)
         .reduce((acc, curr) => acc + curr, 0);
 
-    const sum = shoppingcartCandy.map(e => e.price * e.qty)
-        .reduce((acc, curr) => acc + curr, 0);
+    totSum()
 
     console.log('Total sum (reduce): ', sum, 'Total count (reduce): ', count)
 
@@ -290,17 +294,13 @@ console.log('fname: ', firstName)
 orderForm.addEventListener('submit', async (e) => {
 
     // GÖR FUNKTION AV DENNA SAMT SAMMA I cartSave!! 
-    const totSum = shoppingcartCandy.map(e => e.price * e.qty)
-        .reduce((acc, curr) => acc + curr);
-
-    console.log(shoppingcartCandy, totSum, 'HAAAJ')
+    // totSum()
 
     let shoppingCartItems = shoppingcartCandy.map((e) => {
         return { product_id: e.id, qty: e.qty, item_price: e.price, item_total: e.price * e.qty }
-    })
+    });
 
-    console.log(shoppingCartItems)
-
+    // Values from customer input fields to add to POST body
     const submitData = {
         customer_first_name: firstName.value,
         customer_last_name: lastName.value,
@@ -309,13 +309,14 @@ orderForm.addEventListener('submit', async (e) => {
         customer_city: city.value,
         customer_email: email.value,
         customer_phone: telephone.value,
-        order_total: totSum,
+        order_total: sum,
         order_items: shoppingCartItems
     }
 
     console.log(JSON.stringify(submitData))
     e.preventDefault(); // TA BORT
 
+    // POST request
     const res = await fetch('https://www.bortakvall.se/api/orders', {
         method: 'POST',
         headers: {
@@ -326,7 +327,8 @@ orderForm.addEventListener('submit', async (e) => {
 
     if (!res.ok) {
         alert('APP APP APP!!')
-        // Return to prevent from running rest of code
+
+        // Return to prevent from running rest of code if error
         return;
     };
 
