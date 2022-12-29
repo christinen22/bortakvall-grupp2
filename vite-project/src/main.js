@@ -69,7 +69,7 @@ getApi()
     .then(
         console.log('Success!')
     )
-    .catch(error => console.log('rejected: ', error.message));
+    .catch(error => console.log('The request was rejected: ', error.message));
 
 //console.log('PRODUCTS: ', products)
 
@@ -293,9 +293,6 @@ console.log('fname: ', firstName)
 
 orderForm.addEventListener('submit', async (e) => {
 
-    // GÖR FUNKTION AV DENNA SAMT SAMMA I cartSave!! 
-    // totSum()
-
     let shoppingCartItems = shoppingcartCandy.map((e) => {
         return { product_id: e.id, qty: e.qty, item_price: e.price, item_total: e.price * e.qty }
     });
@@ -313,22 +310,24 @@ orderForm.addEventListener('submit', async (e) => {
         order_items: shoppingCartItems
     }
 
-    console.log(JSON.stringify(submitData))
-    e.preventDefault(); // TA BORT
+    e.preventDefault(); // TA BORT !!!
 
-    // POST request
-    const res = await fetch('https://www.bortakvall.se/api/orders', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(submitData)
-    });
+    try {
+        // POST request
+        const res = await fetch('https://www.bortakvall.se/api/orders', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(submitData)
+        });
 
-    if (!res.ok) {
-        alert('APP APP APP!!')
+        if (!res.ok) {
+            throw new Error(`Could not create order, because: ${res.status} ${res.statusText}`);
+        };
 
-        // Return to prevent from running rest of code if error
+    } catch (err) {
+        alert(err)
         return;
     };
 
