@@ -234,11 +234,13 @@ const cartSave = () => {
 
                                 
                             if (f.target.className.includes('plus'))   {
-                                candyTot.innerHTML = `<td>${e.name}</td> <td>${e.price * e.qty}kr</td> <td>${e.qty++}st<button type="button" id="${e.id}" class="btn-plus">+</button> 
+                                //candyTot.innerHTML= "";
+                                candyTot.innerHTML += `<td>${e.name}</td> <td>${e.price * e.qty}kr</td> <td>${e.qty++}st<button type="button" id="${e.id}" class="btn-plus">+</button> 
                                 <button type="button" id="${e.id}" class="btn-minus">-</button></td><br>`;
                     
                             } else if (f.target.className.includes('minus')) {
-                                candyTot.innerHTML = `<td>${e.name}</td> <td>${e.price * e.qty}kr</td> <td>${e.qty--}st<button type="button" id="${e.id}" class="btn-plus">+</button> 
+                                //candyTot.innerHTML= "";
+                                candyTot.innerHTML += `<td>${e.name}</td> <td>${e.price * e.qty}kr</td> <td>${e.qty--}st<button type="button" id="${e.id}" class="btn-plus">+</button> 
                                 <button type="button" id="${e.id}" class="btn-minus">-</button></td><br>`;
                             };
                             })
