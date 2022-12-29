@@ -308,6 +308,7 @@ orderForm.addEventListener('submit', async (e) => {
         customer_postcode: zipCode.value,
         customer_city: city.value,
         customer_email: email.value,
+        customer_phone: telephone.value,
         order_total: totSum,
         order_items: shoppingCartItems
     }
