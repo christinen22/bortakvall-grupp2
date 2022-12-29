@@ -286,7 +286,21 @@ console.log('fname: ', firstName)
 
 
 
+
 orderForm.addEventListener('submit', async (e) => {
+
+    // GÖR FUNKTION AV DENNA SAMT SAMMA I cartSave!! 
+    const totSum = shoppingcartCandy.map(e => e.price * e.qty)
+        .reduce((acc, curr) => acc + curr);
+
+    console.log(shoppingcartCandy, totSum, 'HAAAJ')
+
+    let shoppingCartItems = shoppingcartCandy.map((e) => {
+        return { product_id: e.id, qty: e.qty, item_price: e.price, item_total: e.price * e.qty }
+    })
+
+    console.log(shoppingCartItems)
+
     const submitData = {
         customer_first_name: firstName.value,
         customer_last_name: lastName.value,
@@ -294,14 +308,12 @@ orderForm.addEventListener('submit', async (e) => {
         customer_postcode: zipCode.value,
         customer_city: city.value,
         customer_email: email.value,
-        order_total: sum,
-        order_items: shoppingcartCandy,
+        order_total: totSum,
+        order_items: shoppingCartItems
     }
 
     console.log(JSON.stringify(submitData))
     e.preventDefault(); // TA BORT
-
-    console.log('fname: ', firstName, firstName.value)
 
     const res = await fetch('https://www.bortakvall.se/api/orders', {
         method: 'POST',
@@ -316,10 +328,6 @@ orderForm.addEventListener('submit', async (e) => {
         // Return to prevent from running rest of code
         return;
     };
-
-    // if (e.target) {
-    //     console.log(fname.value)
-    // };
 
     alertSubmit();
 
