@@ -16,7 +16,6 @@ let cartItems = document.querySelector(".cartItems");
 const orderBtn = document.querySelector(".orderBtn");
 const orderForm = document.querySelector(".form");
 
-
 // Base URL and endpoint from where we fetch the candy
 const baseUrl = 'https://www.bortakvall.se';
 
@@ -138,7 +137,29 @@ document.addEventListener("keydown", e => {
 
 // Getting candyInCart value from local storage
 const shoppingcartCandy = JSON.parse(localStorage.getItem('candyInCart')) ?? [];
-console.log('candy in cart: ', shoppingcartCandy)
+console.log('candy in cart: ', shoppingcartCandy);
+
+let count = 0; // changed from const to let and made them global - VP
+let sum = 0; // changed from const to let and made them global - VP
+
+// created function to update count and sum - VP 
+const setSumCount = () => {
+    const storage = JSON.stringify(shoppingcartCandy); // skapar variabel som store:ar klickade godisar
+    localStorage.setItem('candyInCart', storage);
+    //let count = 0; // changed from const to let - VP
+    //let sum = 0; // changed from const to let - VP
+    if (shoppingcartCandy.length >= 1) { // if there are any objects in the array (an if statement to handle empty array) - VP
+        count = shoppingcartCandy.map(e => e.qty) // run the reduce method - VP
+            .reduce((acc, curr) => acc + curr); // run the reduce method - VP
+
+        sum = shoppingcartCandy.map(e => e.price * e.qty)
+            .reduce((acc, curr) => acc + curr);
+    } else {
+        count = 0;
+        sum = 0;
+    }
+}
+setSumCount(); // call the function to change count and sum - VP 
 
 // Empty then render to DOM
 candyTot.innerHTML = '';
@@ -190,17 +211,7 @@ const addToCart = e => {
 
 const cartSave = () => {
 
-    const storage = JSON.stringify(shoppingcartCandy); // skapar variabel som store:ar klickade godisar
-    localStorage.setItem('candyInCart', storage);
-    let count = 0; // changed from const to let - VP
-    let sum = 0; // changed from const to let - VP
-    if (shoppingcartCandy.length >= 1) { // if there are any objects in the array (an if statement to handle empty array) - VP
-        count = shoppingcartCandy.map(e => e.qty) // run the reduce method - VP
-            .reduce((acc, curr) => acc + curr); // run the reduce method - VP
-
-        sum = shoppingcartCandy.map(e => e.price * e.qty)
-            .reduce((acc, curr) => acc + curr);
-    }
+    setSumCount(); // update sum and count before rendering to cart modal/DOM - VP
 
     console.log('Total sum (reduce): ', sum, 'Total count (reduce): ', count)
 
@@ -222,11 +233,11 @@ cartItems.addEventListener('click', f => {
             if (f.target.id == e.id) {
                 if (f.target.className.includes('plus')) {
                     e.qty++; // add qty - VP
-                    renderCart(); // render cart to DOM - VP
+                    //renderCart(); // render cart to DOM - VP
 
                 } else if (f.target.className.includes('minus')) {
                     e.qty--; // subtract qty - VP
-                    renderCart(); // render cart to DOM - VP
+                    //renderCart(); // render cart to DOM - VP
                     if (e.qty <= 0) { // if statement to handle if qty is 0 or below - VP 
                         removeCandy = e.id; // set variable to id of the object to later remove - VP
                     }
@@ -238,7 +249,6 @@ cartItems.addEventListener('click', f => {
         if (removeCandy) {
             if (shoppingcartCandy.length < 1) { // if last object in the cart is removed - VP
                 localStorage.clear('candyInCart'); // clears the localStorage array 
-
             } else {
                 for (let i = 0; i < shoppingcartCandy.length; i++) { // for loop to iterate through the array - VP
                     if (shoppingcartCandy[i].id == removeCandy) { // if statement to compare with the variable I earlier set e.id - VP
@@ -257,7 +267,9 @@ const renderCart = () => {
     cartItems.innerHTML = '';
     shoppingcartCandy.map(e => cartItems.innerHTML += `<li>${e.qty}st ${e.name} för ${e.price * e.qty}kr<button type="button" id="${e.id}" class="btn-plus">+</button> 
     <button type="button" id="${e.id}" class="btn-minus">-</button></li>`);
+    cartItems.innerHTML += `<p>Antal: ${count} st</p><p>Summa: ${sum} kr</p>`;
 };
+
 
 
 //eventlistener for shoppingcart when icon clicked
