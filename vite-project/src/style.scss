@@ -5,8 +5,8 @@
 $font-color: #000;
 $hover-color: #FF69B4;
 $font-family: 'Quicksand', sans-serif;
-$dark-bg-color: #a3dfeb;
-$dark-pink-color: #f3087d;
+$blue-bg-color: #a3dfeb;
+$pink-bg-color: pink;
 
 
 
@@ -21,7 +21,8 @@ $dark-pink-color: #f3087d;
 
 .wrapper {
   max-width: 1200px;
-  background-color: #a3dfeb
+  background-color: $pink-bg-color;
+
 }
 
 body {
@@ -87,7 +88,7 @@ h2 {
   padding: 1.3rem;
   height: 900px;
   position: fixed;
-  background-color: #fff;
+  background-color: $blue-bg-color;
   border: 1px solid #ddd;
   border-radius: 15px;
   z-index: 2;
@@ -96,7 +97,7 @@ h2 {
 .modal .flex {
   display: flex;
   align-items: center;
-  justify-content: space-between
+  justify-content: space-between;
 }
 
 .modal input {
@@ -110,6 +111,15 @@ h2 {
   font-size: .9rem;
   color: #777;
   margin: .4rem 0 .2rem
+}
+
+
+.infoCandy img {
+  border-radius: 25%;
+  padding: 25px;
+  margin-left: 75px;
+ 
+  
 }
 
 button {
@@ -154,7 +164,9 @@ button {
 footer {
   width: 100%;
   text-align: center;
-  background-color: #fff
+  background-color: #fff;
+  margin-top: 20px;
+  padding: 5px;
 }
 
 /*# sourceMappingURL=style.css.map */
@@ -176,7 +188,7 @@ footer {
   position: fixed;
   right: 0;
   top: 0;
-  background-color: white;
+  background-color: $blue-bg-color;;
   border: 1px solid #ddd;
   border-radius: 15px;
 }
@@ -219,14 +231,17 @@ footer {
   margin-left: 10px;
 }
 
+form {
+  padding: 50px;
+}
+
 
 @media screen and (min-width: 280px) and (max-width: 599px) {
 
 
   .wrapper {
-
-  
-    background-color:pink;
+    background-color:$pink-bg-color;
+    max-width: auto;
 
   }
 
@@ -258,16 +273,25 @@ h3 {
   font-size: 12px;
 }
 
+form {
+  padding: 50px;
+}
+
 
 }
 
 
 @media screen and (min-width: 600px) and (max-width: 1080px) {
 
+
+  form {
+    padding: 100px;
+  }
+
   .wrapper {
 
   
-    background-color:pink;
+    background-color:$pink-bg-color;
 
   }
 
@@ -279,12 +303,6 @@ h3 {
     font-size: 50px;
   }
  
-
-  .col-3 {
-     
-    
-     
-}
 
 .col-3 img {
   margin-top: 10px;
