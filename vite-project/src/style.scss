@@ -214,3 +214,104 @@ footer {
 .hidden {
   display: none;
 }
+
+.row {
+  margin-left: 10px;
+}
+
+
+@media screen and (min-width: 280px) and (max-width: 599px) {
+
+
+  .wrapper {
+
+  
+    background-color:pink;
+
+  }
+
+  .toolbar {
+    width: 100%;
+  }
+
+  h1 {
+    font-size: 50px;
+  }
+ 
+
+  .col-3 {
+     width: 50%;
+}
+
+.col-3 img {
+  margin-top: 10px;
+}
+
+h3 {
+  font-size: 12px;
+  text-align: center;
+  padding: 5px;
+}
+
+.btn-info, .btn-success {
+  padding: 5px;
+  font-size: 12px;
+}
+
+
+}
+
+
+@media screen and (min-width: 600px) and (max-width: 1080px) {
+
+  .wrapper {
+
+  
+    background-color:pink;
+
+  }
+
+  .toolbar {
+    width: 100%;
+  }
+
+  h1 {
+    font-size: 50px;
+  }
+ 
+
+  .col-3 {
+     
+    
+     
+}
+
+.col-3 img {
+  margin-top: 10px;
+
+}
+
+
+.row {
+  justify-content: center;
+  
+}
+
+h3 {
+  font-size: 12px;
+  text-align: center;
+  padding: 5px;
+}
+
+.btn-info, .btn-success {
+  padding: 5px;
+  font-size: 12px;
+
+}
+
+
+}
+
+
+
+
