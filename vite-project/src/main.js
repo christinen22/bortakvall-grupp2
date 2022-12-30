@@ -22,9 +22,6 @@ const baseUrl = 'https://www.bortakvall.se';
 // Array to store data from API
 let products = [];
 
-
-
-
 // Call getApi and render names and images to DOM 
 const getApi = async () => {
 
@@ -34,12 +31,8 @@ const getApi = async () => {
 
     products = data;
 
-
-
     renderApi();
 };
-
-
 
 // Promise for baseUrl and changeable endPoint
 const fetchApi = async (endPoint) => {
@@ -53,8 +46,6 @@ const fetchApi = async (endPoint) => {
 
     return await res.json();
 };
-
-
 
 // Render product name and image to DOM via map-function
 const renderApi = () => {
@@ -79,7 +70,6 @@ const renderApi = () => {
         <button type="button" id="${e.id}" class="info btn btn-info">Info</button>
         </div>`
     });
-
 };
 
 // Catch if returned error from promise and call getApi-function
@@ -232,15 +222,6 @@ const cartSave = () => {
 
     setSumCount(); // update sum and count before rendering to cart modal/DOM - VP
 
-<<<<<<< HEAD
-    const count = shoppingcartCandy.map(e => e.qty)
-        .reduce((acc, curr) => acc + curr);
-
-    const sum = shoppingcartCandy.map(e => e.price * e.qty)
-        .reduce((acc, curr) => acc + curr);
-
-=======
->>>>>>> B4
     console.log('Total sum (reduce): ', sum, 'Total count (reduce): ', count)
 
     console.log('Totalt cost: ', sum)
@@ -266,8 +247,8 @@ cartItems.addEventListener('click', f => {
                 } else if (f.target.className.includes('minus')) {
                     e.qty--; // subtract qty - VP
                     //renderCart(); // render cart to DOM - VP
-                    if (e.qty <= 0) { // if statement to handle if qty is 0 or below - VP 
-                        removeCandy = e.id; // set variable to id of the object to later remove - VP
+                    if (e.qty = 0) { // if statement to handle if qty is 0 or below - VP 
+                        removeCandy = e.id; // set variable to id of the object to later remove - VP 
                     }
 
                 };
