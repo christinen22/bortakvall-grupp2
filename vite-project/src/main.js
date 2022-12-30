@@ -370,19 +370,26 @@ orderForm.addEventListener('submit', async (e) => {
     // submitData.reset(); // ??
 
     try {
-        await postSubmit()
+
+        const orderData = await postOrder()
+
+        alert(orderData.status)
+        console.log(orderData)
+
     } catch (err) {
-        alert(err)
+
+        alert('Could not create order, because: ', err)
         return;
+
     };
 
-    getSubmit()
+    alertSubmit();  // GÖR DIV I DENNA  
 
 });
 
 
+const postOrder = async () => {
 
-const postSubmit = async () => {  // BYT NAMN
 
     let shoppingCartItems = shoppingcartCandy.map((e) => {
         return { product_id: e.id, qty: e.qty, item_price: e.price, item_total: e.price * e.qty }
@@ -399,9 +406,9 @@ const postSubmit = async () => {  // BYT NAMN
         customer_phone: telephone.value,
         order_total: sum,
         order_items: shoppingCartItems
-    }
+    };
 
-    // try {
+
     // POST request
     const res = await fetch('https://www.bortakvall.se/api/orders', {
         method: 'POST',
@@ -416,33 +423,10 @@ const postSubmit = async () => {  // BYT NAMN
     // }
 
     if (!res.ok) {
-        throw new Error(`Could not create your order, because: ${res.status} ${res.statusText}`);
-    };
+        throw new Error(`Could not create order, because: ${res.status} ${res.statusText}`);
+    }
 
     return await res.json()
 
-    // alertSubmit();  // GÖR DIV I DENNA 
 };
-
-
-const fetchSubmit = async () => {
-
-    const res = await fetch('https://www.bortakvall.se/api/orders');
-
-    if (!res.ok) {
-        throw new Error(`Could not fetch your order, because: ${res.status} ${res.statusText}`);
-    }
-
-    return await res.json();
-}
-
-
-const getSubmit = async () => {
-
-    // FetchSubmit with order response
-    const data = await fetchSubmit();
-
-    console.log(data)
-
-}
 
