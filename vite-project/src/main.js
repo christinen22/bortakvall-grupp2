@@ -322,6 +322,10 @@ orderForm.addEventListener('submit', async (e) => {
             body: JSON.stringify(submitData)
         });
 
+        // if (res.status == 200 && res.status < 300) {  // TA BORT !!!!
+        //     alert('Din order har lyckats!')
+        // }
+
         if (!res.ok) {
             throw new Error(`Could not create order, because: ${res.status} ${res.statusText}`);
         };
@@ -331,7 +335,7 @@ orderForm.addEventListener('submit', async (e) => {
         return;
     };
 
-    alertSubmit();
+    alertSubmit();  // GÖR DIV I DENNA
 
 });
 
