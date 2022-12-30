@@ -139,8 +139,8 @@ document.addEventListener("keydown", e => {
 const shoppingcartCandy = JSON.parse(localStorage.getItem('candyInCart')) ?? [];
 console.log('candy in cart: ', shoppingcartCandy);
 
-let count = 0; // changed from const to let and made them global - VP
-let sum = 0; // changed from const to let and made them global - VP
+let count; // changed from const to let and made them global - VP
+let sum; // changed from const to let and made them global - VP
 
 // created function to update count and sum - VP 
 const setSumCount = () => {
@@ -226,7 +226,7 @@ const cartSave = () => {
 };
 
 cartItems.addEventListener('click', f => {
-    if (f.target.className == 'BTN-PLUS' || 'BTN-MINUS') { //changed from tagName == 'BUTTON' - VP
+    if (f.target.className == 'btn-plus' || 'btn-minus') { //changed from tagName == 'BUTTON' - VP
         let removeCandy = null; // create variable to compare with id of e - VP
         shoppingcartCandy.forEach(e => {
 
