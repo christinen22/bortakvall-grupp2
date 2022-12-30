@@ -77,7 +77,7 @@ getApi()
     .then(
         console.log('Success!')
     )
-    .catch(error => console.log('rejected: ', error.message));
+    .catch(error => console.log('The request was rejected: ', error.message));
 
 //console.log('PRODUCTS: ', products)
 
@@ -208,19 +208,36 @@ const addToCart = e => {
 
     console.log('Shopping cart contains: ', shoppingcartCandy);
 
-    console.log('Sum & count: ', sum, count);
-
     console.log(shoppingcartCandy);
 
 
 
     cartSave();
 
+    console.log('Sum & count: ', sum, count);
 };
+
+
+// Function for total sum (re-used at body for POST)
+//let sum;
+
+let totSum = () => {
+    sum = shoppingcartCandy.map(e => e.price * e.qty)
+        .reduce((acc, curr) => acc + curr, 0);
+}
 
 const cartSave = () => {
 
     setSumCount(); // update sum and count before rendering to cart modal/DOM - VP
+
+
+    //const storage = JSON.stringify(shoppingcartCandy); // skapar variabel som store:ar klickade godisar
+    //localStorage.setItem('candyInCart', storage);
+
+    //const count = shoppingcartCandy.map(e => e.qty)
+    //    .reduce((acc, curr) => acc + curr, 0);
+
+    //totSum()
 
     console.log('Total sum (reduce): ', sum, 'Total count (reduce): ', count)
 
@@ -324,9 +341,75 @@ const alertSubmit = () => {
     alert('Thank you for your order!');
     localStorage.clear('candyInCart'); // funkar med click men ej med submit
 }
-orderForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-    alertSubmit();
+
+
+
+
+
+// Trying to POST submitted form/order to server
+
+// Finding all input fields from order form
+const firstName = document.querySelector("#fname");
+const lastName = document.querySelector("#lname");
+const address = document.querySelector("#address");
+const zipCode = document.querySelector("#zipcode");
+const city = document.querySelector("#city");
+const email = document.querySelector("#email");
+const telephone = document.querySelector("#telephone");
+
+console.log('fname: ', firstName)
+
+
+
+
+
+
+orderForm.addEventListener('submit', async (e) => {
+
+    let shoppingCartItems = shoppingcartCandy.map((e) => {
+        return { product_id: e.id, qty: e.qty, item_price: e.price, item_total: e.price * e.qty }
+    });
+
+    // Values from customer input fields to add to POST body
+    const submitData = {
+        customer_first_name: firstName.value,
+        customer_last_name: lastName.value,
+        customer_address: address.value,
+        customer_postcode: zipCode.value,
+        customer_city: city.value,
+        customer_email: email.value,
+        customer_phone: telephone.value,
+        order_total: sum,
+        order_items: shoppingCartItems
+    }
+
+    e.preventDefault(); // TA BORT !!!
+
+    try {
+        // POST request
+        const res = await fetch('https://www.bortakvall.se/api/orders', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(submitData)
+        });
+
+        // if (res.status == 200 && res.status < 300) {  // TA BORT !!!!
+        //     alert('Din order har lyckats!')
+        // }
+
+        if (!res.ok) {
+            throw new Error(`Could not create order, because: ${res.status} ${res.statusText}`);
+        };
+
+    } catch (err) {
+        alert(err)
+        return;
+    };
+
+    alertSubmit();  // GÖR DIV I DENNA
+
 });
 
 
