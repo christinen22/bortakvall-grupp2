@@ -16,7 +16,6 @@ let cartItems = document.querySelector(".cartItems");
 const orderBtn = document.querySelector(".orderBtn");
 const orderForm = document.querySelector(".form");
 
-
 // Base URL and endpoint from where we fetch the candy
 const baseUrl = 'https://www.bortakvall.se';
 
@@ -157,7 +156,29 @@ document.addEventListener("keydown", e => {
 
 // Getting candyInCart value from local storage
 const shoppingcartCandy = JSON.parse(localStorage.getItem('candyInCart')) ?? [];
-console.log('candy in cart: ', shoppingcartCandy)
+console.log('candy in cart: ', shoppingcartCandy);
+
+let count; // changed from const to let and made them global - VP
+let sum; // changed from const to let and made them global - VP
+
+// created function to update count and sum - VP 
+const setSumCount = () => {
+    const storage = JSON.stringify(shoppingcartCandy); // skapar variabel som store:ar klickade godisar
+    localStorage.setItem('candyInCart', storage);
+    //let count = 0; // changed from const to let - VP
+    //let sum = 0; // changed from const to let - VP
+    if (shoppingcartCandy.length >= 1) { // if there are any objects in the array (an if statement to handle empty array) - VP
+        count = shoppingcartCandy.map(e => e.qty) // run the reduce method - VP
+            .reduce((acc, curr) => acc + curr); // run the reduce method - VP
+
+        sum = shoppingcartCandy.map(e => e.price * e.qty)
+            .reduce((acc, curr) => acc + curr);
+    } else {
+        count = 0;
+        sum = 0;
+    }
+}
+setSumCount(); // call the function to change count and sum - VP 
 
 // Empty then render to DOM
 candyTot.innerHTML = '';
@@ -167,7 +188,7 @@ const addToCart = e => {
     // Find clicked candy object from products
     let candy = products.data.find(candy => candy.id == e);
 
-    console.log('shoppingcartCandy i addtocart: ', shoppingcartCandy, candy)
+    //console.log('shoppingcartCandy i addtocart: ', shoppingcartCandy, candy)
 
     // Create temporary array to push object IDs from shoppingcartCandy to new candyIds array
     const candyIds = [];
@@ -194,11 +215,14 @@ const addToCart = e => {
 
     };
 
+
     console.log('Shopping cart contains: ', shoppingcartCandy);
 
     console.log('Sum & count: ', sum, count);
 
     console.log(shoppingcartCandy);
+
+
 
     cartSave();
 
@@ -206,15 +230,17 @@ const addToCart = e => {
 
 const cartSave = () => {
 
-    const storage = JSON.stringify(shoppingcartCandy); // skapar variabel som store:ar klickade godisar
-    localStorage.setItem('candyInCart', storage);
+    setSumCount(); // update sum and count before rendering to cart modal/DOM - VP
 
+<<<<<<< HEAD
     const count = shoppingcartCandy.map(e => e.qty)
         .reduce((acc, curr) => acc + curr);
 
     const sum = shoppingcartCandy.map(e => e.price * e.qty)
         .reduce((acc, curr) => acc + curr);
 
+=======
+>>>>>>> B4
     console.log('Total sum (reduce): ', sum, 'Total count (reduce): ', count)
 
     console.log('Totalt cost: ', sum)
@@ -222,19 +248,57 @@ const cartSave = () => {
     cartSum.innerHTML = `<p>Summa: ${sum} kr</p>`;
     cartCount.innerHTML = `<p>Antal: ${count} st</p>`;
 
-    // Empty then render to DOM
-    candyTot.innerHTML = '';
 
-    cartItems.innerHTML = '';
+    renderCart(); // built a renderCart function to prevent repetitive code - VP
 
-    // if (shoppingcartCandy) {
-    shoppingcartCandy.map(e =>
-        candyTot.innerHTML += `<td>${e.name}</td> <td>${e.price * e.qty}kr</td> <td>${e.qty}st
-            <button type="button" id="${e.id}" class="btn-plus">+</button> 
-                <button type="button" id="${e.id}" class="btn-minus">-</button></td><br>`);
-    shoppingcartCandy.map(e => cartItems.innerHTML += `<li>${e.qty}st ${e.name} för ${e.price * e.qty}kr</li>`);
-    // }
 };
+
+cartItems.addEventListener('click', f => {
+    if (f.target.className == 'btn-plus' || 'btn-minus') { //changed from tagName == 'BUTTON' - VP
+        let removeCandy = null; // create variable to compare with id of e - VP
+        shoppingcartCandy.forEach(e => {
+
+            if (f.target.id == e.id) {
+                if (f.target.className.includes('plus')) {
+                    e.qty++; // add qty - VP
+                    //renderCart(); // render cart to DOM - VP
+
+                } else if (f.target.className.includes('minus')) {
+                    e.qty--; // subtract qty - VP
+                    //renderCart(); // render cart to DOM - VP
+                    if (e.qty <= 0) { // if statement to handle if qty is 0 or below - VP 
+                        removeCandy = e.id; // set variable to id of the object to later remove - VP
+                    }
+
+                };
+            }
+
+        });
+        if (removeCandy) {
+            if (shoppingcartCandy.length < 1) { // if last object in the cart is removed - VP
+                localStorage.clear('candyInCart'); // clears the localStorage array 
+            } else {
+                for (let i = 0; i < shoppingcartCandy.length; i++) { // for loop to iterate through the array - VP
+                    if (shoppingcartCandy[i].id == removeCandy) { // if statement to compare with the variable I earlier set e.id - VP
+                        shoppingcartCandy.splice(i, 1); // remove one object from array starting from position i  - VP
+                        break; // break to stop for loop when correct id is found - VP
+                    }
+                };
+            }
+        }
+        cartSave();
+    };
+});
+
+// Created a function to stop repeteating myself - VP
+const renderCart = () => {
+    cartItems.innerHTML = '';
+    shoppingcartCandy.map(e => cartItems.innerHTML += `<li>${e.qty}st ${e.name} för ${e.price * e.qty}kr<button type="button" id="${e.id}" class="btn-plus">+</button> 
+    <button type="button" id="${e.id}" class="btn-minus">-</button></li>`);
+    cartItems.innerHTML += `<p>Antal: ${count} st</p><p>Summa: ${sum} kr</p>`;
+};
+
+
 
 //eventlistener for shoppingcart when icon clicked
 shoppingCart.addEventListener('click', () => {
@@ -246,8 +310,7 @@ shoppingCart.addEventListener('click', () => {
 
 const openCartModal = () => {
     cartModal.classList.remove("hidden");
-    cartItems.innerHTML = '';
-    shoppingcartCandy.map(e => cartItems.innerHTML += `<li>${e.qty}st ${e.name} för ${e.price * e.qty}kr</li>`);
+    renderCart(); //renders cart when opening it so that it is up to date with whats in localstorage - VP
     //overlay.classList.remove("hidden");
 };
 const closeCartModal = () => {
@@ -284,26 +347,6 @@ orderForm.addEventListener('submit', (e) => {
     e.preventDefault();
     alertSubmit();
 });
-
-
-
-
-// adding event listener 
-candyTot.addEventListener('click', e => {
-    if (e.target.tagName == 'BUTTON') {
-
-        if (e.target.className.includes('plus')) {
-            console.log('you added')
-
-            e.qty++;
-        } else if (e.target.className.includes('minus')) {
-            console.log('you removed');
-            e.qty--;
-        };
-
-        console.log(e.qty);
-    }
-})
 
 
 
