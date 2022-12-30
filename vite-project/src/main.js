@@ -373,12 +373,16 @@ orderForm.addEventListener('submit', async (e) => {
 
         const orderData = await postOrder()
 
-        alert(orderData.status)
+        // Using the returned data from POST:ing order, rendering respons if OK
+        alert(orderData)
         console.log(orderData)
 
     } catch (err) {
 
-        alert('Could not create order, because: ', err)
+        // Catching unexpected errors from POST:ing order, rendering respons if not OK
+        alert(err.status, 'when creating your order, please try again or come back later.')
+
+        // Return if error is found, preventing rest of code to run
         return;
 
     };
@@ -387,9 +391,7 @@ orderForm.addEventListener('submit', async (e) => {
 
 });
 
-
-const postOrder = async () => {
-
+const customerInfo = () => {
 
     let shoppingCartItems = shoppingcartCandy.map((e) => {
         return { product_id: e.id, qty: e.qty, item_price: e.price, item_total: e.price * e.qty }
@@ -407,7 +409,11 @@ const postOrder = async () => {
         order_total: sum,
         order_items: shoppingCartItems
     };
+}
 
+const postOrder = async () => {
+
+    customerInfo()
 
     // POST request
     const res = await fetch('https://www.bortakvall.se/api/orders', {
@@ -417,10 +423,6 @@ const postOrder = async () => {
         },
         body: JSON.stringify(submitData)
     });
-
-    // if (res.status == 200 && res.status < 300) {  // TA BORT !!!!
-    //     alert('Din order har lyckats!')
-    // }
 
     if (!res.ok) {
         throw new Error(`Could not create order, because: ${res.status} ${res.statusText}`);
