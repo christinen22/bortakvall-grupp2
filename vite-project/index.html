@@ -32,32 +32,36 @@
     </div>
     <div class="orderRes hidden">
       <p>TEST NU SYNS JAG</p>
+      <button type="button" id="homebtn">Hem</button>
     </div>
     <form class="form hidden" type="submit">
-      <label for="fname">First name:</label><br>
+      <label for="fname">Förnamn:</label><br>
       <input type="text" id="fname" name="fname" required><br>
 
-      <label for="lname">Last name:</label><br>
+      <label for="lname">Efternamn:</label><br>
       <input type="text" id="lname" name="lname" required><br>
 
-      <label for="address">Address:</label><br>
+      <label for="address">Adress:</label><br>
       <input type="text" id="address" name="address" required><br>
 
-      <label for="zipcode">Zip code:</label><br>
-      <input type="number" id="zipcode" name="zipcode" required><br>
+      <label for="zipcode">Postkod:</label><br>
+      <input type="number" min="10005" max="99470" id="zipcode" name="zipcode" required><br>
 
-      <label for="city">City:</label><br>
+      <label for="city">Stad:</label><br>
       <input type="text" id="city" name="city" required><br>
 
       <label for="email">Email:</label><br>
       <input type="email" id="email" name="email" required><br>
 
-      <label for="telephone">*Optional Telephone:</label><br>
+      <label for="telephone">* Telefonnummer:</label><br>
       <input type="number" id="telephone" name="telephone"><br>
 
-      <input type="submit" id="submitbtn" name="submit" value="Submit">
+      <input type="submit" id="submitbtn" name="submit" value="Skicka beställning">
+      <button type="button" id="backbtn">Bakåt</button>
 
+      <p>*-Valfritt</p>
     </form>
+
 
     <section class="cartModal hidden">
       <div class="cartView">
