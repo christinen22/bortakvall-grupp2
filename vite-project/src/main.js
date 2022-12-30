@@ -52,12 +52,12 @@ const renderApi = () => {
 
     products.data.sort((a, b) => {
         return a.name > b.name
-        ? 1
-        : -1
-    }) 
-    
+            ? 1
+            : -1
+    })
+
     console.log(products);
-    
+
     //console.log('Render API', products)
 
     products.data.map(e => {
@@ -366,6 +366,24 @@ console.log('fname: ', firstName)
 
 orderForm.addEventListener('submit', async (e) => {
 
+    e.preventDefault(); // TA BORT !!!
+    // submitData.reset(); // ??
+
+    try {
+        await postSubmit()
+    } catch (err) {
+        alert(err)
+        return;
+    };
+
+    getSubmit()
+
+});
+
+
+
+const postSubmit = async () => {  // BYT NAMN
+
     let shoppingCartItems = shoppingcartCandy.map((e) => {
         return { product_id: e.id, qty: e.qty, item_price: e.price, item_total: e.price * e.qty }
     });
@@ -383,34 +401,48 @@ orderForm.addEventListener('submit', async (e) => {
         order_items: shoppingCartItems
     }
 
-    e.preventDefault(); // TA BORT !!!
+    // try {
+    // POST request
+    const res = await fetch('https://www.bortakvall.se/api/orders', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(submitData)
+    });
 
-    try {
-        // POST request
-        const res = await fetch('https://www.bortakvall.se/api/orders', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(submitData)
-        });
+    // if (res.status == 200 && res.status < 300) {  // TA BORT !!!!
+    //     alert('Din order har lyckats!')
+    // }
 
-        // if (res.status == 200 && res.status < 300) {  // TA BORT !!!!
-        //     alert('Din order har lyckats!')
-        // }
-
-        if (!res.ok) {
-            throw new Error(`Could not create order, because: ${res.status} ${res.statusText}`);
-        };
-
-    } catch (err) {
-        alert(err)
-        return;
+    if (!res.ok) {
+        throw new Error(`Could not create your order, because: ${res.status} ${res.statusText}`);
     };
 
-    alertSubmit();  // GÖR DIV I DENNA
+    return await res.json()
 
-});
+    // alertSubmit();  // GÖR DIV I DENNA 
+};
 
 
+const fetchSubmit = async () => {
+
+    const res = await fetch('https://www.bortakvall.se/api/orders');
+
+    if (!res.ok) {
+        throw new Error(`Could not fetch your order, because: ${res.status} ${res.statusText}`);
+    }
+
+    return await res.json();
+}
+
+
+const getSubmit = async () => {
+
+    // FetchSubmit with order response
+    const data = await fetchSubmit();
+
+    console.log(data)
+
+}
 
