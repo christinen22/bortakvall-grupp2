@@ -247,7 +247,7 @@ cartItems.addEventListener('click', f => {
                 } else if (f.target.className.includes('minus')) {
                     e.qty--; // subtract qty - VP
                     //renderCart(); // render cart to DOM - VP
-                    if (e.qty = 0) { // if statement to handle if qty is 0 or below - VP 
+                    if (e.qty <= 0) { // if statement to handle if qty is 0 or below - VP 
                         removeCandy = e.id; // set variable to id of the object to later remove - VP 
                     }
 
