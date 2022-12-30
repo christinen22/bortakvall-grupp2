@@ -16,6 +16,8 @@ let cartItems = document.querySelector(".cartItems");
 const orderBtn = document.querySelector(".orderBtn");
 const orderForm = document.querySelector(".form");
 const orderRes = document.querySelector(".orderRes");
+const backBtn = document.querySelector("#backbtn");
+const homeBtn = document.querySelector("#homebtn");
 
 // Base URL and endpoint from where we fetch the candy
 const baseUrl = 'https://www.bortakvall.se';
@@ -222,10 +224,10 @@ const addToCart = e => {
 // Function for total sum (re-used at body for POST)
 //let sum;
 
-let totSum = () => {
-    sum = shoppingcartCandy.map(e => e.price * e.qty)
-        .reduce((acc, curr) => acc + curr, 0);
-}
+// let totSum = () => {
+//     sum = shoppingcartCandy.map(e => e.price * e.qty)
+//         .reduce((acc, curr) => acc + curr, 0);
+// }
 
 const cartSave = () => {
 
@@ -340,11 +342,24 @@ const orderView = () => {
 orderBtn.addEventListener('click', orderView);
 
 const alertSubmit = () => {
-    orderForm.classList.toggle("hidden");
+    orderForm.classList.add("hidden");
     alert('Thank you for your order!');
     localStorage.clear('candyInCart'); // funkar med click men ej med submit
-    orderRes.classList.remove("hidden");
+    orderRes.classList.toggle("hidden");
 }
+
+const backToHomepage = () => {
+    orderForm.classList.add("hidden");
+    containerEl.classList.toggle("hidden");
+    orderRes.classList.add("hidden");
+    shoppingCart.classList.remove("hidden");
+}
+
+backBtn.addEventListener("click", backToHomepage);
+
+homeBtn.addEventListener("click", () => {
+    document.location.href = "/"; // Ändra detta till netlify-länken?? Ska inte behövas
+});
 
 
 
