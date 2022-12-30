@@ -335,6 +335,7 @@ const orderView = () => {
     closeModal();
     closeCartModal();
     orderForm.classList.toggle("hidden");
+    shoppingCart.classList.add("hidden");
 }
 orderBtn.addEventListener('click', orderView);
 
