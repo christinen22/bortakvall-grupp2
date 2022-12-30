@@ -23,6 +23,9 @@ const baseUrl = 'https://www.bortakvall.se';
 // Array to store data from API
 let products = [];
 
+
+
+
 // Call getApi and render names and images to DOM 
 const getApi = async () => {
 
@@ -32,8 +35,12 @@ const getApi = async () => {
 
     products = data;
 
+
+
     renderApi();
 };
+
+
 
 // Promise for baseUrl and changeable endPoint
 const fetchApi = async (endPoint) => {
@@ -48,20 +55,32 @@ const fetchApi = async (endPoint) => {
     return await res.json();
 };
 
+
+
 // Render product name and image to DOM via map-function
 const renderApi = () => {
 
+    products.data.sort((a, b) => {
+        return a.name > b.name
+        ? 1
+        : -1
+    }) 
+    
+    console.log(products);
+    
     //console.log('Render API', products)
 
     products.data.map(e => {
+
         return containerEl.innerHTML +=
             `<div class="col-3">
         <img src="${baseUrl}${e.images.thumbnail}" alt="picture of ${e.name} candy">
-        <h3>${e.name} ${e.price}kr</h3>
+        <h3>${e.name} ${e.price}kr, <br> ${e.stock_quantity} st i lager.</h3>
         <button type="button" id="${e.id}" class="cart btn btn-success">Add to cart</button> 
         <button type="button" id="${e.id}" class="info btn btn-info">Info</button>
         </div>`
     });
+
 };
 
 // Catch if returned error from promise and call getApi-function
