@@ -9,6 +9,17 @@ $blue-bg-color: #a3dfeb;
 $pink-bg-color: pink;
 
 
+header {
+  background-color: $font-color;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+header img {
+  align-self: center;
+  max-width: 1000px;
+}
 
 
 .toolbar {
@@ -16,8 +27,11 @@ $pink-bg-color: pink;
   position: sticky;
   top: 0;
   text-align: center;
-  background-color: #fff
+  background-color: $font-color;
+  color: #eee;
 }
+
+
 
 .wrapper {
   max-width: 1200px;
