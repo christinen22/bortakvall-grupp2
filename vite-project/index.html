@@ -20,20 +20,20 @@
 </head>
 
 <body>
-  <div class="wrapper">
+    <div class="toolbar">
+      <img class="cart" src="src/shoppingcart.png" width="50px" height="50px" alt="shopping cart">
+      <span id="count"></span>
+      <span id="sum"></span>
+      <div class="prodStock">
+    <!-- contains total of products and total of products in stock -->
+      </div>
+    </div>
     <header>
-
       <img class="headerimg" src="src/bortakvall.png" alt="logo-bortakvall">
-        <div class="toolbar">
-          <img class="cart" src="src/shoppingcart.png" width="50px" height="50px" alt="shopping cart">
-          <span id="count"></span>
-          <span id="sum"></span>
-          <div class="prodStock">
-        <!-- contains total of products and total of products in stock -->
-          </div>
-        </div>
+      <a class="top"></a>
     </header>
     
+    <div class="wrapper">
     <div class="orderRes hidden">
       <p>TEST NU SYNS JAG</p>
       <button type="button" id="homebtn">Hem</button>
@@ -100,8 +100,13 @@
 
 
     </div>
+    <div class="goToTop">
+      <img src="src/arrow (3).png" alt="arrowup">
+    <a href="#top" class="top">Tillbaka till topp!</a>
+    </div>
     <footer>
-      <p>Här är footertext</p>
+      <p>
+        Här är footertext</p>
     </footer>
   </div>
   </div>
