@@ -246,9 +246,15 @@ footer {
 
 }
 
-.orderBtn {
+.orderBtn, .btn-plus, .btn-minus {
   background-color: $blue-bg-color;
 }
+
+.orderBtn {
+  border: 1px solid #000;
+  padding: 5px;
+}
+
 
 .hidden {
   display: none;
@@ -277,7 +283,7 @@ a  {
 
     width: 350px;
   
-    height: 450px;
+    height: 700px;
   }
 
   header img {
@@ -329,6 +335,10 @@ form {
 
 
 @media screen and (min-width: 600px) and (max-width: 1080px) {
+
+  header img {
+    width: 75%;
+  }
 
 
   form {
