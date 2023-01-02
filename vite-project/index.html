@@ -20,21 +20,25 @@
 </head>
 
 <body>
-  <div class="wrapper">
     <div class="toolbar">
-      <h1 class="brand">Bortakväll</h1>
-      <img class="cart" src="src/shoppingcart.jpg" alt="shopping cart">
+      <img class="cart" src="src/shoppingcart.png" width="50px" height="50px" alt="shopping cart">
       <span id="count"></span>
       <span id="sum"></span>
-
       <div class="prodStock">
-        <!-- contains total of products and total of products in stock -->
+    <!-- contains total of products and total of products in stock -->
       </div>
     </div>
+    <header>
+      <img class="headerimg" src="src/bortakvall2.png" alt="logo-bortakvall">
+      <a class="top"></a>
+    </header>
+    
+    <div class="wrapper">
     <div class="orderRes hidden">
       <p>TEST NU SYNS JAG</p>
       <button type="button" id="homebtn">Hem</button>
     </div>
+
     <form class="form hidden" type="submit">
       <label for="fname">Förnamn:</label><br>
       <input type="text" id="fname" name="fname" required><br>
@@ -66,10 +70,11 @@
 
     <section class="cartModal hidden">
       <div class="cartView">
+        <button class="btn-close-cart">x</button>
         <ul class="cartItems">
 
         </ul>
-        <button class="btn-close-cart">x</button>
+        
         <button class="orderBtn">Beställ</button>
       </div>
     </section>
@@ -96,8 +101,20 @@
 
 
     </div>
+    <div class="goToTop">
+      <img src="src/arrow (3).png" alt="arrowup">
+    <a href="#top" class="top">Tillbaka till topp!</a>
+    </div>
     <footer>
-      <p>Här är footertext</p>
+      <p>
+        Frågor?
+        <a href="mailto: exempel@mail.com">Mejla oss!</a>
+        Besök oss på: Godisgatan 11, Candyville.
+      </p>
+      <p class="sidenote">Ett projektarbete i Javascript 1, Agilt projektarbete och Arbetsmetodik för utvecklare
+        <br>
+        Av Louise Murray, Christine Nilsson och Viktor Pettersson.
+      </p>
     </footer>
   </div>
   </div>

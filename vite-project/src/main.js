@@ -22,7 +22,6 @@ const productStock = document.querySelector(".prodStock");
 
 
 
-
 // Base URL and endpoint from where we fetch the candy
 const baseUrl = 'https://www.bortakvall.se';
 
@@ -77,6 +76,7 @@ const renderApi = () => {
 
 
     products.data.map(e => {
+        
 
         if (e.stock_status == "outofstock") {
             containerEl.innerHTML +=
@@ -87,15 +87,18 @@ const renderApi = () => {
         <button type="button" id="${e.id}" class="info btn btn-info">Info</button>
         </div>`
         } else {
-
+            
+            
             containerEl.innerHTML +=
                 `<div class="col-3">
         <img src="${baseUrl}${e.images.thumbnail}" alt="picture of ${e.name} candy">
         <h3>${e.name} ${e.price}kr, <br> ${e.stock_quantity} st i lager.</h3>
         <button type="button" id="${e.id}" class="cart btn btn-success">Lägg i kundvagn</button> 
         <button type="button" id="${e.id}" class="info btn btn-info">Info</button>
-        </div>`
+        </div>` 
         }
+        
+        
     });
 };
 
@@ -117,10 +120,13 @@ let containerEl = document.querySelector('.candyProducts');
 // // Query Selector for Add to Cart button
 // let shoppingcartCandy = [];
 
+let clickedBtn;
+
+
 // Query Selector for button and adding event listener 
 containerEl.addEventListener('click', e => {
     if (e.target.tagName == 'BUTTON') {
-
+        clickedBtn = e.target;
         // If adding another button in containerEl add includes('.info') to else
         e.target.className.includes('cart') ? addToCart(e.target.id) : getInfo(e.target.id);
 
@@ -207,6 +213,8 @@ const addToCart = e => {
     // Find clicked candy object from products
     let candy = products.data.find(candy => candy.id == e);
 
+    console.log(candy.stock_quantity);
+
     //console.log('shoppingcartCandy i addtocart: ', shoppingcartCandy, candy)
 
     // Create temporary array to push object IDs from shoppingcartCandy to new candyIds array
@@ -223,27 +231,49 @@ const addToCart = e => {
 
         shoppingcartCandy.push(candy)
         candy.qty = 1;
+        //candy.stock_quantity = -1;
+
+    
 
     } else {
 
         shoppingcartCandy.map(e => {
+
             if (candy.id == e.id) {
-                e.qty++;
-            }
-        });
+                 e.qty++;
+
+                    console.log(e.qty);
+
+                    //candy.stock_quantity--;
+
+                }
+
+            });
+
+            // (candy.stock_status == "outofstock" || candy.stock_quantity <= 0 || null)
+
+            // if (candy.stock_quantity == e.qty) {
+
+            //     console.log('Denna godisen är slut');
+
+            //     //document.querySelector(".cart btn btn-success").disabled = true; //funkar ej
+
+            // }
+
+        };
+
+
+        //console.log('Shopping cart contains: ', shoppingcartCandy);
+
+        //console.log(shoppingcartCandy);
+
+
+        cartSave();
+
+        //console.log('Sum & count: ', sum, count);
 
     };
 
-
-    console.log('Shopping cart contains: ', shoppingcartCandy);
-
-    console.log(shoppingcartCandy);
-
-
-    cartSave();
-
-    console.log('Sum & count: ', sum, count);
-};
 
 
 // Function for total sum (re-used at body for POST)
@@ -280,12 +310,12 @@ const cartSave = () => {
 };
 
 cartItems.addEventListener('click', f => {
-    if (f.target.className == 'btn-plus' || 'btn-minus') { //changed from tagName == 'BUTTON' - VP
+    if (f.target.className == 'btn-plus' || 'btn-minus' || 'btnRemove') { //changed from tagName == 'BUTTON' - VP
         let removeCandy = null; // create variable to compare with id of e - VP
         shoppingcartCandy.forEach(e => {
 
             if (f.target.id == e.id) {
-                if (f.target.className.includes('plus')) {
+                if (f.target.className.includes('plus') && e.stock_quantity != e.qty) {
                     e.qty++; // add qty - VP
                     //e.stock_quantity--;
                     //renderCart(); // render cart to DOM - VP
@@ -293,15 +323,26 @@ cartItems.addEventListener('click', f => {
                 } else if (f.target.className.includes('minus')) {
                     e.qty--; // subtract qty - VP
                     // e.stock_quatity++; 
+                
                     //renderCart(); // render cart to DOM - VP
                     if (e.qty <= 0) { // if statement to handle if qty is 0 or below - VP 
                         removeCandy = e.id; // set variable to id of the object to later remove - VP 
-                    }
+                    } 
 
-                };
+                } else if (f.target.className.includes('btnRemove')) {
+                    e.qty = 0;
+                    if (e.qty <= 0) { // if statement to handle if qty is 0 or below - VP 
+                        removeCandy = e.id; // set variable to id of the object to later remove - VP 
+                    } 
+                }
             }
+        
 
         });
+
+
+
+
         if (removeCandy) {
             if (shoppingcartCandy.length < 1) { // if last object in the cart is removed - VP
                 localStorage.clear('candyInCart'); // clears the localStorage array 
@@ -321,8 +362,8 @@ cartItems.addEventListener('click', f => {
 // Created a function to stop repeteating myself - VP
 const renderCart = () => {
     cartItems.innerHTML = '';
-    shoppingcartCandy.map(e => cartItems.innerHTML += `<li>${e.qty}st ${e.name} för ${e.price * e.qty}kr<button type="button" id="${e.id}" class="btn-plus">+</button> 
-    <button type="button" id="${e.id}" class="btn-minus">-</button></li>`);
+    shoppingcartCandy.map(e => cartItems.innerHTML += `<li>${e.qty}st ${e.name} för ${e.price * e.qty}kr <button type="button" id="${e.id}" class="btn-plus"> + </button> 
+    <button type="button" id="${e.id}" class="btn-minus"> - </button></li> <button type="button" id="${e.id}" class="btnRemove">Ta bort</button>`);
     cartItems.innerHTML += `<p>Antal: ${count} st</p><p>Summa: ${sum} kr</p>`;
 };
 

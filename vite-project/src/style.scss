@@ -9,15 +9,36 @@ $blue-bg-color: #a3dfeb;
 $pink-bg-color: pink;
 
 
+header {
+  background-color: $font-color;
+  display: flex;
+  justify-content: center;
+}
+
+header img {
+  align-self: center;
+  max-width: 1200px;
+  margin-top: 0;
+  background-color: $font-color;
+
+}
 
 
 .toolbar {
-  position: -webkit-sticky;
   position: sticky;
   top: 0;
+  bottom: 0;
   text-align: center;
-  background-color: #fff
+  background-color: $font-color;
+  color: #eee;
+  width: 1200px;
 }
+
+.cart {
+  cursor: pointer;
+}
+
+
 
 .wrapper {
   max-width: 1200px;
@@ -118,6 +139,8 @@ h2 {
   border-radius: 25%;
   padding: 25px;
   margin-left: 75px;
+  width: 50%;
+  
  
   
 }
@@ -139,9 +162,11 @@ button {
 .btn-close {
   transform: translate(10px, -20px);
   padding: .5rem .7rem;
-  background: #eee;
-  border-radius: 50%
+  background: $blue-bg-color;
+  border-radius: 50%;
 }
+
+
 
 .overlay {
   position: fixed;
@@ -195,6 +220,7 @@ footer {
 
 .cartModal .cartView {
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: space-between;
 }
@@ -210,18 +236,42 @@ footer {
   font-size: 0.9em;
 }
 
+.cartItems {
+  font-size: 14px;
+
+}
+
 .cartModal p {
   font-size: 0.9rem;
-  color: #777;
+  color: $font-color;
+  font-style: italic;
   margin: 0.4rem 0 0.2rem;
 }
 
 .btn-close-cart {
   transform: translate(10px, -20px);
   padding: 0.5rem 0.7rem;
-  background: #eee;
-  border-radius: 50%;
+  background-color: $blue-bg-color;
+
 }
+
+.orderBtn, .btn-plus, .btn-minus  {
+  background-color: $blue-bg-color;
+  font-weight: bold;
+  padding: 5px;
+  
+  
+}
+
+.btnRemove {
+  background-color: $blue-bg-color;
+}
+
+.orderBtn {
+  border: 1px solid #000;
+  padding: 5px;
+}
+
 
 .hidden {
   display: none;
@@ -236,7 +286,35 @@ form {
 }
 
 
+
+a  {
+  color: #000;
+  text-decoration: none;
+
+}
+
+p.sidenote  {
+  font-size: 0.7em;
+  text-align: left;
+  font-style: italic;
+
+
+}
+
+
 @media screen and (min-width: 280px) and (max-width: 599px) {
+
+
+  .cartModal {
+
+    width: 350px;
+  
+    height: 700px;
+  }
+
+  header img {
+    width: 75%;
+  }
 
 
   .wrapper {
@@ -260,6 +338,7 @@ form {
 
 .col-3 img {
   margin-top: 10px;
+
 }
 
 h3 {
@@ -278,10 +357,15 @@ form {
 }
 
 
+
 }
 
 
 @media screen and (min-width: 600px) and (max-width: 1080px) {
+
+  header img {
+    width: 75%;
+  }
 
 
   form {
