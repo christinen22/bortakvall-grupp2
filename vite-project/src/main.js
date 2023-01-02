@@ -371,8 +371,6 @@ orderBtn.addEventListener('click', orderView);
 
 const alertSubmit = (data) => {
     orderForm.classList.toggle("hidden");
-    alert('Thank you for your order!');
-    localStorage.clear('candyInCart'); // funkar med click men ej med submit
     orderRes.classList.remove("hidden");
     orderForm.innerHTML = `<p>${data}</p>`
 };
