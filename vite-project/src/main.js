@@ -399,6 +399,10 @@ const submitOrder = async () => {
 };
 
 
+// OBS ?! Invänta svar från Johan ang. customer info & flytta denna + skriv kommentar
+
+localStorage.getItem('customerInfo')
+
 // When submit button is clicked by the customer
 orderForm.addEventListener('submit', async (e) => {
 
@@ -439,8 +443,8 @@ orderForm.addEventListener('submit', async (e) => {
 
     const successMsg = `Thank you ${submitData.customer_first_name} for your order, your order number is: ${orderData.data.id}`;
 
-    // Clear local storage cart
-    localStorage.clear('candyInCart')
+    // Remove local storage cart
+    localStorage.removeItem('candyInCart')
 
     alertSubmit(successMsg)
 
