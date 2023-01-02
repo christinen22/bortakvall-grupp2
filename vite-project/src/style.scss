@@ -255,12 +255,16 @@ footer {
 
 }
 
-.orderBtn, .btn-plus, .btn-minus {
+.orderBtn, .btn-plus, .btn-minus  {
   background-color: $blue-bg-color;
   font-weight: bold;
   padding: 5px;
   
   
+}
+
+.btnRemove {
+  background-color: $blue-bg-color;
 }
 
 .orderBtn {
