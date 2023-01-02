@@ -19,7 +19,8 @@ const orderRes = document.querySelector(".orderRes");
 const backBtn = document.querySelector("#backbtn");
 const homeBtn = document.querySelector("#homebtn");
 const productStock = document.querySelector(".prodStock");
-
+const cartButtonPos = document.querySelector(".cart btn btn-success");
+const cartButtonNeg = document.querySelector(".cart btn btn-danger");
 
 
 
@@ -77,6 +78,7 @@ const renderApi = () => {
 
 
     products.data.map(e => {
+        
 
         if (e.stock_status == "outofstock") {
             containerEl.innerHTML +=
@@ -87,14 +89,15 @@ const renderApi = () => {
         <button type="button" id="${e.id}" class="info btn btn-info">Info</button>
         </div>`
         } else {
-
+            
+            
             containerEl.innerHTML +=
                 `<div class="col-3">
         <img src="${baseUrl}${e.images.thumbnail}" alt="picture of ${e.name} candy">
         <h3>${e.name} ${e.price}kr, <br> ${e.stock_quantity} st i lager.</h3>
         <button type="button" id="${e.id}" class="cart btn btn-success">Lägg i kundvagn</button> 
         <button type="button" id="${e.id}" class="info btn btn-info">Info</button>
-        </div>`
+        </div>` 
         }
         
         
@@ -237,13 +240,16 @@ const addToCart = e => {
             if (candy.id == e.id) {
                 e.qty++;
                 candy.stock_quantity--;
+                
             }
         });
         
-       if (candy.stock_quantity <= 0) {
-        console.log('HEJ')
-       } 
+       if (candy.stock_status == "outofstock" || candy.stock_quantity <= 0) {
+        document.querySelector(".cart btn btn-success").disabled = true;
 
+
+      
+    } 
     };
 
   
