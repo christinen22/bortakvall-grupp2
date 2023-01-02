@@ -212,7 +212,6 @@ const addToCart = e => {
     console.log(shoppingcartCandy);
 
 
-
     cartSave();
 
     console.log('Sum & count: ', sum, count);
@@ -338,18 +337,19 @@ const orderView = () => {
 }
 orderBtn.addEventListener('click', orderView);
 
-const alertSubmit = () => {
+const alertSubmit = (data) => {
     orderForm.classList.toggle("hidden");
     alert('Thank you for your order!');
     localStorage.clear('candyInCart'); // funkar med click men ej med submit
     orderRes.classList.remove("hidden");
-}
+    orderForm.innerHTML = `<p>${data}</p>`
+};
 
 
 
 
 
-// Trying to POST submitted form/order to server
+// POST submitted form/order to server
 
 // Finding all input fields from order form
 const firstName = document.querySelector("#fname");
@@ -360,21 +360,16 @@ const city = document.querySelector("#city");
 const email = document.querySelector("#email");
 const telephone = document.querySelector("#telephone");
 
-console.log('fname: ', firstName)
+let submitData = {};
 
+const submitOrder = async () => {
 
-
-
-
-
-orderForm.addEventListener('submit', async (e) => {
-
-    let shoppingCartItems = shoppingcartCandy.map((e) => {
+    let shoppingCartItems = await shoppingcartCandy.map(e => {
         return { product_id: e.id, qty: e.qty, item_price: e.price, item_total: e.price * e.qty }
     });
 
     // Values from customer input fields to add to POST body
-    const submitData = {
+    submitData = {
         customer_first_name: firstName.value,
         customer_last_name: lastName.value,
         customer_address: address.value,
@@ -384,35 +379,77 @@ orderForm.addEventListener('submit', async (e) => {
         customer_phone: telephone.value,
         order_total: sum,
         order_items: shoppingCartItems
+    };
+
+    console.log(submitData)
+
+    // POST request
+    const res = await fetch('https://www.bortakvall.se/api/orders', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(submitData)
+    });
+
+    if (!res.ok) {
+        console.log(res)
+        throw new Error(`Could not place order, because of error: ${res.status}`);
     }
 
-    e.preventDefault(); // TA BORT !!!
+    return await res.json()
+
+};
+
+
+// OBS ?! Invänta svar från Johan ang. customer info & flytta denna + skriv kommentar
+
+localStorage.getItem('customerInfo')
+
+// When submit button is clicked by the customer
+orderForm.addEventListener('submit', async (e) => {
+
+    e.preventDefault();
+
+    let orderData = [];
 
     try {
-        // POST request
-        const res = await fetch('https://www.bortakvall.se/api/orders', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(submitData)
-        });
 
-        // if (res.status == 200 && res.status < 300) {  // TA BORT !!!!
-        //     alert('Din order har lyckats!')
-        // }
+        orderData = await submitOrder()
+        console.log(orderData)
 
-        if (!res.ok) {
-            throw new Error(`Could not create order, because: ${res.status} ${res.statusText}`);
-        };
+        const submitErrors = Object.values(orderData.data)
+
+        if (orderData.status == 'fail') {
+
+            // Calling function which renders respons to DOM
+            alertSubmit(submitErrors);
+
+            // Return if error is found, preventing rest of code to run
+            return;
+
+        }
 
     } catch (err) {
-        alert(err)
+
+        console.log(err)
+
+        alertSubmit(err)
+
+        // Return if error is found, preventing rest of code to run
         return;
 
     };
 
-    alertSubmit(); // GÖR DIV I DENNA
+    // Store contact information from previous order in local storage
+    localStorage.setItem('customerInfo', JSON.stringify(submitData))
+
+    const successMsg = `Thank you ${submitData.customer_first_name} for your order, your order number is: ${orderData.data.id}`;
+
+    // Remove local storage cart
+    localStorage.removeItem('candyInCart')
+
+    alertSubmit(successMsg)
 
 });
 
