@@ -339,6 +339,7 @@ orderBtn.addEventListener('click', orderView);
 const alertSubmit = (data) => {
     orderForm.innerHTML = `<p>${data}</p>`
 
+
 }
 
 
@@ -356,17 +357,16 @@ const city = document.querySelector("#city");
 const email = document.querySelector("#email");
 const telephone = document.querySelector("#telephone");
 
-
+let submitData = {};
 
 const submitOrder = async () => {
-
 
     let shoppingCartItems = await shoppingcartCandy.map(e => {
         return { product_id: e.id, qty: e.qty, item_price: e.price, item_total: e.price * e.qty }
     });
 
     // Values from customer input fields to add to POST body
-    const submitData = {
+    submitData = {
         customer_first_name: firstName.value,
         customer_last_name: lastName.value,
         customer_address: address.value,
@@ -434,7 +434,10 @@ orderForm.addEventListener('submit', async (e) => {
 
     };
 
-    const successMsg = `Thank you for your order, you order number is: ${orderData.data.id}`;
+    // Store contact information in local storage
+    localStorage.setItem('customerInfo', submitData)
+
+    const successMsg = `Thank you ${submitData.customer_first_name} for your order, your order number is: ${orderData.data.id}`;
 
     // Clear local storage cart
     localStorage.clear('candyInCart')
