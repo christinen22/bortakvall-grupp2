@@ -245,7 +245,7 @@ const addToCart = e => {
         });
         
        if (candy.stock_status == "outofstock" || candy.stock_quantity <= 0) {
-        document.querySelector(".cart btn btn-success").disabled = true;
+        document.querySelector(".cart btn btn-success").disabled = true; //funkar ej
 
 
       
