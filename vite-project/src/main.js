@@ -19,6 +19,7 @@ const orderRes = document.querySelector(".orderRes");
 const backBtn = document.querySelector("#backbtn");
 const homeBtn = document.querySelector("#homebtn");
 const productStock = document.querySelector(".prodStock");
+const topArrow = document.querySelector(".goToTop")
 
 
 
@@ -396,13 +397,16 @@ const orderView = () => {
     orderForm.classList.toggle("hidden");
     shoppingCart.classList.add("hidden");
     productStock.classList.add("hidden");
+    topArrow.classList.add("hidden")
 }
+
 orderBtn.addEventListener('click', orderView);
 
 const alertSubmit = (data) => {
     orderForm.classList.toggle("hidden");
     orderRes.classList.remove("hidden");
-    orderForm.innerHTML = `<p>${data}</p>`
+    orderForm.innerHTML += `<p>${data}</p>`
+    topArrow.classList.add("hidden")
 };
 
 const backToHomepage = () => {
