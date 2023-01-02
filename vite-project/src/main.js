@@ -96,6 +96,8 @@ const renderApi = () => {
         <button type="button" id="${e.id}" class="info btn btn-info">Info</button>
         </div>`
         }
+        
+        
     });
 };
 
@@ -207,6 +209,8 @@ const addToCart = e => {
     // Find clicked candy object from products
     let candy = products.data.find(candy => candy.id == e);
 
+    console.log(candy.stock_quantity);
+
     //console.log('shoppingcartCandy i addtocart: ', shoppingcartCandy, candy)
 
     // Create temporary array to push object IDs from shoppingcartCandy to new candyIds array
@@ -223,16 +227,26 @@ const addToCart = e => {
 
         shoppingcartCandy.push(candy)
         candy.qty = 1;
+        candy.stock_quantity = -1;
+
+    
 
     } else {
 
         shoppingcartCandy.map(e => {
             if (candy.id == e.id) {
                 e.qty++;
+                candy.stock_quantity--;
             }
         });
+        
+       if (candy.stock_quantity <= 0) {
+        console.log('HEJ')
+       } 
 
     };
+
+  
 
 
     console.log('Shopping cart contains: ', shoppingcartCandy);
@@ -297,12 +311,18 @@ cartItems.addEventListener('click', f => {
                     //renderCart(); // render cart to DOM - VP
                     if (e.qty <= 0) { // if statement to handle if qty is 0 or below - VP 
                         removeCandy = e.id; // set variable to id of the object to later remove - VP 
-                    }
+                    } 
 
                 };
             }
 
+        
+
         });
+
+
+
+
         if (removeCandy) {
             if (shoppingcartCandy.length < 1) { // if last object in the cart is removed - VP
                 localStorage.clear('candyInCart'); // clears the localStorage array 

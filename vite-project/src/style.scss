@@ -19,6 +19,8 @@ header img {
   align-self: center;
   max-width: 1200px;
   margin-top: 0;
+  background-color: $font-color;
+
 }
 
 
@@ -137,6 +139,8 @@ h2 {
   border-radius: 25%;
   padding: 25px;
   margin-left: 75px;
+  width: 50%;
+  
  
   
 }
@@ -232,6 +236,11 @@ footer {
   font-size: 0.9em;
 }
 
+.cartItems {
+  font-size: 14px;
+
+}
+
 .cartModal p {
   font-size: 0.9rem;
   color: $font-color;
@@ -248,6 +257,10 @@ footer {
 
 .orderBtn, .btn-plus, .btn-minus {
   background-color: $blue-bg-color;
+  font-weight: bold;
+  padding: 5px;
+  
+  
 }
 
 .orderBtn {
