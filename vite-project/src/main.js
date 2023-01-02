@@ -240,22 +240,7 @@ const addToCart = e => {
         shoppingcartCandy.map(e => {
 
             if (candy.id == e.id) {
-
-                if (candy.stock_quantity == e.qty) {
-
-                    //clickedBtn.classList.remove('btn-success');
-
-                    //clickedBtn.classList.add('btn-danger', 'disabled');
-
-                    console.log(clickedBtn);
-
-                    alert('denna godisen är slut!');
-
-                    console.log(e);
-
-                } else {
-
-                    e.qty++;
+                 e.qty++;
 
                     console.log(e.qty);
 
@@ -263,7 +248,7 @@ const addToCart = e => {
 
                 }
 
-            };
+            });
 
             // (candy.stock_status == "outofstock" || candy.stock_quantity <= 0 || null)
 
@@ -275,7 +260,7 @@ const addToCart = e => {
 
             // }
 
-        });
+        };
 
 
         //console.log('Shopping cart contains: ', shoppingcartCandy);
@@ -289,7 +274,7 @@ const addToCart = e => {
 
     };
 
-};
+
 
 // Function for total sum (re-used at body for POST)
 //let sum;
