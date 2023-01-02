@@ -211,7 +211,6 @@ const addToCart = e => {
     console.log(shoppingcartCandy);
 
 
-
     cartSave();
 
     console.log('Sum & count: ', sum, count);
@@ -337,9 +336,9 @@ const orderView = () => {
 }
 orderBtn.addEventListener('click', orderView);
 
-const alertSubmit = () => {
-    alert('Thank you for your order!');
-    localStorage.clear('candyInCart'); // funkar med click men ej med submit
+const alertSubmit = (data) => {
+    orderForm.innerHTML = `<p>${data}</p>`
+
 }
 
 
@@ -357,41 +356,12 @@ const city = document.querySelector("#city");
 const email = document.querySelector("#email");
 const telephone = document.querySelector("#telephone");
 
-console.log('fname: ', firstName)
 
 
 
 
+const postOrder = async () => {
 
-
-orderForm.addEventListener('submit', async (e) => {
-
-    e.preventDefault(); // TA BORT !!!
-    // submitData.reset(); // ??
-
-    try {
-
-        const orderData = await postOrder()
-
-        // Using the returned data from POST:ing order, rendering respons if OK
-        alert(orderData)
-        console.log(orderData)
-
-    } catch (err) {
-
-        // Catching unexpected errors from POST:ing order, rendering respons if not OK
-        alert(err.status, 'when creating your order, please try again or come back later.')
-
-        // Return if error is found, preventing rest of code to run
-        return;
-
-    };
-
-    alertSubmit();  // GÖR DIV I DENNA  
-
-});
-
-const customerInfo = () => {
 
     let shoppingCartItems = shoppingcartCandy.map((e) => {
         return { product_id: e.id, qty: e.qty, item_price: e.price, item_total: e.price * e.qty }
@@ -409,11 +379,8 @@ const customerInfo = () => {
         order_total: sum,
         order_items: shoppingCartItems
     };
-}
 
-const postOrder = async () => {
-
-    customerInfo()
+    console.log(submitData)
 
     // POST request
     const res = await fetch('https://www.bortakvall.se/api/orders', {
@@ -425,10 +392,63 @@ const postOrder = async () => {
     });
 
     if (!res.ok) {
-        throw new Error(`Could not create order, because: ${res.status} ${res.statusText}`);
+        console.log(res)
+        throw new Error(`Could not place order, because of error: ${res.status}`);
     }
 
     return await res.json()
 
 };
+
+orderForm.addEventListener('submit', async (e) => {
+
+    e.preventDefault();
+
+    let orderData = [];
+
+    try {
+
+        orderData = await postOrder()
+        console.log(orderData)
+
+        const submitErrors = Object.values(orderData.data)
+
+        if (orderData.status == 'fail') {
+
+            // let wrongInput = Object.keys()
+
+            console.log(orderData.data.customer_first_name[0])
+
+            alertSubmit(submitErrors);
+
+            return;
+
+        }
+        // Using the returned data from POST:ing order, rendering respons if OK
+        console.log(orderData.status)
+        console.log(orderData.data.id)
+        console.log(orderData)
+
+    } catch (err) {
+
+        console.log(err)
+
+        let error = err;
+        // Catching unexpected errors from POST:ing order, rendering respons if not OK
+        alertSubmit(error)
+
+        // Return if error is found, preventing rest of code to run
+        return;
+
+    };
+
+    const successMsg = `Thank you for your order, you order number is: ${orderData.data.id}`;
+
+    localStorage.clear('candyInCart')
+
+    alertSubmit(successMsg)
+
+});
+
+
 
