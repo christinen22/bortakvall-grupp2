@@ -438,8 +438,8 @@ orderForm.addEventListener('submit', async (e) => {
 
     };
 
-    // Store contact information in local storage
-    localStorage.setItem('customerInfo', submitData)
+    // Store contact information from previous order in local storage
+    localStorage.setItem('customerInfo', JSON.stringify(submitData))
 
     const successMsg = `Thank you ${submitData.customer_first_name} for your order, your order number is: ${orderData.data.id}`;
 
