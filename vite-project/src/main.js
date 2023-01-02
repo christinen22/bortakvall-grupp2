@@ -345,7 +345,7 @@ const alertSubmit = (data) => {
 
 
 
-// Trying to POST submitted form/order to server
+// POST submitted form/order to server
 
 // Finding all input fields from order form
 const firstName = document.querySelector("#fname");
@@ -358,12 +358,10 @@ const telephone = document.querySelector("#telephone");
 
 
 
+const submitOrder = async () => {
 
 
-const postOrder = async () => {
-
-
-    let shoppingCartItems = shoppingcartCandy.map((e) => {
+    let shoppingCartItems = await shoppingcartCandy.map(e => {
         return { product_id: e.id, qty: e.qty, item_price: e.price, item_total: e.price * e.qty }
     });
 
@@ -400,6 +398,8 @@ const postOrder = async () => {
 
 };
 
+
+// When submit button is clicked by the customer
 orderForm.addEventListener('submit', async (e) => {
 
     e.preventDefault();
@@ -408,34 +408,26 @@ orderForm.addEventListener('submit', async (e) => {
 
     try {
 
-        orderData = await postOrder()
+        orderData = await submitOrder()
         console.log(orderData)
 
         const submitErrors = Object.values(orderData.data)
 
         if (orderData.status == 'fail') {
 
-            // let wrongInput = Object.keys()
-
-            console.log(orderData.data.customer_first_name[0])
-
+            // Calling function which renders respons to DOM
             alertSubmit(submitErrors);
 
+            // Return if error is found, preventing rest of code to run
             return;
 
         }
-        // Using the returned data from POST:ing order, rendering respons if OK
-        console.log(orderData.status)
-        console.log(orderData.data.id)
-        console.log(orderData)
 
     } catch (err) {
 
         console.log(err)
 
-        let error = err;
-        // Catching unexpected errors from POST:ing order, rendering respons if not OK
-        alertSubmit(error)
+        alertSubmit(err)
 
         // Return if error is found, preventing rest of code to run
         return;
@@ -444,6 +436,7 @@ orderForm.addEventListener('submit', async (e) => {
 
     const successMsg = `Thank you for your order, you order number is: ${orderData.data.id}`;
 
+    // Clear local storage cart
     localStorage.clear('candyInCart')
 
     alertSubmit(successMsg)
