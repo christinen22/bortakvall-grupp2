@@ -8,7 +8,7 @@ let candyImg = document.createElement("img");
 let shoppingCart = document.querySelector(".cart");
 const cartSum = document.querySelector("#sum");
 const cartCount = document.querySelector("#count");
-const candyTot = document.querySelector(".order");
+//const candyTot = document.querySelector(".order");
 //queryselector to open cartModal
 const cartModal = document.querySelector(".cartModal");
 const closeCartModalBtn = document.querySelector(".btn-close-cart");
@@ -16,6 +16,12 @@ let cartItems = document.querySelector(".cartItems");
 const orderBtn = document.querySelector(".orderBtn");
 const orderForm = document.querySelector(".form");
 const orderRes = document.querySelector(".orderRes");
+const backBtn = document.querySelector("#backbtn");
+const homeBtn = document.querySelector("#homebtn");
+const productStock = document.querySelector(".prodStock");
+
+
+
 
 // Base URL and endpoint from where we fetch the candy
 const baseUrl = 'https://www.bortakvall.se';
@@ -60,18 +66,40 @@ const renderApi = () => {
     console.log(products);
 
     //console.log('Render API', products)
+    const instock = products.data.filter(e => e.stock_status == "instock").length;
+    const stockTot = products.data.length;
+
+    console.log(instock);
+    console.log(stockTot);
+
+    productStock.innerHTML += `<p>Visar ${stockTot} produkter varav ${instock} är i lager.</p>`;
+
+
 
     products.data.map(e => {
 
-        return containerEl.innerHTML +=
-            `<div class="col-3">
+        if (e.stock_status == "outofstock") {
+            containerEl.innerHTML +=
+                `<div class="col-3">
         <img src="${baseUrl}${e.images.thumbnail}" alt="picture of ${e.name} candy">
-        <h3>${e.name} ${e.price}kr, <br> ${e.stock_quantity} st i lager.</h3>
-        <button type="button" id="${e.id}" class="cart btn btn-success">Add to cart</button> 
+        <h3>${e.name} ${e.price}kr,<br>Slut i lager</h3>
+        <button type="button" id="${e.id}" class="cart btn btn-danger" disabled aria-disabled="true">Lägg i kundvagn</button> 
         <button type="button" id="${e.id}" class="info btn btn-info">Info</button>
         </div>`
+        } else {
+
+            containerEl.innerHTML +=
+                `<div class="col-3">
+        <img src="${baseUrl}${e.images.thumbnail}" alt="picture of ${e.name} candy">
+        <h3>${e.name} ${e.price}kr, <br> ${e.stock_quantity} st i lager.</h3>
+        <button type="button" id="${e.id}" class="cart btn btn-success">Lägg i kundvagn</button> 
+        <button type="button" id="${e.id}" class="info btn btn-info">Info</button>
+        </div>`
+        }
     });
 };
+
+
 
 // Catch if returned error from promise and call getApi-function
 getApi()
@@ -172,7 +200,7 @@ const setSumCount = () => {
 setSumCount(); // call the function to change count and sum - VP 
 
 // Empty then render to DOM
-candyTot.innerHTML = '';
+//candyTot.innerHTML = '';
 
 const addToCart = e => {
 
@@ -221,10 +249,10 @@ const addToCart = e => {
 // Function for total sum (re-used at body for POST)
 //let sum;
 
-let totSum = () => {
-    sum = shoppingcartCandy.map(e => e.price * e.qty)
-        .reduce((acc, curr) => acc + curr, 0);
-}
+// let totSum = () => {
+//     sum = shoppingcartCandy.map(e => e.price * e.qty)
+//         .reduce((acc, curr) => acc + curr, 0);
+// }
 
 const cartSave = () => {
 
@@ -259,10 +287,12 @@ cartItems.addEventListener('click', f => {
             if (f.target.id == e.id) {
                 if (f.target.className.includes('plus')) {
                     e.qty++; // add qty - VP
+                    //e.stock_quantity--;
                     //renderCart(); // render cart to DOM - VP
 
                 } else if (f.target.className.includes('minus')) {
                     e.qty--; // subtract qty - VP
+                    // e.stock_quatity++; 
                     //renderCart(); // render cart to DOM - VP
                     if (e.qty <= 0) { // if statement to handle if qty is 0 or below - VP 
                         removeCandy = e.id; // set variable to id of the object to later remove - VP 
@@ -334,6 +364,8 @@ const orderView = () => {
     closeModal();
     closeCartModal();
     orderForm.classList.toggle("hidden");
+    shoppingCart.classList.add("hidden");
+    productStock.classList.add("hidden");
 }
 orderBtn.addEventListener('click', orderView);
 
@@ -344,6 +376,20 @@ const alertSubmit = (data) => {
     orderRes.classList.remove("hidden");
     orderForm.innerHTML = `<p>${data}</p>`
 };
+
+const backToHomepage = () => {
+    orderForm.classList.add("hidden");
+    containerEl.classList.toggle("hidden");
+    orderRes.classList.add("hidden");
+    shoppingCart.classList.remove("hidden");
+    productStock.classList.remove("hidden");
+}
+
+backBtn.addEventListener("click", backToHomepage);
+
+homeBtn.addEventListener("click", () => {
+    document.location.href = "/"; // Ändra detta till netlify-länken?? Ska inte behövas
+});
 
 
 
