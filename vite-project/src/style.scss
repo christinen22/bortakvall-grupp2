@@ -276,6 +276,15 @@ a  {
 
 }
 
+p.sidenote  {
+  font-size: 0.7em;
+  text-align: left;
+  font-style: italic;
+
+
+}
+
+
 @media screen and (min-width: 280px) and (max-width: 599px) {
 
 
@@ -329,6 +338,7 @@ h3 {
 form {
   padding: 50px;
 }
+
 
 
 }
