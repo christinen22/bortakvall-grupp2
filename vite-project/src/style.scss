@@ -326,7 +326,12 @@ p.sidenote  {
   }
 
   header img {
-    width: 75%;
+    max-width: 350px;
+  }
+
+  header {
+   
+    max-width: auto;
   }
 
 
@@ -378,8 +383,9 @@ form {
 @media screen and (min-width: 600px) and (max-width: 1080px) {
 
   header img {
-    width: 75%;
+    max-width: 600px;
   }
+
 
 
   form {
