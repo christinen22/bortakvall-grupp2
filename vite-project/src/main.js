@@ -45,10 +45,9 @@ const fetchApi = async (endPoint) => {
 const getApi = async () => {
     try {
         // Variable to store awaited URL with products
-        let data = await fetchApi('/api/products');
-        console.log('data:', data);
+        products = await fetchApi('/api/products');
+        console.log('data:', products);
 
-        products = data;  // ÄNDRA ta bort data!! 
     } catch (err) {
         submitMsg(err)
     }
@@ -103,8 +102,6 @@ const renderApi = () => {
 
     });
 };
-
-
 
 // Call API and render to DOM
 getApi()
@@ -406,7 +403,7 @@ const orderView = () => {
 orderBtn.addEventListener('click', orderView);
 
 const submitMsg = (name, id) => {
-    orderForm.classList.toggle("hidden");
+    orderForm.classList.add("hidden");
     orderRes.classList.remove("hidden");
     topArrow.classList.add("hidden");
     orderRes.innerHTML += `<p>Tack för din order, ${name}!<br>Ditt ordernummer är: ${id}</p>
