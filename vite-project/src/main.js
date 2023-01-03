@@ -76,7 +76,7 @@ const renderApi = () => {
 
 
     products.data.map(e => {
-        
+
 
         if (e.stock_status == "outofstock") {
             containerEl.innerHTML +=
@@ -87,18 +87,18 @@ const renderApi = () => {
         <button type="button" id="${e.id}" class="info btn btn-info">Info</button>
         </div>`
         } else {
-            
-            
+
+
             containerEl.innerHTML +=
                 `<div class="col-3">
         <img src="${baseUrl}${e.images.thumbnail}" alt="picture of ${e.name} candy">
         <h3>${e.name} ${e.price}kr, <br> ${e.stock_quantity} st i lager.</h3>
         <button type="button" id="${e.id}" class="cart btn btn-success">Lägg i kundvagn</button> 
         <button type="button" id="${e.id}" class="info btn btn-info">Info</button>
-        </div>` 
+        </div>`
         }
-        
-        
+
+
     });
 };
 
@@ -231,48 +231,37 @@ const addToCart = e => {
 
         shoppingcartCandy.push(candy)
         candy.qty = 1;
-        //candy.stock_quantity = -1;
 
-    
+
 
     } else {
 
         shoppingcartCandy.map(e => {
 
-            if (candy.id == e.id) {
-                 e.qty++;
+            if (candy.id == e.id && e.qty != candy.stock_quantity) {
+                e.qty++;
 
-                    console.log(e.qty);
+                console.log(e.qty);
 
-                    //candy.stock_quantity--;
+                //candy.stock_quantity--;
 
-                }
+            }
 
-            });
-
-            // (candy.stock_status == "outofstock" || candy.stock_quantity <= 0 || null)
-
-            // if (candy.stock_quantity == e.qty) {
-
-            //     console.log('Denna godisen är slut');
-
-            //     //document.querySelector(".cart btn btn-success").disabled = true; //funkar ej
-
-            // }
-
-        };
-
-
-        //console.log('Shopping cart contains: ', shoppingcartCandy);
-
-        //console.log(shoppingcartCandy);
-
-
-        cartSave();
-
-        //console.log('Sum & count: ', sum, count);
+        });
 
     };
+
+
+    //console.log('Shopping cart contains: ', shoppingcartCandy);
+
+    //console.log(shoppingcartCandy);
+
+
+    cartSave();
+
+    //console.log('Sum & count: ', sum, count);
+
+};
 
 
 
@@ -323,20 +312,20 @@ cartItems.addEventListener('click', f => {
                 } else if (f.target.className.includes('minus')) {
                     e.qty--; // subtract qty - VP
                     // e.stock_quatity++; 
-                
+
                     //renderCart(); // render cart to DOM - VP
                     if (e.qty <= 0) { // if statement to handle if qty is 0 or below - VP 
                         removeCandy = e.id; // set variable to id of the object to later remove - VP 
-                    } 
+                    }
 
                 } else if (f.target.className.includes('btnRemove')) {
                     e.qty = 0;
                     if (e.qty <= 0) { // if statement to handle if qty is 0 or below - VP 
                         removeCandy = e.id; // set variable to id of the object to later remove - VP 
-                    } 
+                    }
                 }
             }
-        
+
 
         });
 
