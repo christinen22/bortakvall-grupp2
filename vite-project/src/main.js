@@ -474,10 +474,6 @@ const submitOrder = async () => {
 };
 
 
-// OBS ?! Invänta svar från Johan ang. customer info & flytta denna + skriv kommentar
-
-localStorage.getItem('customerInfo')
-
 // When submit button is clicked by the customer
 orderForm.addEventListener('submit', async (e) => {
 
@@ -523,5 +519,21 @@ orderForm.addEventListener('submit', async (e) => {
 
 });
 
+
+// Retrive customerInfo to pre fill form values 
+const customerInfo = JSON.parse(localStorage.getItem('customerInfo'))
+console.log(customerInfo)
+
+// Getting submit values and setting them to form input when empty
+const submitValues = Object.values(customerInfo ?? [])
+console.log(submitValues)
+
+firstName.value = submitValues[0] ?? ''
+lastName.value = submitValues[1] ?? ''
+address.value = submitValues[2] ?? ''
+zipCode.value = submitValues[3] ?? ''
+city.value = submitValues[4] ?? ''
+email.value = submitValues[5] ?? ''
+telephone.value = submitValues[6] ?? ''
 
 
