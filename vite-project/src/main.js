@@ -28,18 +28,6 @@ const baseUrl = 'https://www.bortakvall.se';
 // Array to store data from API
 let products = [];
 
-// Call getApi and render names and images to DOM 
-const getApi = async () => {
-
-    // Variable to store awaited URL with products
-    let data = await fetchApi('/api/products');
-    console.log('data:', data);
-
-    products = data;  // ÄNDRA ta bort data!! 
-
-    renderApi();
-};
-
 // Promise for baseUrl and changeable endPoint
 const fetchApi = async (endPoint) => {
 
@@ -47,10 +35,26 @@ const fetchApi = async (endPoint) => {
 
     // If fetch not succeeds throw error
     if (!res.ok) {
-        throw new Error(`This did not work: ${res.status} ${res.statusText}`)
+        throw new Error(`Något gick fel: ${res.status} ${res.statusText}`)
     };
 
     return await res.json();
+};
+
+// Call getApi and render names and images to DOM 
+const getApi = async () => {
+
+    try {
+        // Variable to store awaited URL with products
+        let products = await fetchApi('/api/products');
+        console.log('data:', products);
+
+    } catch (err) {
+        // Div for errors or completed orders
+        submitMsg(err)
+    }
+
+    renderApi();
 };
 
 // Render product name and image to DOM via map-function
@@ -102,14 +106,15 @@ const renderApi = () => {
     });
 };
 
-
+// Call API and render to DOM
+getApi()
 
 // Catch if returned error from promise and call getApi-function
-getApi()
-    .then(
-        console.log('Success!')
-    )
-    .catch(error => console.log('The request was rejected: ', error.message));
+// getApi()
+// .then(
+//     console.log('Success!')
+// )
+// .catch(error => console.log('The request was rejected: ', error.message));
 
 //console.log('PRODUCTS: ', products)
 
