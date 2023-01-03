@@ -351,8 +351,8 @@ cartItems.addEventListener('click', f => {
 // Created a function to stop repeteating myself - VP
 const renderCart = () => {
     cartItems.innerHTML = '';
-    shoppingcartCandy.map(e => cartItems.innerHTML += `<li>${e.qty}st ${e.name} för ${e.price * e.qty}kr <button type="button" id="${e.id}" class="btn-plus"> + </button> 
-    <button type="button" id="${e.id}" class="btn-minus"> - </button></li> <button type="button" id="${e.id}" class="btnRemove">Ta bort</button>`);
+    shoppingcartCandy.map(e => cartItems.innerHTML += `<li>${e.qty}st ${e.name} för ${e.price * e.qty}kr <button type="button" id="${e.id}" class="btn-plus  btn btn-outline-secondary"> + </button> 
+    <button type="button" id="${e.id}" class="btn-minus btn btn-outline-secondary"> - </button></li> <button type="button" id="${e.id}" class="btnRemove btn btn-outline-secondary">Ta bort</button>`);
     cartItems.innerHTML += `<p>Antal: ${count} st</p><p>Summa: ${sum} kr</p>`;
 };
 
