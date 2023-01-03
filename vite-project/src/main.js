@@ -29,18 +29,6 @@ const baseUrl = 'https://www.bortakvall.se';
 // Array to store data from API
 let products = [];
 
-// Call getApi and render names and images to DOM 
-const getApi = async () => {
-
-    // Variable to store awaited URL with products
-    let data = await fetchApi('/api/products');
-    console.log('data:', data);
-
-    products = data;  // ÄNDRA ta bort data!! 
-
-    renderApi();
-};
-
 // Promise for baseUrl and changeable endPoint
 const fetchApi = async (endPoint) => {
 
@@ -48,10 +36,26 @@ const fetchApi = async (endPoint) => {
 
     // If fetch not succeeds throw error
     if (!res.ok) {
-        throw new Error(`This did not work: ${res.status} ${res.statusText}`)
+        throw new Error(`Något gick fel: ${res.status} ${res.statusText}`)
     };
 
     return await res.json();
+};
+
+// Call getApi and render names and images to DOM 
+const getApi = async () => {
+    try {
+        // Variable to store awaited URL with products
+        const data = await fetchApi('/api/products');
+        console.log('data:', data);
+
+        products = data;
+
+    } catch (err) {
+        submitMsg(err)
+        return;
+    }
+    renderApi();
 };
 
 // Render product name and image to DOM via map-function
@@ -103,14 +107,14 @@ const renderApi = () => {
     });
 };
 
-
-
-// Catch if returned error from promise and call getApi-function
+// Call API and render to DOM
 getApi()
-    .then(
-        console.log('Success!')
-    )
-    .catch(error => console.log('The request was rejected: ', error.message));
+
+
+// .then(
+//     console.log('Success!')
+// )
+// .catch(error => console.log('The request was rejected: ', error.message));
 
 //console.log('PRODUCTS: ', products)
 
@@ -402,13 +406,13 @@ const orderView = () => {
 
 orderBtn.addEventListener('click', orderView);
 
-const submitMsg = (name, id) => {
-    orderForm.classList.toggle("hidden");
+const submitMsg = (msg) => {
+    orderForm.classList.add("hidden");
     orderRes.classList.remove("hidden");
-    //topArrow.classList.add("hidden");
     topArrow.innerHTML = "";
-    orderRes.innerHTML += `<p>Tack för din order, ${name}!<br>Ditt ordernummer är: ${id}</p>
-    <button type="button" class="homeBtn btn btn-outline-secondary">Hem</button>`;
+    // topArrow.classList.add("hidden");
+    orderRes.innerHTML += msg
+    orderRes.innerHTML += `<br><button type="button" class="homeBtn btn btn-outline-secondary">Hem</button>`;
     document.querySelector(".homeBtn").addEventListener('click', () => document.location.href = "/")
 };
 
@@ -502,22 +506,25 @@ orderForm.addEventListener('submit', async (e) => {
 
     } catch (err) {
 
-        console.log(err)
+        console.log(err);
 
-        submitMsg(err)
+        submitMsg(err);
 
         // Return if error is found, preventing rest of code to run
         return;
 
     };
 
+    const orderConfirmation = orderRes.innerHTML +=
+        `<p>Tack för din order, ${submitData.customer_first_name}!<br>Ditt ordernummer är: ${orderData.data.id}</p>`;
+
     // Store contact information from previous order in local storage
-    localStorage.setItem('customerInfo', JSON.stringify(submitData))
+    localStorage.setItem('customerInfo', JSON.stringify(submitData));
 
     // Remove local storage cart
-    localStorage.removeItem('candyInCart')
+    localStorage.removeItem('candyInCart');
 
-    submitMsg(submitData.customer_first_name, orderData.data.id)
+    submitMsg(orderConfirmation);
 
 });
 
