@@ -284,7 +284,6 @@ const orderView = () => {
     orderForm.classList.toggle("hidden");
     shoppingCart.classList.add("hidden");
     productStock.classList.add("hidden");
-    // topArrow.classList.add("hidden");
 };
 
 orderBtn.addEventListener('click', orderView);
@@ -293,7 +292,6 @@ const submitMsg = (msg) => {
     orderForm.classList.add("hidden");
     orderRes.classList.remove("hidden");
     topArrow.innerHTML = "";
-    // topArrow.classList.add("hidden");
     orderRes.innerHTML += msg
     orderRes.innerHTML += `<br><button type="button" class="homeBtn btn btn-outline-secondary">Hem</button>`;
     document.querySelector(".homeBtn").addEventListener('click', () => document.location.href = "/")
