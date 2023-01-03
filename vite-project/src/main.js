@@ -17,8 +17,8 @@ const orderBtn = document.querySelector(".orderBtn");
 const orderForm = document.querySelector(".form");
 const orderRes = document.querySelector(".orderRes");
 const backBtn = document.querySelector("#backbtn");
-const homeBtn = document.querySelector("#homebtn");
 const productStock = document.querySelector(".prodStock");
+const topArrow = document.querySelector(".goToTop")
 
 
 
@@ -35,7 +35,7 @@ const getApi = async () => {
     let data = await fetchApi('/api/products');
     console.log('data:', data);
 
-    products = data;
+    products = data;  // ÄNDRA ta bort data!! 
 
     renderApi();
 };
@@ -396,13 +396,18 @@ const orderView = () => {
     orderForm.classList.toggle("hidden");
     shoppingCart.classList.add("hidden");
     productStock.classList.add("hidden");
+    topArrow.classList.add("hidden")
 }
+
 orderBtn.addEventListener('click', orderView);
 
-const alertSubmit = (data) => {
+const submitMsg = (name, id) => {
     orderForm.classList.toggle("hidden");
     orderRes.classList.remove("hidden");
-    orderForm.innerHTML = `<p>${data}</p>`
+    topArrow.classList.add("hidden");
+    orderRes.innerHTML += `<p>Tack för din order, ${name}!<br>Ditt ordernummer är: ${id}</p>
+    <button type="button" class="homeBtn">Hem</button>`;
+    document.querySelector(".homeBtn").addEventListener('click', () => document.location.href = "/")
 };
 
 const backToHomepage = () => {
@@ -414,13 +419,6 @@ const backToHomepage = () => {
 }
 
 backBtn.addEventListener("click", backToHomepage);
-
-homeBtn.addEventListener("click", () => {
-    document.location.href = "/"; // Ändra detta till netlify-länken?? Ska inte behövas
-});
-
-
-
 
 
 // POST submitted form/order to server
@@ -476,10 +474,6 @@ const submitOrder = async () => {
 };
 
 
-// OBS ?! Invänta svar från Johan ang. customer info & flytta denna + skriv kommentar
-
-localStorage.getItem('customerInfo')
-
 // When submit button is clicked by the customer
 orderForm.addEventListener('submit', async (e) => {
 
@@ -497,7 +491,7 @@ orderForm.addEventListener('submit', async (e) => {
         if (orderData.status == 'fail') {
 
             // Calling function which renders respons to DOM
-            alertSubmit(submitErrors);
+            submitMsg(submitErrors);
 
             // Return if error is found, preventing rest of code to run
             return;
@@ -508,7 +502,7 @@ orderForm.addEventListener('submit', async (e) => {
 
         console.log(err)
 
-        alertSubmit(err)
+        submitMsg(err)
 
         // Return if error is found, preventing rest of code to run
         return;
@@ -518,14 +512,28 @@ orderForm.addEventListener('submit', async (e) => {
     // Store contact information from previous order in local storage
     localStorage.setItem('customerInfo', JSON.stringify(submitData))
 
-    const successMsg = `Thank you ${submitData.customer_first_name} for your order, your order number is: ${orderData.data.id}`;
-
     // Remove local storage cart
     localStorage.removeItem('candyInCart')
 
-    alertSubmit(successMsg)
+    submitMsg(submitData.customer_first_name, orderData.data.id)
 
 });
 
+
+// Retrive customerInfo to pre fill form values 
+const customerInfo = JSON.parse(localStorage.getItem('customerInfo'))
+console.log(customerInfo)
+
+// Getting submit values and setting them to form input when empty
+const submitValues = Object.values(customerInfo ?? [])
+console.log(submitValues)
+
+firstName.value = submitValues[0] ?? ''
+lastName.value = submitValues[1] ?? ''
+address.value = submitValues[2] ?? ''
+zipCode.value = submitValues[3] ?? ''
+city.value = submitValues[4] ?? ''
+email.value = submitValues[5] ?? ''
+telephone.value = submitValues[6] ?? ''
 
 
