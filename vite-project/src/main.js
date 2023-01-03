@@ -45,11 +45,14 @@ const fetchApi = async (endPoint) => {
 const getApi = async () => {
     try {
         // Variable to store awaited URL with products
-        products = await fetchApi('/api/products');
-        console.log('data:', products);
+        const data = await fetchApi('/api/products');
+        console.log('data:', data);
+
+        products = data;
 
     } catch (err) {
         submitMsg(err)
+        return;
     }
     renderApi();
 };
@@ -402,12 +405,12 @@ const orderView = () => {
 
 orderBtn.addEventListener('click', orderView);
 
-const submitMsg = (name, id) => {
+const submitMsg = (msg) => {
     orderForm.classList.add("hidden");
     orderRes.classList.remove("hidden");
     topArrow.classList.add("hidden");
-    orderRes.innerHTML += `<p>Tack för din order, ${name}!<br>Ditt ordernummer är: ${id}</p>
-    <button type="button" class="homeBtn">Hem</button>`;
+    orderRes.innerHTML += msg
+    orderRes.innerHTML += `<br><button type="button" class="homeBtn">Hem</button>`;
     document.querySelector(".homeBtn").addEventListener('click', () => document.location.href = "/")
 };
 
@@ -501,22 +504,25 @@ orderForm.addEventListener('submit', async (e) => {
 
     } catch (err) {
 
-        console.log(err)
+        console.log(err);
 
-        submitMsg(err)
+        submitMsg(err);
 
         // Return if error is found, preventing rest of code to run
         return;
 
     };
 
+    const orderConfirmation = orderRes.innerHTML +=
+        `<p>Tack för din order, ${submitData.customer_first_name}!<br>Ditt ordernummer är: ${orderData.data.id}</p>`;
+
     // Store contact information from previous order in local storage
-    localStorage.setItem('customerInfo', JSON.stringify(submitData))
+    localStorage.setItem('customerInfo', JSON.stringify(submitData));
 
     // Remove local storage cart
-    localStorage.removeItem('candyInCart')
+    localStorage.removeItem('candyInCart');
 
-    submitMsg(submitData.customer_first_name, orderData.data.id)
+    submitMsg(orderConfirmation);
 
 });
 
