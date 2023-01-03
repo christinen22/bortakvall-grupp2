@@ -76,20 +76,37 @@ h3 {
   font-weight: bold
 }
 
-.col-3 img {
-  border-radius: 50%;
-  width: 150px;
-  height: 150px
-}
-
-.card-text {
-  text-align: center
-}
-
 .col-3 {
-  padding: 10px;
-  align-self: center
+  width: 33%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding:0 ;
+  margin-bottom: 20px;
+  margin-top: 20px;
 }
+
+.col-3 img {
+margin-top: 10px;
+align-self: center;
+
+}
+
+h3 {
+font-size: 15px;
+text-align: center;
+padding: 5px;
+}
+
+.btn-info, .btn-success, .btn-danger {
+padding: 5px;
+font-size: 12px;
+width: 15.75vw;
+align-self: center;
+
+}
+
+
 
 h2 {
   font-size: 1.4rem
@@ -165,7 +182,7 @@ button {
   transform: translate(10px, -20px);
   padding: .5rem .7rem;
   background: $blue-bg-color;
-  border-radius: 50%;
+  border-radius: 0%;
 
 }
 
@@ -308,6 +325,7 @@ form #submitbtn {
   --bs-btn-hover-bg: hsl(190, 64%, 78%);
   border: 1px solid black;
   border-radius: 0%;
+  color: $font-color;
 }
 
 #backbtn {
@@ -315,7 +333,7 @@ form #submitbtn {
   padding: 5px;
   --bs-btn-hover-bg: hsl(190, 64%, 78%);
   border-radius: 0%;
-  
+  color: $font-color;
 }
 
 
@@ -334,12 +352,27 @@ p.sidenote  {
 
 }
 
+.cartView button {
+  color: $font-color;
+}
+
+.goToTop {
+  display: flex;
+  justify-content: center;
+}
+
 
 @media screen and (min-width: 280px) and (max-width: 599px) {
 
 
   body {
     background-image: none;
+
+  }
+
+  .candyProducts {
+    margin-left: 0px;
+  
   }
 
   .btn-danger {
@@ -414,10 +447,16 @@ p.sidenote  {
 
   .col-3 {
      width: 50%;
+     display: flex;
+     flex-direction: column;
+     justify-content: center;
+     padding:0 ;
 }
 
 .col-3 img {
   margin-top: 10px;
+  align-self: center;
+  width: 50%;
 
 }
 
@@ -427,10 +466,14 @@ h3 {
   padding: 5px;
 }
 
-.btn-info, .btn-success {
+.btn-info, .btn-success, .btn-danger {
   padding: 5px;
   font-size: 12px;
+  width: 30vw;
+  align-self: center;
+  
 }
+
 
 form {
   padding: 50px;
@@ -501,11 +544,17 @@ form {
 
 .col-3 img {
   margin-top: 10px;
+  align-self: center;
+  width: 75%;
+  
 
 }
 
 .col-3 {
-  width: 30%;
+  width: 33%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 
