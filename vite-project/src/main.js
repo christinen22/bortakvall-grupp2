@@ -18,7 +18,8 @@ const orderForm = document.querySelector(".form");
 const orderRes = document.querySelector(".orderRes");
 const backBtn = document.querySelector("#backbtn");
 const productStock = document.querySelector(".prodStock");
-const topArrow = document.querySelector(".goToTop")
+const topArrow = document.querySelector(".goToTop");
+
 
 
 
@@ -396,7 +397,7 @@ const orderView = () => {
     orderForm.classList.toggle("hidden");
     shoppingCart.classList.add("hidden");
     productStock.classList.add("hidden");
-    topArrow.classList.add("hidden")
+    topArrow.classList.add("hidden");
 }
 
 orderBtn.addEventListener('click', orderView);
@@ -404,9 +405,10 @@ orderBtn.addEventListener('click', orderView);
 const submitMsg = (name, id) => {
     orderForm.classList.toggle("hidden");
     orderRes.classList.remove("hidden");
-    topArrow.classList.add("hidden");
+    //topArrow.classList.add("hidden");
+    topArrow.innerHTML = "";
     orderRes.innerHTML += `<p>Tack för din order, ${name}!<br>Ditt ordernummer är: ${id}</p>
-    <button type="button" class="homeBtn">Hem</button>`;
+    <button type="button" class="homeBtn btn btn-outline-secondary">Hem</button>`;
     document.querySelector(".homeBtn").addEventListener('click', () => document.location.href = "/")
 };
 

@@ -209,9 +209,14 @@ button {
 footer {
   width: 100%;
   text-align: center;
-  background-color: #fff;
+  background-color: $font-color;
+  color: #eee;
   margin-top: 20px;
   padding: 5px;
+}
+
+footer a {
+  color: #eee;
 }
 
 /*# sourceMappingURL=style.css.map */
@@ -272,6 +277,7 @@ footer {
   transform: translate(10px, -20px);
   padding: 0.5rem 0.7rem;
   background-color: $blue-bg-color;
+
 
 }
 
@@ -360,6 +366,21 @@ p.sidenote  {
   display: flex;
   justify-content: center;
 }
+
+.orderRes {
+  margin-top: 25px;
+  text-align: center;
+  width: 1200px;
+}
+
+.homeBtn {
+  border: 1px solid black;
+  padding: 5px;
+  --bs-btn-hover-bg: hsl(190, 64%, 78%);
+  border-radius: 0%;
+  color: $font-color;
+}
+
 
 
 @media screen and (min-width: 280px) and (max-width: 599px) {
