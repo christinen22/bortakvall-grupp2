@@ -13,6 +13,7 @@ header {
   background-color: $font-color;
   display: flex;
   justify-content: center;
+  width: 1200px;
 }
 
 header img {
@@ -265,6 +266,7 @@ footer {
 
 .btnRemove {
   background-color: $blue-bg-color;
+  margin-bottom: 10px;
 }
 
 .orderBtn {
@@ -283,6 +285,17 @@ footer {
 
 form {
   padding: 50px;
+  width: 1200px;
+  text-align: center;
+}
+
+form #submitbtn {
+  margin-top: 20px;
+}
+
+#backbtn {
+  border: 1px solid black;
+  padding: 5px;
 }
 
 
@@ -355,6 +368,7 @@ h3 {
 form {
   padding: 50px;
 }
+
 
 
 
