@@ -515,7 +515,7 @@ orderForm.addEventListener('submit', async (e) => {
 
     };
 
-    const orderConfirmation = orderRes.innerHTML +=
+    const orderConfirmation =
         `<p>Tack för din order, ${submitData.customer_first_name}!<br>Ditt ordernummer är: ${orderData.data.id}</p>`;
 
     // Store contact information from previous order in local storage
