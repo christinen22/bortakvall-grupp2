@@ -43,17 +43,15 @@ const fetchApi = async (endPoint) => {
 
 // Call getApi and render names and images to DOM 
 const getApi = async () => {
-
     try {
         // Variable to store awaited URL with products
-        let products = await fetchApi('/api/products');
-        console.log('data:', products);
+        let data = await fetchApi('/api/products');
+        console.log('data:', data);
 
+        products = data;  // ÄNDRA ta bort data!! 
     } catch (err) {
-        // Div for errors or completed orders
         submitMsg(err)
     }
-
     renderApi();
 };
 
@@ -106,11 +104,12 @@ const renderApi = () => {
     });
 };
 
+
+
 // Call API and render to DOM
 getApi()
 
-// Catch if returned error from promise and call getApi-function
-// getApi()
+
 // .then(
 //     console.log('Success!')
 // )
