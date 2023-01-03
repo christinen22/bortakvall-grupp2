@@ -357,6 +357,7 @@ const submitOrder = async () => {
 orderForm.addEventListener('submit', async (e) => {
 
     e.preventDefault();
+    document.querySelector('#submitbtn').disabled = true;
 
     let orderData = [];
 
