@@ -21,25 +21,12 @@ const backBtn = document.querySelector("#backbtn");
 const productStock = document.querySelector(".prodStock");
 const topArrow = document.querySelector(".goToTop");
 
-// Base URL and endpoint from where we fetch the candy
-//const baseUrl = 'https://www.bortakvall.se';
+
 
 // Array to store data from API
 let products = [];
 
 
-/*
-// Promise for baseUrl and changeable endPoint
-const fetchApi = async (endPoint) => {
-    const res = await fetch(baseUrl + endPoint);
-
-    // If fetch not succeeds throw error
-    if (!res.ok) {
-        throw new Error(`Något gick fel: ${res.status} ${res.statusText}`)
-    };
-    return await res.json();
-};
-*/
 
 // Call getApi and render names and images to DOM 
 const getApi = async () => {
@@ -231,7 +218,7 @@ cartItems.addEventListener('click', f => {
 
         if (removeCandy) {
             if (shoppingcartCandy.length < 1) {
-                localStorage.clear('candyInCart');
+                localStorage.removeItem('candyInCart');
             } else {
                 for (let i = 0; i < shoppingcartCandy.length; i++) {
                     if (shoppingcartCandy[i].id == removeCandy) {
@@ -339,24 +326,25 @@ const submitOrder = async () => {
         order_total: sum,
         order_items: shoppingCartItems
     };
+// POST request
+const res = await fetch('https://www.bortakvall.se/api/orders', {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(submitData)
+});
 
-    /*
-    // POST request
-    const res = await fetch('https://www.bortakvall.se/api/orders', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(submitData)
-    });
-
-    if (!res.ok) {
-        throw new Error(`Could not place order, because of error: ${res.status}`);
-    };
-
-    return await res.json()
+if (!res.ok) {
+    throw new Error(`Could not place order, because of error: ${res.status}`);
 };
-*/
+
+return await res.json()
+
+};
+
+
+
 
 // When submit button is clicked by the customer
 orderForm.addEventListener('submit', async (e) => {
