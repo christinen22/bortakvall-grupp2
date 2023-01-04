@@ -1,5 +1,5 @@
-import { shoppingcartCandy} from "./bortakvallmain";
-import { sum } from "./bortakvallmain";
+import { shoppingcartCandy } from "./bortakvallmain";
+import { sum, firstName, lastName, address, zipCode, city, email, telephone } from "./bortakvallmain";
 
 // Base URL and endpoint from where we fetch the candy
 export const baseUrl = 'https://www.bortakvall.se';
@@ -16,21 +16,7 @@ export const fetchApi = async (endPoint: string) => {
     return await res.json();
 };
 
-
-
-
-
-
-let submitData: object = {};
-
-// Finding all input fields from order form
-const firstName = document.querySelector("#fname");
-const lastName = document.querySelector("#lname");
-const address = document.querySelector("#address");
-const zipCode = document.querySelector("#zipcode");
-const city = document.querySelector("#city");
-const email = document.querySelector("#email");
-const telephone = document.querySelector("#telephone");
+export let submitData: any = {};
 
 export const submitOrder = async () => {
 
@@ -39,7 +25,7 @@ export const submitOrder = async () => {
     });
 
     // Values from customer input fields to add to POST body
-    submitData = {
+     submitData = {
         customer_first_name: (firstName as HTMLInputElement | null)?.value,
         customer_last_name: (lastName as HTMLInputElement | null)?.value,
         customer_address: (address as HTMLInputElement | null)?.value,
@@ -50,6 +36,7 @@ export const submitOrder = async () => {
         order_total: sum,
         order_items: shoppingCartItems,
     };
+    
  // POST request
   const res = await fetch('https://www.bortakvall.se/api/orders', {
     method: 'POST',

@@ -1,5 +1,5 @@
 import './style.css'
-import { baseUrl, fetchApi, submitOrder } from './bortakvallapi'
+import { baseUrl, fetchApi, submitOrder, submitData } from './bortakvallapi'
 import { IShoppingcartCandy } from './interfaces'
 
 
@@ -30,21 +30,8 @@ const topArrow = document.querySelector(".goToTop");
 //const baseUrl = 'https://www.bortakvall.se';
 
 // Array to store data from API
-let products = [];
+let products: any = [];                 //GÖR EV INTERFACE
 
-
-/*
-// Promise for baseUrl and changeable endPoint
-const fetchApi = async (endPoint) => {
-    const res = await fetch(baseUrl + endPoint);
-
-    // If fetch not succeeds throw error
-    if (!res.ok) {
-        throw new Error(`Något gick fel: ${res.status} ${res.statusText}`)
-    };
-    return await res.json();
-};
-*/
 
 // Call getApi and render names and images to DOM 
 const getApi = async () => {
@@ -55,7 +42,7 @@ const getApi = async () => {
 
         products = data;
 
-    } catch (err) {
+    } catch (err: any) {
         submitMsg(err)
         return;
     }
@@ -65,16 +52,16 @@ const getApi = async () => {
 // Render product name and image to DOM via map-function
 const renderApi = () => {
 
-    products.data.sort((a, b) => a.name > b.name ? 1 : -1);
+    products.data.sort((a: any, b: any) => a.name > b.name ? 1 : -1);
 
-    const instock = products.data.filter(e => e.stock_status == "instock").length;
+    const instock = products.data.filter((e: any) => e.stock_status == "instock").length;
     const stockTot = products.data.length;
 
-    productStock.innerHTML += `<p>Visar ${stockTot} produkter varav ${instock} är i lager.</p>`;
+    productStock!.innerHTML += `<p>Visar ${stockTot} produkter varav ${instock} är i lager.</p>`;
 
-    products.data.map(e => {
+    products.data.map((e: any) => {
         if (e.stock_status == "outofstock") {
-            containerEl.innerHTML +=
+            containerEl!.innerHTML +=
                 `<div class="col-3">
         <img src="${baseUrl}${e.images.thumbnail}" alt="picture of ${e.name} candy">
         <h3>${e.name} ${e.price}kr,<br>Slut i lager</h3>
@@ -82,7 +69,7 @@ const renderApi = () => {
         <button type="button" id="${e.id}" class="info btn btn-info">Info</button>
         </div>`
         } else {
-            containerEl.innerHTML +=
+            containerEl!.innerHTML +=
                 `<div class="col-3">
         <img src="${baseUrl}${e.images.thumbnail}" alt="picture of ${e.name} candy">
         <h3>${e.name} ${e.price}kr, <br> ${e.stock_quantity} st i lager.</h3>
@@ -99,50 +86,49 @@ getApi()
 // Query selectors for functionality of Info button 
 let containerEl = document.querySelector('.candyProducts');
 
-let clickedBtn;
 
 // Deciding what will happen depending on which button clicked
-containerEl.addEventListener('click', e => {
-    if (e.target.tagName == 'BUTTON') {
-        clickedBtn = e.target;
-        e.target.className.includes('cart') ? addToCart(e.target.id) : getInfo(e.target.id);
+containerEl!.addEventListener('click', e => {
+    if ((e.target as HTMLButtonElement).tagName == 'BUTTON') {
+        (e.target as HTMLButtonElement).className.includes('cart') ? addToCart((e.target as HTMLButtonElement).id) : getInfo((e.target as HTMLButtonElement).id);
     };
 });
 
 // Function w/ module that pops up on click
-const getInfo = e => {
+const getInfo = (e: string) => {
+
 
     // Find products via ID to show info
-    const infoCandy = products.data.find(candy => candy.id == e);
+    const infoCandy = products.data.find((candy: any) => candy.id == e);
 
     openModal();
 
     // Rendering candy name + price + description to DOM
-    modalInfo.innerHTML = `${infoCandy.name} - ${infoCandy.price} kr ${infoCandy.description}`;
+    modalInfo!.innerHTML = `${infoCandy.name} - ${infoCandy.price} kr ${infoCandy.description}`;
 
     // Setting src to large image to render to DOM
     candyImg.src = `${baseUrl}${infoCandy.images.large}`;
-    modalInfo.appendChild(candyImg);
+    modalInfo!.appendChild(candyImg);
     candyImg.alt = `picture of ${infoCandy.name} candy`;
 };
 
 // Functions for modalbox 
 const openModal = () => {
-    modal.classList.remove("hidden");
-    overlay.classList.remove("hidden");
+    modal!.classList.remove("hidden");
+    overlay!.classList.remove("hidden");
 };
 const closeModal = () => {
-    modal.classList.add("hidden");
-    overlay.classList.add("hidden");
+    modal!.classList.add("hidden");
+    overlay!.classList.add("hidden");
 };
 
 // Eventlisteners for modalbox 
-closeModalBtn.addEventListener("click", closeModal);
-overlay.addEventListener("click", closeModal);
+closeModalBtn!.addEventListener("click", closeModal);
+overlay!.addEventListener("click", closeModal);
 
 // close modal when the Esc key is pressed
 document.addEventListener("keydown", e => {
-    if (e.key === "Escape" && !modal.classList.contains("hidden")) {
+    if (e.key === "Escape" && !modal!.classList.contains("hidden")) {
         closeModal();
     };
 });
@@ -173,14 +159,13 @@ const setSumCount = () => {
 
 setSumCount();
 
-const addToCart = e => {
+const addToCart = (e: any) => {          
 
     // Find clicked candy object from products
-    let candy = products.data.find(candy => candy.id == e);
+    let candy = products.data.find((candy: any) => candy.id == e);
 
     // Create temporary array to push object IDs from shoppingcartCandy to new candyIds array
-    const candyIds = [];
-
+    const candyIds: any = [];            
     shoppingcartCandy.map(f => candyIds.push(f.id));
 
     // Pushing candy to shoppingcartCandy & adding quantity to candy array to store the amount of each candy 
@@ -203,29 +188,29 @@ const cartSave = () => {
 
     setSumCount();
 
-    cartSum.innerHTML = `<p>Summa: ${sum} kr</p>`;
-    cartCount.innerHTML = `<p>Antal: ${count} st</p>`;
+    cartSum!.innerHTML = `<p>Summa: ${sum} kr</p>`;
+    cartCount!.innerHTML = `<p>Antal: ${count} st</p>`;
 
     renderCart();
 };
 
-cartItems.addEventListener('click', f => {
-    if (f.target.className == 'btn-plus' || 'btn-minus' || 'btnRemove') {
+cartItems!.addEventListener('click', f => {
+    if ((f.target as HTMLButtonElement).className == 'btn-plus' || 'btn-minus' || 'btnRemove') {
         let removeCandy = null;
         shoppingcartCandy.forEach(e => {
 
-            if (f.target.id == e.id) {
-                if (f.target.className.includes('plus') && e.stock_quantity != e.qty) {
+            if ((f.target as HTMLButtonElement).id == String(e.id)) {
+                if ((f.target as HTMLButtonElement).className.includes('plus') && e.stock_quantity != e.qty) {
                     e.qty++;
 
-                } else if (f.target.className.includes('minus')) {
+                } else if ((f.target as HTMLButtonElement).className.includes('minus')) {
                     e.qty--;
 
                     if (e.qty <= 0) {
                         removeCandy = e.id;
                     };
 
-                } else if (f.target.className.includes('btnRemove')) {
+                } else if ((f.target as HTMLButtonElement).className.includes('btnRemove')) {
                     e.qty = 0;
                     if (e.qty <= 0) {
                         removeCandy = e.id;
@@ -236,7 +221,7 @@ cartItems.addEventListener('click', f => {
 
         if (removeCandy) {
             if (shoppingcartCandy.length < 1) {
-                localStorage.clear('candyInCart');
+                localStorage.removeItem('candyInCart');
             } else {
                 for (let i = 0; i < shoppingcartCandy.length; i++) {
                     if (shoppingcartCandy[i].id == removeCandy) {
@@ -252,132 +237,91 @@ cartItems.addEventListener('click', f => {
 
 // Cart modal text as function
 const renderCart = () => {
-    cartItems.innerHTML = '';
-    shoppingcartCandy.map(e => cartItems.innerHTML += `<li>${e.qty}st ${e.name} för ${e.price * e.qty}kr <button type="button" id="${e.id}" class="btn-plus  btn btn-outline-secondary"> + </button> 
+    cartItems!.innerHTML = '';
+    shoppingcartCandy.map(e => cartItems!.innerHTML += `<li>${e.qty}st ${e.name} för ${e.price * e.qty}kr <button type="button" id="${e.id}" class="btn-plus  btn btn-outline-secondary"> + </button> 
     <button type="button" id="${e.id}" class="btn-minus btn btn-outline-secondary"> - </button></li> <button type="button" id="${e.id}" class="btnRemove btn btn-outline-secondary">Ta bort</button>`);
-    cartItems.innerHTML += `<p>Antal: ${count} st</p><p>Summa: ${sum} kr</p>`;
+    cartItems!.innerHTML += `<p>Antal: ${count} st</p><p>Summa: ${sum} kr</p>`;
 };
 
 // Eventlistener for shoppingcart when icon clicked
-shoppingCart.addEventListener('click', () => {
+shoppingCart!.addEventListener('click', () => {
     openCartModal();
 });
 
 const openCartModal = () => {
-    cartModal.classList.remove("hidden");
+    cartModal!.classList.remove("hidden");
     renderCart();
 };
 
 const closeCartModal = () => {
-    cartModal.classList.add("hidden");
-    overlay.classList.add("hidden");
+    cartModal!.classList.add("hidden");
+    overlay!.classList.add("hidden");
 };
 
-closeCartModalBtn.addEventListener("click", closeCartModal);
-overlay.addEventListener("click", closeCartModal);
+closeCartModalBtn!.addEventListener("click", closeCartModal);
+overlay!.addEventListener("click", closeCartModal);
 
 // Close modal when the Esc key is pressed
 document.addEventListener("keydown", e => {
-    if (e.key === "Escape" && !cartModal.classList.contains("hidden")) {
+    if (e.key === "Escape" && !cartModal!.classList.contains("hidden")) {
         closeCartModal();
     };
 });
 
 
-
 const orderView = () => {
-    containerEl.classList.toggle("hidden");
+    containerEl!.classList.toggle("hidden");
     closeModal();
     closeCartModal();
-    orderForm.classList.toggle("hidden");
-    shoppingCart.classList.add("hidden");
-    productStock.classList.add("hidden");
+    orderForm!.classList.toggle("hidden");
+    shoppingCart!.classList.add("hidden");
+    productStock!.classList.add("hidden");
 };
 
-orderBtn.addEventListener('click', orderView);
+orderBtn!.addEventListener('click', orderView);
 
-const submitMsg = (msg) => {
-    orderForm.classList.add("hidden");
-    orderRes.classList.remove("hidden");
-    topArrow.innerHTML = "";
-    orderRes.innerHTML += msg
-    orderRes.innerHTML += `<br><button type="button" class="homeBtn btn btn-outline-secondary">Hem</button>`;
-    document.querySelector(".homeBtn").addEventListener('click', () => document.location.href = "/")
+const submitMsg = (msg: string) => {
+    orderForm!.classList.add("hidden");
+    orderRes!.classList.remove("hidden");
+    topArrow!.innerHTML = "";
+    orderRes!.innerHTML += msg
+    orderRes!.innerHTML += `<br><button type="button" class="homeBtn btn btn-outline-secondary">Hem</button>`;
+    document.querySelector(".homeBtn")!.addEventListener('click', () => document.location.href = "/")
 };
 
 const backToHomepage = () => {
-    orderForm.classList.add("hidden");
-    containerEl.classList.toggle("hidden");
-    orderRes.classList.add("hidden");
-    shoppingCart.classList.remove("hidden");
-    productStock.classList.remove("hidden");
+    orderForm!.classList.add("hidden");
+    containerEl!.classList.toggle("hidden");
+    orderRes!.classList.add("hidden");
+    shoppingCart!.classList.remove("hidden");
+    productStock!.classList.remove("hidden");
 }
 
-backBtn.addEventListener("click", backToHomepage);
+backBtn!.addEventListener("click", backToHomepage);
 
-/*
+
 // Finding all input fields from order form
-const firstName = document.querySelector("#fname");
-const lastName = document.querySelector("#lname");
-const address = document.querySelector("#address");
-const zipCode = document.querySelector("#zipcode");
-const city = document.querySelector("#city");
-const email = document.querySelector("#email");
-const telephone = document.querySelector("#telephone");
-*/
-//let submitData = {};
+export const firstName: any = document.querySelector("#fname");
+export const lastName: any = document.querySelector("#lname");
+export const address: any = document.querySelector("#address");
+export const zipCode: any = document.querySelector("#zipcode");
+export const city: any = document.querySelector("#city");
+export const email: any = document.querySelector("#email");
+export const telephone: any = document.querySelector("#telephone");
 
-/*
-
-const submitOrder = async () => {
-
-    let shoppingCartItems = await shoppingcartCandy.map(e => {
-        return { product_id: e.id, qty: e.qty, item_price: e.price, item_total: e.price * e.qty }
-    });
-
-    // Values from customer input fields to add to POST body
-    submitData = {
-        customer_first_name: firstName.value,
-        customer_last_name: lastName.value,
-        customer_address: address.value,
-        customer_postcode: zipCode.value,
-        customer_city: city.value,
-        customer_email: email.value,
-        customer_phone: telephone.value,
-        order_total: sum,
-        order_items: shoppingCartItems
-    };
-
-    
-    // POST request
-    const res = await fetch('https://www.bortakvall.se/api/orders', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(submitData)
-    });
-
-    if (!res.ok) {
-        throw new Error(`Could not place order, because of error: ${res.status}`);
-    };
-
-    return await res.json()
-};
-*/
 
 // When submit button is clicked by the customer
-orderForm.addEventListener('submit', async (e) => {
+orderForm!.addEventListener('submit', async (e) => {
 
     e.preventDefault();
-    document.querySelector('#submitbtn').disabled = true;
+    (document.querySelector('#submitbtn') as HTMLButtonElement).disabled = true;
 
     let orderData = [];
 
     try {
 
         orderData = await submitOrder();
-        const submitErrors = Object.values(orderData.data)
+        const submitErrors: any = Object.values(orderData.data)         //INTERRFACE
 
         if (orderData.status == 'fail') {
 
@@ -387,7 +331,7 @@ orderForm.addEventListener('submit', async (e) => {
             // Return if error is found, preventing rest of code to run
             return;
         };
-    } catch (err) {
+    } catch (err: any) {
         submitMsg(err);
 
         // Return if error is found, preventing rest of code to run
@@ -395,7 +339,7 @@ orderForm.addEventListener('submit', async (e) => {
     };
 
     const orderConfirmation =
-        `<p>Tack för din order, ${submitData.customer_first_name}!<br>Ditt ordernummer är: ${orderData.data.id}</p>`;
+        `<p>Tack för din order, ${submitData.customer_first_name}!<br>Ditt ordernummer är: ${orderData.data.id}</p>`;     //INTERFACE 
 
     // Store contact information from previous order in local storage
     localStorage.setItem('customerInfo', JSON.stringify(submitData));
@@ -407,15 +351,15 @@ orderForm.addEventListener('submit', async (e) => {
 });
 
 // Retrive customerInfo to pre fill form values 
-const customerInfo = JSON.parse(localStorage.getItem('customerInfo'));
+const customerInfo = JSON.parse(localStorage.getItem('customerInfo')!);
 
 // Getting submit values and setting them to form input when empty
 const submitValues = Object.values(customerInfo ?? []);
 
-(firstName as HTMLInputElement).value = submitValues[0] ?? ''
-lastName.value = submitValues[1] ?? ''
-address.value = submitValues[2] ?? ''
-zipCode.value = submitValues[3] ?? ''
-city.value = submitValues[4] ?? ''
-email.value = submitValues[5] ?? ''
-telephone.value = submitValues[6] ?? ''
+firstName!.value = submitValues[0] ?? ''
+lastName!.value = submitValues[1] ?? ''
+address!.value = submitValues[2] ?? ''
+zipCode!.value = submitValues[3] ?? ''
+city!.value = submitValues[4] ?? ''
+email!.value = submitValues[5] ?? ''
+telephone!.value = submitValues[6] ?? ''
