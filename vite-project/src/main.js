@@ -22,11 +22,13 @@ const productStock = document.querySelector(".prodStock");
 const topArrow = document.querySelector(".goToTop");
 
 // Base URL and endpoint from where we fetch the candy
-const baseUrl = 'https://www.bortakvall.se';
+//const baseUrl = 'https://www.bortakvall.se';
 
 // Array to store data from API
 let products = [];
 
+
+/*
 // Promise for baseUrl and changeable endPoint
 const fetchApi = async (endPoint) => {
     const res = await fetch(baseUrl + endPoint);
@@ -37,6 +39,7 @@ const fetchApi = async (endPoint) => {
     };
     return await res.json();
 };
+*/
 
 // Call getApi and render names and images to DOM 
 const getApi = async () => {
