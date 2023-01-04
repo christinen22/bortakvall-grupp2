@@ -340,6 +340,7 @@ const submitOrder = async () => {
         order_items: shoppingCartItems
     };
 
+    /*
     // POST request
     const res = await fetch('https://www.bortakvall.se/api/orders', {
         method: 'POST',
@@ -355,6 +356,7 @@ const submitOrder = async () => {
 
     return await res.json()
 };
+*/
 
 // When submit button is clicked by the customer
 orderForm.addEventListener('submit', async (e) => {
