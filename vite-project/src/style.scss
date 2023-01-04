@@ -106,7 +106,9 @@ align-self: center;
 
 }
 
-
+.btn-info {
+  margin-top: 10px;
+}
 
 h2 {
   font-size: 1.4rem
@@ -623,6 +625,19 @@ h3 {
 
 
 }
+
+@media screen and (min-width: 1081px) and (max-width: 3500px) {
+
+  .btn-info, .btn-success, .btn-danger {
+    padding: 5px;
+    font-size: 12px;
+    width: 10vw;
+    align-self: center;
+    
+  }
+
+}
+
 
 
 
